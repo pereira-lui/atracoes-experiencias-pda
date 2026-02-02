@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.1.0
+ * Version: 1.1.3
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -476,26 +476,6 @@ final class Atracoes_Experiencias_PDA {
             'manter_silencio' => [
                 'texto' => __('Manter silêncio em alguns pontos para ouvir o barulho da floresta e dos animais', 'atracoes-experiencias-pda'),
                 'icone' => 'silencio'
-            ],
-            'nao_correr' => [
-                'texto' => __('Não correr nas trilhas', 'atracoes-experiencias-pda'),
-                'icone' => 'nao-correr'
-            ],
-            'usar_repelente' => [
-                'texto' => __('Usar repelente de insetos', 'atracoes-experiencias-pda'),
-                'icone' => 'repelente'
-            ],
-            'usar_calcado' => [
-                'texto' => __('Usar calçados fechados e confortáveis', 'atracoes-experiencias-pda'),
-                'icone' => 'calcado'
-            ],
-            'levar_agua' => [
-                'texto' => __('Levar água para hidratação', 'atracoes-experiencias-pda'),
-                'icone' => 'agua'
-            ],
-            'nao_lixo' => [
-                'texto' => __('Não jogar lixo nas trilhas', 'atracoes-experiencias-pda'),
-                'icone' => 'nao-lixo'
             ],
         ];
     }
