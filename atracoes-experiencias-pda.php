@@ -314,7 +314,6 @@ final class Atracoes_Experiencias_PDA {
      * Render Meta Box - Textos Sobre
      */
     public function render_meta_box_textos_sobre($post) {
-        $subtitulo = get_post_meta($post->ID, '_atracao_subtitulo', true);
         $texto_sobre = get_post_meta($post->ID, '_atracao_texto_sobre', true);
         ?>
         <p class="description" style="margin-bottom: 15px; padding: 10px; background: #f0f6fc; border-left: 4px solid #2271b1; border-radius: 0 4px 4px 0;">
@@ -323,13 +322,6 @@ final class Atracoes_Experiencias_PDA {
             <em>(<?php _e('usa o título da página automaticamente', 'atracoes-experiencias-pda'); ?>)</em>
         </p>
         <table class="form-table atracao-meta-table">
-            <tr>
-                <th><label for="atracao_subtitulo"><?php _e('Subtítulo', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_subtitulo" name="atracao_subtitulo" value="<?php echo esc_attr($subtitulo); ?>" class="widefat" placeholder="Ex: O visitante pode ficar muito próximo de mutuns, perdizes, jacutingas e muitas outras aves incríveis.">
-                    <p class="description"><?php _e('Texto curto que aparece abaixo do título principal.', 'atracoes-experiencias-pda'); ?></p>
-                </td>
-            </tr>
             <tr>
                 <th><label for="atracao_texto_sobre"><?php _e('Textos Sobre', 'atracoes-experiencias-pda'); ?></label></th>
                 <td>
@@ -342,7 +334,7 @@ final class Atracoes_Experiencias_PDA {
                         'quicktags' => true,
                     ]);
                     ?>
-                    <p class="description"><?php _e('Conteúdo descritivo sobre a atração/experiência.', 'atracoes-experiencias-pda'); ?></p>
+                    <p class="description"><?php _e('Conteúdo descritivo sobre a atração/experiência. Use negrito para destacar a primeira frase.', 'atracoes-experiencias-pda'); ?></p>
                 </td>
             </tr>
         </table>
@@ -715,7 +707,6 @@ final class Atracoes_Experiencias_PDA {
         // Salvar campos de texto simples
         $text_fields = [
             'atracao_imagem_topo' => '_atracao_imagem_topo',
-            'atracao_subtitulo' => '_atracao_subtitulo',
             'atracao_galeria' => '_atracao_galeria',
             'atracao_card_imagem' => '_atracao_card_imagem',
             'atracao_card_texto' => '_atracao_card_texto',
