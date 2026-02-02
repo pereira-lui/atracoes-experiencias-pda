@@ -189,7 +189,7 @@ final class Atracoes_Experiencias_PDA {
             'label'                 => __('Atração/Experiência', 'atracoes-experiencias-pda'),
             'description'           => __('Atrações e Experiências do Parque', 'atracoes-experiencias-pda'),
             'labels'                => $labels,
-            'supports'              => ['title', 'thumbnail', 'revisions'], // Removido 'editor' e 'excerpt'
+            'supports'              => ['title', 'revisions'], // Apenas título e revisões
             'taxonomies'            => [], // Removido categorias
             'hierarchical'          => false,
             'public'                => true,
