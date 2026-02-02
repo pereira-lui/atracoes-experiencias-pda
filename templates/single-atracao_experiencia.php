@@ -15,7 +15,6 @@ while (have_posts()) :
     
     // Obter dados dos campos personalizados
     $imagem_topo = get_post_meta($post_id, '_atracao_imagem_topo', true);
-    $titulo_sobre = get_post_meta($post_id, '_atracao_titulo_sobre', true);
     $subtitulo = get_post_meta($post_id, '_atracao_subtitulo', true);
     $texto_sobre = get_post_meta($post_id, '_atracao_texto_sobre', true);
     $galeria = get_post_meta($post_id, '_atracao_galeria', true);
@@ -66,7 +65,7 @@ while (have_posts()) :
             
             <!-- Título e Subtítulo -->
             <div class="aepda-title-block">
-                <h1 class="aepda-page-title"><?php echo esc_html($titulo_sobre ? $titulo_sobre : get_the_title()); ?></h1>
+                <h1 class="aepda-page-title"><?php echo esc_html(get_the_title()); ?></h1>
                 <?php if ($subtitulo) : ?>
                     <p class="aepda-page-subtitle"><?php echo esc_html($subtitulo); ?></p>
                 <?php endif; ?>
