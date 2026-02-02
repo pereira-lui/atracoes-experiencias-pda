@@ -137,7 +137,7 @@ while (have_posts()) :
                 $blog_imagem_url = wp_get_attachment_image_url($blog_imagem, 'medium_large');
             ?>
             <div class="aepda-blog-section__image">
-                <img src="<?php echo esc_url($blog_imagem_url); ?>" alt="<?php echo esc_attr($blog_titulo); ?>">
+                <img src="<?php echo esc_url($blog_imagem_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
             <?php endif; ?>
         </div>

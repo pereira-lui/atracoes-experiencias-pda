@@ -706,20 +706,35 @@ final class Atracoes_Experiencias_PDA {
 
         // Salvar campos de texto simples
         $text_fields = [
-            'atracao_imagem_topo' => '_atracao_imagem_topo',
             'atracao_galeria' => '_atracao_galeria',
-            'atracao_card_imagem' => '_atracao_card_imagem',
             'atracao_card_texto' => '_atracao_card_texto',
             'atracao_blog_descricao' => '_atracao_blog_descricao',
             'atracao_blog_link_texto' => '_atracao_blog_link_texto',
             'atracao_blog_link_url' => '_atracao_blog_link_url',
-            'atracao_blog_imagem' => '_atracao_blog_imagem',
         ];
 
         foreach ($text_fields as $field_name => $meta_key) {
             if (isset($_POST[$field_name])) {
                 $value = sanitize_text_field($_POST[$field_name]);
                 update_post_meta($post_id, $meta_key, $value);
+            }
+        }
+        
+        // Salvar campos de imagem (IDs de attachments)
+        $image_fields = [
+            'atracao_imagem_topo' => '_atracao_imagem_topo',
+            'atracao_card_imagem' => '_atracao_card_imagem',
+            'atracao_blog_imagem' => '_atracao_blog_imagem',
+        ];
+
+        foreach ($image_fields as $field_name => $meta_key) {
+            if (isset($_POST[$field_name])) {
+                $value = absint($_POST[$field_name]);
+                if ($value > 0) {
+                    update_post_meta($post_id, $meta_key, $value);
+                } else {
+                    delete_post_meta($post_id, $meta_key);
+                }
             }
         }
 
