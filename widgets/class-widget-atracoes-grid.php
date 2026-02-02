@@ -539,13 +539,14 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
 
         $use_custom_colors = $settings['use_custom_colors'] === 'yes';
         
-        // Cores intercaladas para os cards (azul escuro, roxo, verde, amarelo, rosa)
+        // Cores intercaladas para os cards (conforme design)
         $card_colors = [
-            ['bg' => '#1E3A5F', 'text' => '#FFFFFF'], // Azul escuro
-            ['bg' => '#8B5CF6', 'text' => '#FFFFFF'], // Roxo
-            ['bg' => '#22C55E', 'text' => '#FFFFFF'], // Verde
-            ['bg' => '#EAB308', 'text' => '#FFFFFF'], // Amarelo
-            ['bg' => '#EC4899', 'text' => '#FFFFFF'], // Rosa/Magenta
+            ['bg' => '#0891B2', 'text' => '#FFFFFF'], // Azul petróleo/ciano
+            ['bg' => '#7C3AED', 'text' => '#FFFFFF'], // Roxo
+            ['bg' => '#DB2777', 'text' => '#FFFFFF'], // Rosa/Magenta
+            ['bg' => '#EA580C', 'text' => '#FFFFFF'], // Laranja
+            ['bg' => '#16A34A', 'text' => '#FFFFFF'], // Verde
+            ['bg' => '#CA8A04', 'text' => '#FFFFFF'], // Amarelo/Dourado
         ];
         $color_index = 0;
         $total_colors = count($card_colors);
