@@ -71,6 +71,9 @@ final class Atracoes_Experiencias_PDA {
         add_action('add_meta_boxes', [$this, 'add_meta_boxes']);
         add_action('save_post', [$this, 'save_meta_boxes']);
 
+        // Reordenar meta boxes - Rank Math por último
+        add_action('add_meta_boxes', [$this, 'reorder_meta_boxes'], 99);
+
         // Check for Elementor
         if ($this->is_compatible()) {
             add_action('elementor/init', [$this, 'init_elementor']);
@@ -94,6 +97,34 @@ final class Atracoes_Experiencias_PDA {
 
         // Template filter for single post
         add_filter('single_template', [$this, 'load_single_template']);
+    }
+
+    /**
+     * Reordenar meta boxes para colocar Rank Math por último
+     */
+    public function reorder_meta_boxes() {
+        global $wp_meta_boxes;
+        
+        if (!isset($wp_meta_boxes['atracao_experiencia'])) {
+            return;
+        }
+        
+        // Procurar o metabox do Rank Math e movê-lo para baixo
+        foreach (['normal', 'side', 'advanced'] as $context) {
+            foreach (['high', 'core', 'default', 'low'] as $priority) {
+                if (isset($wp_meta_boxes['atracao_experiencia'][$context][$priority])) {
+                    foreach ($wp_meta_boxes['atracao_experiencia'][$context][$priority] as $id => $metabox) {
+                        // Rank Math meta box
+                        if (strpos($id, 'rank_math') !== false || $id === 'rank_math_metabox') {
+                            // Remove e adiciona novamente com prioridade baixa
+                            $saved_metabox = $wp_meta_boxes['atracao_experiencia'][$context][$priority][$id];
+                            unset($wp_meta_boxes['atracao_experiencia'][$context][$priority][$id]);
+                            $wp_meta_boxes['atracao_experiencia'][$context]['low'][$id] = $saved_metabox;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -158,8 +189,8 @@ final class Atracoes_Experiencias_PDA {
             'label'                 => __('Atração/Experiência', 'atracoes-experiencias-pda'),
             'description'           => __('Atrações e Experiências do Parque', 'atracoes-experiencias-pda'),
             'labels'                => $labels,
-            'supports'              => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions'],
-            'taxonomies'            => ['atracao_categoria'],
+            'supports'              => ['title', 'thumbnail', 'revisions'], // Removido 'editor' e 'excerpt'
+            'taxonomies'            => [], // Removido categorias
             'hierarchical'          => false,
             'public'                => true,
             'show_ui'               => true,
@@ -178,44 +209,6 @@ final class Atracoes_Experiencias_PDA {
         ];
 
         register_post_type('atracao_experiencia', $args);
-
-        // Registrar Taxonomia - Categoria de Atrações
-        $cat_labels = [
-            'name'                       => _x('Categorias de Atrações', 'Taxonomy General Name', 'atracoes-experiencias-pda'),
-            'singular_name'              => _x('Categoria de Atração', 'Taxonomy Singular Name', 'atracoes-experiencias-pda'),
-            'menu_name'                  => __('Categorias', 'atracoes-experiencias-pda'),
-            'all_items'                  => __('Todas as Categorias', 'atracoes-experiencias-pda'),
-            'parent_item'                => __('Categoria Pai', 'atracoes-experiencias-pda'),
-            'parent_item_colon'          => __('Categoria Pai:', 'atracoes-experiencias-pda'),
-            'new_item_name'              => __('Nova Categoria', 'atracoes-experiencias-pda'),
-            'add_new_item'               => __('Adicionar Nova Categoria', 'atracoes-experiencias-pda'),
-            'edit_item'                  => __('Editar Categoria', 'atracoes-experiencias-pda'),
-            'update_item'                => __('Atualizar Categoria', 'atracoes-experiencias-pda'),
-            'view_item'                  => __('Ver Categoria', 'atracoes-experiencias-pda'),
-            'separate_items_with_commas' => __('Separar categorias com vírgulas', 'atracoes-experiencias-pda'),
-            'add_or_remove_items'        => __('Adicionar ou remover categorias', 'atracoes-experiencias-pda'),
-            'choose_from_most_used'      => __('Escolher das mais usadas', 'atracoes-experiencias-pda'),
-            'popular_items'              => __('Categorias populares', 'atracoes-experiencias-pda'),
-            'search_items'               => __('Buscar Categorias', 'atracoes-experiencias-pda'),
-            'not_found'                  => __('Não encontrada', 'atracoes-experiencias-pda'),
-            'no_terms'                   => __('Sem categorias', 'atracoes-experiencias-pda'),
-            'items_list'                 => __('Lista de categorias', 'atracoes-experiencias-pda'),
-            'items_list_navigation'      => __('Navegação da lista de categorias', 'atracoes-experiencias-pda'),
-        ];
-
-        $cat_args = [
-            'labels'                     => $cat_labels,
-            'hierarchical'               => true,
-            'public'                     => true,
-            'show_ui'                    => true,
-            'show_admin_column'          => true,
-            'show_in_nav_menus'          => true,
-            'show_tagcloud'              => true,
-            'show_in_rest'               => true,
-            'rewrite'                    => ['slug' => 'categoria-atracao'],
-        ];
-
-        register_taxonomy('atracao_categoria', ['atracao_experiencia'], $cat_args);
     }
 
     /**

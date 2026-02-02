@@ -86,29 +86,6 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             ]
         );
 
-        // Obter categorias
-        $categories = get_terms([
-            'taxonomy' => 'atracao_categoria',
-            'hide_empty' => false,
-        ]);
-
-        $category_options = ['' => __('Todas as Categorias', 'atracoes-experiencias-pda')];
-        if (!is_wp_error($categories) && !empty($categories)) {
-            foreach ($categories as $category) {
-                $category_options[$category->term_id] = $category->name;
-            }
-        }
-
-        $this->add_control(
-            'category',
-            [
-                'label' => __('Categoria', 'atracoes-experiencias-pda'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => '',
-                'options' => $category_options,
-            ]
-        );
-
         $this->add_control(
             'orderby',
             [
@@ -552,17 +529,6 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             'order' => $settings['order'],
             'post_status' => 'publish',
         ];
-
-        // Filter by category
-        if (!empty($settings['category'])) {
-            $args['tax_query'] = [
-                [
-                    'taxonomy' => 'atracao_categoria',
-                    'field' => 'term_id',
-                    'terms' => $settings['category'],
-                ],
-            ];
-        }
 
         $query = new \WP_Query($args);
 
