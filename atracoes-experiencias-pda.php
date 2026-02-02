@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.0.0');
+define('ATRACOES_EXP_PDA_VERSION', '1.1.0');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -91,6 +91,26 @@ final class Atracoes_Experiencias_PDA {
 
         // Enqueue editor assets
         add_action('elementor/editor/before_enqueue_scripts', [$this, 'enqueue_editor_assets']);
+
+        // Template filter for single post
+        add_filter('single_template', [$this, 'load_single_template']);
+    }
+
+    /**
+     * Load custom single template
+     */
+    public function load_single_template($template) {
+        global $post;
+        
+        if ($post->post_type === 'atracao_experiencia') {
+            $plugin_template = ATRACOES_EXP_PDA_PLUGIN_DIR . 'templates/single-atracao_experiencia.php';
+            
+            if (file_exists($plugin_template)) {
+                return $plugin_template;
+            }
+        }
+        
+        return $template;
     }
 
     /**
@@ -202,21 +222,21 @@ final class Atracoes_Experiencias_PDA {
      * Add Meta Boxes
      */
     public function add_meta_boxes() {
-        // Meta Box - Informações Principais
+        // Meta Box - Imagem do Topo
         add_meta_box(
-            'atracao_info_principal',
-            __('Informações Principais', 'atracoes-experiencias-pda'),
-            [$this, 'render_meta_box_info_principal'],
+            'atracao_imagem_topo',
+            __('Imagem do Topo', 'atracoes-experiencias-pda'),
+            [$this, 'render_meta_box_imagem_topo'],
             'atracao_experiencia',
             'normal',
             'high'
         );
 
-        // Meta Box - Subtítulo e Descrição Curta
+        // Meta Box - Textos Sobre (Título e Conteúdo)
         add_meta_box(
-            'atracao_subtitulo',
-            __('Subtítulo e Descrição Curta', 'atracoes-experiencias-pda'),
-            [$this, 'render_meta_box_subtitulo'],
+            'atracao_textos_sobre',
+            __('Textos Sobre', 'atracoes-experiencias-pda'),
+            [$this, 'render_meta_box_textos_sobre'],
             'atracao_experiencia',
             'normal',
             'high'
@@ -242,31 +262,21 @@ final class Atracoes_Experiencias_PDA {
             'default'
         );
 
-        // Meta Box - Regras e Dicas
-        add_meta_box(
-            'atracao_regras',
-            __('Regras e Dicas para Visitantes', 'atracoes-experiencias-pda'),
-            [$this, 'render_meta_box_regras'],
-            'atracao_experiencia',
-            'normal',
-            'default'
-        );
-
-        // Meta Box - Seção de Blog Relacionado
+        // Meta Box - Seção de Blog/Matérias
         add_meta_box(
             'atracao_blog_relacionado',
-            __('Blog Relacionado', 'atracoes-experiencias-pda'),
+            __('Matérias do Blog', 'atracoes-experiencias-pda'),
             [$this, 'render_meta_box_blog_relacionado'],
             'atracao_experiencia',
             'normal',
             'default'
         );
 
-        // Meta Box - Links Adicionais
+        // Meta Box - Regras para Visitantes (Checkboxes)
         add_meta_box(
-            'atracao_links',
-            __('Links Adicionais (Saiba Mais)', 'atracoes-experiencias-pda'),
-            [$this, 'render_meta_box_links'],
+            'atracao_regras',
+            __('Regras para Melhor Experiência', 'atracoes-experiencias-pda'),
+            [$this, 'render_meta_box_regras'],
             'atracao_experiencia',
             'normal',
             'default'
@@ -274,62 +284,55 @@ final class Atracoes_Experiencias_PDA {
     }
 
     /**
-     * Render Meta Box - Informações Principais
+     * Render Meta Box - Imagem do Topo
      */
-    public function render_meta_box_info_principal($post) {
+    public function render_meta_box_imagem_topo($post) {
         wp_nonce_field('atracao_meta_box', 'atracao_meta_box_nonce');
 
-        $localizacao = get_post_meta($post->ID, '_atracao_localizacao', true);
-        $horario_funcionamento = get_post_meta($post->ID, '_atracao_horario_funcionamento', true);
-        $duracao_visita = get_post_meta($post->ID, '_atracao_duracao_visita', true);
-        $nivel_dificuldade = get_post_meta($post->ID, '_atracao_nivel_dificuldade', true);
+        $imagem_topo = get_post_meta($post->ID, '_atracao_imagem_topo', true);
         ?>
-        <table class="form-table atracao-meta-table">
-            <tr>
-                <th><label for="atracao_localizacao"><?php _e('Localização', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_localizacao" name="atracao_localizacao" value="<?php echo esc_attr($localizacao); ?>" class="widefat" placeholder="Ex: Área Central do Parque">
-                    <p class="description"><?php _e('Localização da atração dentro do parque.', 'atracoes-experiencias-pda'); ?></p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="atracao_horario_funcionamento"><?php _e('Horário de Funcionamento', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_horario_funcionamento" name="atracao_horario_funcionamento" value="<?php echo esc_attr($horario_funcionamento); ?>" class="widefat" placeholder="Ex: 8h às 17h">
-                    <p class="description"><?php _e('Horário de funcionamento da atração.', 'atracoes-experiencias-pda'); ?></p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="atracao_duracao_visita"><?php _e('Duração da Visita', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_duracao_visita" name="atracao_duracao_visita" value="<?php echo esc_attr($duracao_visita); ?>" class="widefat" placeholder="Ex: 30 minutos">
-                    <p class="description"><?php _e('Tempo médio de visita.', 'atracoes-experiencias-pda'); ?></p>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="atracao_nivel_dificuldade"><?php _e('Nível de Dificuldade', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <select id="atracao_nivel_dificuldade" name="atracao_nivel_dificuldade" class="widefat">
-                        <option value=""><?php _e('Selecione...', 'atracoes-experiencias-pda'); ?></option>
-                        <option value="facil" <?php selected($nivel_dificuldade, 'facil'); ?>><?php _e('Fácil', 'atracoes-experiencias-pda'); ?></option>
-                        <option value="moderado" <?php selected($nivel_dificuldade, 'moderado'); ?>><?php _e('Moderado', 'atracoes-experiencias-pda'); ?></option>
-                        <option value="dificil" <?php selected($nivel_dificuldade, 'dificil'); ?>><?php _e('Difícil', 'atracoes-experiencias-pda'); ?></option>
-                    </select>
-                    <p class="description"><?php _e('Nível de dificuldade da atração/experiência.', 'atracoes-experiencias-pda'); ?></p>
-                </td>
-            </tr>
-        </table>
+        <div class="atracao-imagem-topo-wrapper">
+            <p class="description"><?php _e('Esta imagem será exibida no topo da página, em formato widescreen.', 'atracoes-experiencias-pda'); ?></p>
+            <div class="atracao-image-upload">
+                <input type="hidden" id="atracao_imagem_topo" name="atracao_imagem_topo" value="<?php echo esc_attr($imagem_topo); ?>">
+                <div id="atracao-imagem-topo-preview" class="atracao-image-preview atracao-image-preview--large">
+                    <?php
+                    if ($imagem_topo) {
+                        $image_url = wp_get_attachment_image_url($imagem_topo, 'large');
+                        if ($image_url) {
+                            echo '<img src="' . esc_url($image_url) . '" alt="">';
+                        }
+                    }
+                    ?>
+                </div>
+                <button type="button" class="button button-primary atracao-image-upload-btn" data-target="atracao_imagem_topo" data-preview="atracao-imagem-topo-preview">
+                    <?php _e('Selecionar Imagem do Topo', 'atracoes-experiencias-pda'); ?>
+                </button>
+                <button type="button" class="button atracao-image-remove-btn" data-target="atracao_imagem_topo" data-preview="atracao-imagem-topo-preview" <?php echo empty($imagem_topo) ? 'style="display:none;"' : ''; ?>>
+                    <?php _e('Remover', 'atracoes-experiencias-pda'); ?>
+                </button>
+            </div>
+            <p class="description"><?php _e('Recomendado: 1920x600px ou proporção similar.', 'atracoes-experiencias-pda'); ?></p>
+        </div>
         <?php
     }
 
     /**
-     * Render Meta Box - Subtítulo e Descrição Curta
+     * Render Meta Box - Textos Sobre
      */
-    public function render_meta_box_subtitulo($post) {
+    public function render_meta_box_textos_sobre($post) {
+        $titulo_sobre = get_post_meta($post->ID, '_atracao_titulo_sobre', true);
         $subtitulo = get_post_meta($post->ID, '_atracao_subtitulo', true);
-        $descricao_curta = get_post_meta($post->ID, '_atracao_descricao_curta', true);
+        $texto_sobre = get_post_meta($post->ID, '_atracao_texto_sobre', true);
         ?>
         <table class="form-table atracao-meta-table">
+            <tr>
+                <th><label for="atracao_titulo_sobre"><?php _e('Título', 'atracoes-experiencias-pda'); ?></label></th>
+                <td>
+                    <input type="text" id="atracao_titulo_sobre" name="atracao_titulo_sobre" value="<?php echo esc_attr($titulo_sobre); ?>" class="widefat" placeholder="Ex: Os Pequenos Marrons">
+                    <p class="description"><?php _e('Título principal que aparece na página.', 'atracoes-experiencias-pda'); ?></p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="atracao_subtitulo"><?php _e('Subtítulo', 'atracoes-experiencias-pda'); ?></label></th>
                 <td>
@@ -338,18 +341,18 @@ final class Atracoes_Experiencias_PDA {
                 </td>
             </tr>
             <tr>
-                <th><label for="atracao_descricao_curta"><?php _e('Descrição Curta', 'atracoes-experiencias-pda'); ?></label></th>
+                <th><label for="atracao_texto_sobre"><?php _e('Textos Sobre', 'atracoes-experiencias-pda'); ?></label></th>
                 <td>
                     <?php
-                    wp_editor($descricao_curta, 'atracao_descricao_curta', [
-                        'textarea_name' => 'atracao_descricao_curta',
-                        'textarea_rows' => 5,
-                        'media_buttons' => false,
-                        'teeny' => true,
+                    wp_editor($texto_sobre, 'atracao_texto_sobre', [
+                        'textarea_name' => 'atracao_texto_sobre',
+                        'textarea_rows' => 8,
+                        'media_buttons' => true,
+                        'teeny' => false,
                         'quicktags' => true,
                     ]);
                     ?>
-                    <p class="description"><?php _e('Descrição que aparece na página da atração, abaixo do subtítulo.', 'atracoes-experiencias-pda'); ?></p>
+                    <p class="description"><?php _e('Conteúdo descritivo sobre a atração/experiência.', 'atracoes-experiencias-pda'); ?></p>
                 </td>
             </tr>
         </table>
@@ -412,40 +415,80 @@ final class Atracoes_Experiencias_PDA {
     }
 
     /**
-     * Render Meta Box - Regras e Dicas
+     * Obter lista de regras disponíveis
+     */
+    public function get_regras_disponiveis() {
+        return [
+            'nao_alimentar' => [
+                'texto' => __('Não alimentar os animais', 'atracoes-experiencias-pda'),
+                'icone' => 'nao-alimentar'
+            ],
+            'nao_tocar' => [
+                'texto' => __('Não tocar nos animais', 'atracoes-experiencias-pda'),
+                'icone' => 'nao-tocar'
+            ],
+            'nao_sair_trilha' => [
+                'texto' => __('Não sair da trilha', 'atracoes-experiencias-pda'),
+                'icone' => 'nao-sair-trilha'
+            ],
+            'fotografar_sem_flash' => [
+                'texto' => __('É permitido fotografar e fazer vídeos, mas não usar flash', 'atracoes-experiencias-pda'),
+                'icone' => 'sem-flash'
+            ],
+            'manter_silencio' => [
+                'texto' => __('Manter silêncio em alguns pontos para ouvir o barulho da floresta e dos animais', 'atracoes-experiencias-pda'),
+                'icone' => 'silencio'
+            ],
+            'nao_correr' => [
+                'texto' => __('Não correr nas trilhas', 'atracoes-experiencias-pda'),
+                'icone' => 'nao-correr'
+            ],
+            'usar_repelente' => [
+                'texto' => __('Usar repelente de insetos', 'atracoes-experiencias-pda'),
+                'icone' => 'repelente'
+            ],
+            'usar_calcado' => [
+                'texto' => __('Usar calçados fechados e confortáveis', 'atracoes-experiencias-pda'),
+                'icone' => 'calcado'
+            ],
+            'levar_agua' => [
+                'texto' => __('Levar água para hidratação', 'atracoes-experiencias-pda'),
+                'icone' => 'agua'
+            ],
+            'nao_lixo' => [
+                'texto' => __('Não jogar lixo nas trilhas', 'atracoes-experiencias-pda'),
+                'icone' => 'nao-lixo'
+            ],
+        ];
+    }
+
+    /**
+     * Render Meta Box - Regras para Visitantes
      */
     public function render_meta_box_regras($post) {
-        $regras = get_post_meta($post->ID, '_atracao_regras', true);
-        if (!is_array($regras)) {
-            $regras = [];
+        $regras_selecionadas = get_post_meta($post->ID, '_atracao_regras_selecionadas', true);
+        if (!is_array($regras_selecionadas)) {
+            $regras_selecionadas = [];
         }
+        
+        $regras_disponiveis = $this->get_regras_disponiveis();
         ?>
         <div class="atracao-regras-wrapper">
-            <div id="atracao-regras-list">
-                <?php
-                if (!empty($regras)) {
-                    foreach ($regras as $index => $regra) {
-                        ?>
-                        <div class="atracao-regra-item">
-                            <div class="atracao-regra-icon">
-                                <label><?php _e('Ícone (Dashicon)', 'atracoes-experiencias-pda'); ?></label>
-                                <input type="text" name="atracao_regras[<?php echo $index; ?>][icone]" value="<?php echo esc_attr($regra['icone'] ?? ''); ?>" placeholder="dashicons-warning">
-                            </div>
-                            <div class="atracao-regra-texto">
-                                <label><?php _e('Texto', 'atracoes-experiencias-pda'); ?></label>
-                                <input type="text" name="atracao_regras[<?php echo $index; ?>][texto]" value="<?php echo esc_attr($regra['texto'] ?? ''); ?>" class="widefat" placeholder="Ex: Não alimentar os animais">
-                            </div>
-                            <button type="button" class="button atracao-regra-remove"><?php _e('Remover', 'atracoes-experiencias-pda'); ?></button>
-                        </div>
-                        <?php
-                    }
-                }
-                ?>
+            <p class="description" style="margin-bottom: 15px;">
+                <?php _e('Selecione as regras que deseja exibir nesta atração/experiência:', 'atracoes-experiencias-pda'); ?>
+            </p>
+            <div class="atracao-regras-checkboxes">
+                <?php foreach ($regras_disponiveis as $key => $regra) : ?>
+                    <label class="atracao-regra-checkbox">
+                        <input type="checkbox" 
+                               name="atracao_regras_selecionadas[]" 
+                               value="<?php echo esc_attr($key); ?>"
+                               <?php checked(in_array($key, $regras_selecionadas)); ?>>
+                        <span class="atracao-regra-checkbox-icon atracao-icon-<?php echo esc_attr($regra['icone']); ?>"></span>
+                        <span class="atracao-regra-checkbox-text"><?php echo esc_html($regra['texto']); ?></span>
+                    </label>
+                <?php endforeach; ?>
             </div>
-            <button type="button" class="button atracao-regra-add" id="atracao-regra-add">
-                <?php _e('Adicionar Regra/Dica', 'atracoes-experiencias-pda'); ?>
-            </button>
-            <p class="description"><?php _e('Adicione regras e dicas para os visitantes. Use classes de ícones Dashicons (ex: dashicons-warning, dashicons-heart, etc.)', 'atracoes-experiencias-pda'); ?></p>
         </div>
         <?php
     }
@@ -578,10 +621,8 @@ final class Atracoes_Experiencias_PDA {
 
         // Salvar campos de texto simples
         $text_fields = [
-            'atracao_localizacao' => '_atracao_localizacao',
-            'atracao_horario_funcionamento' => '_atracao_horario_funcionamento',
-            'atracao_duracao_visita' => '_atracao_duracao_visita',
-            'atracao_nivel_dificuldade' => '_atracao_nivel_dificuldade',
+            'atracao_imagem_topo' => '_atracao_imagem_topo',
+            'atracao_titulo_sobre' => '_atracao_titulo_sobre',
             'atracao_subtitulo' => '_atracao_subtitulo',
             'atracao_galeria' => '_atracao_galeria',
             'atracao_card_cor_fundo' => '_atracao_card_cor_fundo',
@@ -600,42 +641,18 @@ final class Atracoes_Experiencias_PDA {
             }
         }
 
-        // Salvar descrição curta (permite HTML)
-        if (isset($_POST['atracao_descricao_curta'])) {
-            $descricao_curta = wp_kses_post($_POST['atracao_descricao_curta']);
-            update_post_meta($post_id, '_atracao_descricao_curta', $descricao_curta);
+        // Salvar texto sobre (permite HTML)
+        if (isset($_POST['atracao_texto_sobre'])) {
+            $texto_sobre = wp_kses_post($_POST['atracao_texto_sobre']);
+            update_post_meta($post_id, '_atracao_texto_sobre', $texto_sobre);
         }
 
-        // Salvar regras (array)
-        if (isset($_POST['atracao_regras']) && is_array($_POST['atracao_regras'])) {
-            $regras = [];
-            foreach ($_POST['atracao_regras'] as $regra) {
-                if (!empty($regra['texto'])) {
-                    $regras[] = [
-                        'icone' => sanitize_text_field($regra['icone'] ?? ''),
-                        'texto' => sanitize_text_field($regra['texto']),
-                    ];
-                }
-            }
-            update_post_meta($post_id, '_atracao_regras', $regras);
+        // Salvar regras selecionadas (array de checkboxes)
+        if (isset($_POST['atracao_regras_selecionadas']) && is_array($_POST['atracao_regras_selecionadas'])) {
+            $regras_selecionadas = array_map('sanitize_text_field', $_POST['atracao_regras_selecionadas']);
+            update_post_meta($post_id, '_atracao_regras_selecionadas', $regras_selecionadas);
         } else {
-            delete_post_meta($post_id, '_atracao_regras');
-        }
-
-        // Salvar links (array)
-        if (isset($_POST['atracao_links']) && is_array($_POST['atracao_links'])) {
-            $links = [];
-            foreach ($_POST['atracao_links'] as $link) {
-                if (!empty($link['texto']) && !empty($link['url'])) {
-                    $links[] = [
-                        'texto' => sanitize_text_field($link['texto']),
-                        'url' => esc_url_raw($link['url']),
-                    ];
-                }
-            }
-            update_post_meta($post_id, '_atracao_links', $links);
-        } else {
-            delete_post_meta($post_id, '_atracao_links');
+            delete_post_meta($post_id, '_atracao_regras_selecionadas');
         }
     }
 

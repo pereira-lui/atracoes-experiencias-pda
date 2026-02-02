@@ -2,27 +2,65 @@
  * Atrações e Experiências PDA - Frontend Scripts
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 (function($) {
     'use strict';
 
     $(document).ready(function() {
-        // Initialize any frontend functionality here
+        // Initialize frontend functionality
         initGalleryLightbox();
+        initGallerySlider();
     });
 
     /**
-     * Initialize Gallery Lightbox (if needed)
+     * Initialize Gallery Slider Navigation
+     */
+    function initGallerySlider() {
+        var $slider = $('#aepda-gallery-slider');
+        var $prevBtn = $('.aepda-gallery-prev');
+        var $nextBtn = $('.aepda-gallery-next');
+        
+        if (!$slider.length) return;
+        
+        var scrollAmount = 400; // pixels to scroll
+        
+        $prevBtn.on('click', function() {
+            $slider.animate({
+                scrollLeft: $slider.scrollLeft() - scrollAmount
+            }, 300);
+        });
+        
+        $nextBtn.on('click', function() {
+            $slider.animate({
+                scrollLeft: $slider.scrollLeft() + scrollAmount
+            }, 300);
+        });
+        
+        // Hide/show buttons based on scroll position
+        function updateNavButtons() {
+            var scrollLeft = $slider.scrollLeft();
+            var maxScroll = $slider[0].scrollWidth - $slider[0].clientWidth;
+            
+            $prevBtn.css('opacity', scrollLeft <= 0 ? 0.3 : 1);
+            $nextBtn.css('opacity', scrollLeft >= maxScroll - 5 ? 0.3 : 1);
+        }
+        
+        $slider.on('scroll', updateNavButtons);
+        updateNavButtons();
+    }
+
+    /**
+     * Initialize Gallery Lightbox
      */
     function initGalleryLightbox() {
-        // Simple lightbox for gallery items
-        $('.aepda-gallery__item').on('click', function(e) {
+        // Handle both old and new gallery selectors
+        $('.aepda-gallery__item, .aepda-gallery-item a').on('click', function(e) {
             e.preventDefault();
             
             var $img = $(this).find('img');
-            var fullSrc = $img.attr('src').replace(/-\d+x\d+\./, '.'); // Try to get full size
+            var fullSrc = $(this).attr('href') || $img.attr('src').replace(/-\d+x\d+\./, '.');
             
             // Create overlay
             var $overlay = $('<div class="aepda-lightbox-overlay">' +
@@ -33,8 +71,6 @@
             '</div>');
             
             $('body').append($overlay);
-            
-            // Prevent body scroll
             $('body').addClass('aepda-no-scroll');
             
             // Fade in

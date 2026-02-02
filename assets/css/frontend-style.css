@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Styles
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 /* ==========================================================================
@@ -56,7 +56,6 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 1.3;
-    /* Cores padrão - podem ser sobrescritas por CSS Variables */
     background-color: var(--aepda-card-bg, #8B5CF6);
     color: var(--aepda-card-color, #FFFFFF);
 }
@@ -76,11 +75,6 @@ a.aepda-card:focus {
     outline: none;
 }
 
-/* Preview styles for editor */
-.aepda-card--preview {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
 /* No results message */
 .aepda-no-results {
     text-align: center;
@@ -90,12 +84,462 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
+   Single Atração Page - Nova Estrutura
+   ========================================================================== */
+
+.aepda-single-page {
+    width: 100%;
+}
+
+/* Hero Image (Imagem do Topo) */
+.aepda-hero-image {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.aepda-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Container */
+.aepda-single-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Breadcrumb */
+.aepda-breadcrumb {
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #666;
+}
+
+.aepda-breadcrumb a {
+    color: #5B21B6;
+    text-decoration: none;
+}
+
+.aepda-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Content Section */
+.aepda-content-section {
+    margin-bottom: 40px;
+}
+
+/* Title Block */
+.aepda-title-block {
+    margin-bottom: 30px;
+}
+
+.aepda-page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+}
+
+.aepda-page-subtitle {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Texto Sobre */
+.aepda-texto-sobre {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.aepda-texto-sobre p {
+    margin-bottom: 1.5em;
+}
+
+.aepda-texto-sobre h2,
+.aepda-texto-sobre h3,
+.aepda-texto-sobre h4 {
+    color: #1a1a1a;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+/* ==========================================================================
+   Gallery Section
+   ========================================================================== */
+
+.aepda-gallery-section {
+    margin-bottom: 50px;
+}
+
+.aepda-gallery-wrapper {
+    position: relative;
+}
+
+.aepda-gallery-slider {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 10px 0;
+}
+
+.aepda-gallery-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.aepda-gallery-item {
+    flex: 0 0 auto;
+    width: calc(50% - 10px);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.aepda-gallery-item img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.aepda-gallery-item:hover img {
+    transform: scale(1.03);
+}
+
+.aepda-gallery-item a {
+    display: block;
+}
+
+/* Gallery Navigation */
+.aepda-gallery-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    padding: 0 10px;
+}
+
+.aepda-gallery-prev,
+.aepda-gallery-next {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.aepda-gallery-prev:hover,
+.aepda-gallery-next:hover {
+    background: #5B21B6;
+    color: white;
+}
+
+/* ==========================================================================
+   Blog Section (Seção Roxa)
+   ========================================================================== */
+
+.aepda-blog-section {
+    background-color: #5B21B6;
+    color: white;
+    padding: 60px 0;
+}
+
+.aepda-blog-section__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.aepda-blog-section__content {
+    padding-right: 30px;
+}
+
+.aepda-blog-section__title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: white;
+}
+
+.aepda-blog-section__divider {
+    width: 80px;
+    height: 4px;
+    background-color: #7C3AED;
+    margin-bottom: 25px;
+}
+
+.aepda-blog-section__description {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    opacity: 0.95;
+}
+
+.aepda-blog-section__link {
+    color: #FCD34D;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.aepda-blog-section__link:hover {
+    color: #FDE68A;
+    text-decoration: underline;
+}
+
+.aepda-blog-section__image {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.aepda-blog-section__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   Rules Section (Seção de Regras)
+   ========================================================================== */
+
+.aepda-rules-section {
+    padding: 70px 0;
+    background-color: #FAFAFA;
+}
+
+.aepda-rules-section__inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.aepda-rules-section__title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: left;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+}
+
+.aepda-rules-section__divider {
+    width: 80px;
+    height: 4px;
+    background-color: #5B21B6;
+    margin-bottom: 40px;
+}
+
+.aepda-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 40px;
+    border: 2px solid #E5E7EB;
+    border-radius: 15px;
+    background: white;
+}
+
+.aepda-rule-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+}
+
+.aepda-rule-item__icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aepda-rule-item__text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   Icons for Rules (SVG icons)
+   ========================================================================== */
+
+.aepda-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.aepda-icon-nao-alimentar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3Cpath d='M25 35c0-5 7-10 7-10s7 5 7 10-3 7-7 7-7-2-7-7z'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-nao-tocar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3Cpath d='M32 20v-5M26 22l-3-3M38 22l3-3M24 30h-5M40 30h5M32 38v8M28 42l-4 4M36 42l4 4'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-nao-sair-trilha {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3Cpath d='M25 45l7-15 7 15M32 30v-12'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-sem-flash {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='18' y='22' width='28' height='20' rx='3'/%3E%3Ccircle cx='32' cy='32' r='6'/%3E%3Cpath d='M42 18h6l-3 8'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-silencio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M20 26v12h8l10 8V18l-10 8h-8z'/%3E%3Cpath d='M44 24l8 16M52 24l-8 16'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-nao-correr {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3Ccircle cx='36' cy='20' r='4'/%3E%3Cpath d='M26 28l8 4-2 8 6 8M34 32l8-4'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-repelente {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='24' y='20' width='16' height='30' rx='2'/%3E%3Crect x='26' y='14' width='12' height='6'/%3E%3Cpath d='M20 28l-6-4M20 36l-6 0M44 28l6-4M44 36l6 0'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-calcado {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M16 40c0-8 4-16 8-20h16c4 4 8 12 8 20v4H16v-4z'/%3E%3Cpath d='M20 44v4h24v-4'/%3E%3Cpath d='M24 30h16'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-agua {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M26 16h12v6l4 4v22a4 4 0 01-4 4H26a4 4 0 01-4-4V26l4-4v-6z'/%3E%3Cpath d='M26 32c0 6 6 10 6 10s6-4 6-10'/%3E%3C/svg%3E");
+}
+
+.aepda-icon-nao-lixo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3Cpath d='M24 24h16v20H24z'/%3E%3Cpath d='M22 24h20M28 20v4M36 20v4'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
    Responsive Styles
    ========================================================================== */
 
 @media (max-width: 1024px) {
     .aepda-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .aepda-hero-image {
+        height: 400px;
+    }
+    
+    .aepda-blog-section__inner {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .aepda-blog-section__content {
+        padding-right: 0;
+        order: 1;
+    }
+    
+    .aepda-blog-section__image {
+        order: 2;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .aepda-gallery-item {
+        width: calc(60% - 10px);
+    }
+}
+
+@media (max-width: 767px) {
+    .aepda-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-card {
+        height: 220px;
+    }
+    
+    .aepda-card__text {
+        font-size: 13px;
+        padding: 10px 15px;
+        margin: 0 10px 10px 10px;
+    }
+    
+    .aepda-hero-image {
+        height: 300px;
+    }
+    
+    .aepda-page-title {
+        font-size: 28px;
+    }
+    
+    .aepda-page-subtitle {
+        font-size: 16px;
+    }
+    
+    .aepda-gallery-item {
+        width: calc(85% - 10px);
+    }
+    
+    .aepda-gallery-item img {
+        height: 250px;
+    }
+    
+    .aepda-gallery-prev,
+    .aepda-gallery-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .aepda-blog-section {
+        padding: 40px 0;
+    }
+    
+    .aepda-blog-section__title {
+        font-size: 24px;
+    }
+    
+    .aepda-rules-section__title {
+        font-size: 22px;
+    }
+    
+    .aepda-rules-grid {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+    
+    .aepda-rule-item {
+        padding: 10px;
     }
 }
 

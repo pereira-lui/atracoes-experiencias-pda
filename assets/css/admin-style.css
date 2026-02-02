@@ -149,39 +149,87 @@
     margin-bottom: 15px;
 }
 
-.atracao-regra-item {
-    display: grid;
-    grid-template-columns: 200px 1fr auto;
-    gap: 15px;
-    padding: 15px;
-    margin-bottom: 10px;
+/* ==========================================================================
+   Imagem do Topo (Large Preview)
+   ========================================================================== */
+
+.atracao-image-preview--large {
+    min-height: 200px;
+    max-width: 100%;
+}
+
+.atracao-image-preview--large img {
+    max-height: 300px;
+    max-width: 100%;
+}
+
+/* ==========================================================================
+   Rules Checkboxes (Nova versão)
+   ========================================================================== */
+
+.atracao-regras-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.atracao-regra-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    align-items: end;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.atracao-regra-item label {
-    display: block;
-    margin-bottom: 5px;
+.atracao-regra-checkbox:hover {
+    background-color: #f0f0f0;
+    border-color: #5B21B6;
+}
+
+.atracao-regra-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: #5B21B6;
+}
+
+.atracao-regra-checkbox input[type="checkbox"]:checked + .atracao-regra-checkbox-icon + .atracao-regra-checkbox-text {
+    color: #5B21B6;
     font-weight: 600;
-    font-size: 12px;
-    color: #666;
 }
 
-.atracao-regra-item input {
-    width: 100%;
+.atracao-regra-checkbox-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
 }
 
-.atracao-regra-remove {
-    color: #dc3232 !important;
-    border-color: #dc3232 !important;
+.atracao-regra-checkbox-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
 }
 
-.atracao-regra-remove:hover {
-    background-color: #dc3232 !important;
-    color: white !important;
-}
+/* Icons for admin checkboxes */
+.atracao-icon-nao-alimentar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3C/svg%3E"); }
+.atracao-icon-nao-tocar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3C/svg%3E"); }
+.atracao-icon-nao-sair-trilha { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3C/svg%3E"); }
+.atracao-icon-sem-flash { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='18' y='22' width='28' height='20' rx='3'/%3E%3C/svg%3E"); }
+.atracao-icon-silencio { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M20 26v12h8l10 8V18l-10 8h-8z'/%3E%3C/svg%3E"); }
+.atracao-icon-nao-correr { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3C/svg%3E"); }
+.atracao-icon-repelente { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='24' y='20' width='16' height='30' rx='2'/%3E%3C/svg%3E"); }
+.atracao-icon-calcado { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M16 40c0-8 4-16 8-20h16c4 4 8 12 8 20v4H16v-4z'/%3E%3C/svg%3E"); }
+.atracao-icon-agua { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M26 16h12v6l4 4v22a4 4 0 01-4 4H26a4 4 0 01-4-4V26l4-4v-6z'/%3E%3C/svg%3E"); }
+.atracao-icon-nao-lixo { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M20 20L44 44'/%3E%3C/svg%3E"); }
 
 /* ==========================================================================
    Links Meta Box
@@ -270,5 +318,9 @@
     .atracao-regra-item .button,
     .atracao-link-item .button {
         justify-self: start;
+    }
+    
+    .atracao-regra-checkbox {
+        flex-wrap: wrap;
     }
 }
