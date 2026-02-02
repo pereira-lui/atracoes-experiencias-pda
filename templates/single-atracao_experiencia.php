@@ -26,6 +26,10 @@ while (have_posts()) :
     $blog_link_texto = get_post_meta($post_id, '_atracao_blog_link_texto', true);
     $blog_link_url = get_post_meta($post_id, '_atracao_blog_link_url', true);
     $blog_imagem = get_post_meta($post_id, '_atracao_blog_imagem', true);
+    $blog_posts_ids = get_post_meta($post_id, '_atracao_blog_posts', true);
+    if (!is_array($blog_posts_ids)) {
+        $blog_posts_ids = [];
+    }
     
     // Regras selecionadas
     $regras_selecionadas = get_post_meta($post_id, '_atracao_regras_selecionadas', true);
@@ -117,7 +121,7 @@ while (have_posts()) :
     </div><!-- .aepda-single-container -->
     
     <!-- Seção Matérias do Blog (Fundo Roxo) -->
-    <?php if ($blog_titulo || $blog_descricao || $blog_imagem) : ?>
+    <?php if ($blog_titulo || $blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : ?>
     <section class="aepda-blog-section">
         <div class="aepda-blog-section__inner">
             <div class="aepda-blog-section__content">
@@ -145,6 +149,48 @@ while (have_posts()) :
             </div>
             <?php endif; ?>
         </div>
+        
+        <?php if (!empty($blog_posts_ids)) : 
+            // Cores intercaladas para os cards
+            $card_colors = [
+                ['bg' => '#0891B2', 'text' => '#FFFFFF'], // Azul petróleo/ciano
+                ['bg' => '#7C3AED', 'text' => '#FFFFFF'], // Roxo
+                ['bg' => '#DB2777', 'text' => '#FFFFFF'], // Rosa/Magenta
+                ['bg' => '#EA580C', 'text' => '#FFFFFF'], // Laranja
+                ['bg' => '#16A34A', 'text' => '#FFFFFF'], // Verde
+                ['bg' => '#CA8A04', 'text' => '#FFFFFF'], // Amarelo/Dourado
+            ];
+            $color_index = 0;
+            $total_colors = count($card_colors);
+            
+            // Buscar os posts selecionados
+            $blog_posts_query = get_posts([
+                'post_type' => 'blog_post',
+                'post__in' => $blog_posts_ids,
+                'orderby' => 'post__in',
+                'posts_per_page' => -1,
+                'post_status' => 'publish',
+            ]);
+        ?>
+        <div class="aepda-blog-cards">
+            <div class="aepda-blog-cards__grid">
+                <?php foreach ($blog_posts_query as $blog_post) : 
+                    $current_color = $card_colors[$color_index % $total_colors];
+                    $color_index++;
+                    $thumbnail_url = get_the_post_thumbnail_url($blog_post->ID, 'medium_large');
+                ?>
+                <a href="<?php echo esc_url(get_permalink($blog_post->ID)); ?>" class="aepda-blog-card">
+                    <?php if ($thumbnail_url) : ?>
+                        <img class="aepda-blog-card__image" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr($blog_post->post_title); ?>">
+                    <?php endif; ?>
+                    <span class="aepda-blog-card__text" style="background-color: <?php echo esc_attr($current_color['bg']); ?>; color: <?php echo esc_attr($current_color['text']); ?>;">
+                        <?php echo esc_html($blog_post->post_title); ?>
+                    </span>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
     </section>
     <?php endif; ?>
     

@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.1.4
+ * Version: 1.2.0
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -508,6 +508,19 @@ final class Atracoes_Experiencias_PDA {
         $blog_link_texto = get_post_meta($post->ID, '_atracao_blog_link_texto', true);
         $blog_link_url = get_post_meta($post->ID, '_atracao_blog_link_url', true);
         $blog_imagem = get_post_meta($post->ID, '_atracao_blog_imagem', true);
+        $blog_posts_selecionados = get_post_meta($post->ID, '_atracao_blog_posts', true);
+        if (!is_array($blog_posts_selecionados)) {
+            $blog_posts_selecionados = [];
+        }
+        
+        // Buscar posts do blog para o seletor
+        $blog_posts = get_posts([
+            'post_type' => 'blog_post',
+            'posts_per_page' => -1,
+            'orderby' => 'title',
+            'order' => 'ASC',
+            'post_status' => 'publish',
+        ]);
         ?>
         <table class="form-table atracao-meta-table">
             <tr>
@@ -559,6 +572,32 @@ final class Atracoes_Experiencias_PDA {
                 </td>
             </tr>
         </table>
+        
+        <h4 style="margin-top: 25px; margin-bottom: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
+            <?php _e('Posts do Blog para Exibir como Cards', 'atracoes-experiencias-pda'); ?>
+        </h4>
+        <p class="description" style="margin-bottom: 15px;">
+            <?php _e('Selecione os posts do blog que aparecerão como cards abaixo desta seção. As cores dos cards são intercaladas automaticamente.', 'atracoes-experiencias-pda'); ?>
+        </p>
+        
+        <div class="atracao-blog-posts-selector">
+            <?php if (!empty($blog_posts)) : ?>
+                <div class="atracao-blog-posts-checkboxes" style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
+                    <?php foreach ($blog_posts as $blog_post) : ?>
+                        <label style="display: block; padding: 8px 10px; margin-bottom: 5px; background: #f9f9f9; border-radius: 4px; cursor: pointer;">
+                            <input type="checkbox" 
+                                   name="atracao_blog_posts[]" 
+                                   value="<?php echo esc_attr($blog_post->ID); ?>"
+                                   <?php checked(in_array($blog_post->ID, $blog_posts_selecionados)); ?>
+                                   style="margin-right: 10px;">
+                            <?php echo esc_html($blog_post->post_title); ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+            <?php else : ?>
+                <p class="description"><?php _e('Nenhum post do blog encontrado. Crie posts do tipo "blog_post" para selecioná-los aqui.', 'atracoes-experiencias-pda'); ?></p>
+            <?php endif; ?>
+        </div>
         <?php
     }
 
@@ -659,6 +698,14 @@ final class Atracoes_Experiencias_PDA {
             update_post_meta($post_id, '_atracao_regras_selecionadas', $regras_selecionadas);
         } else {
             delete_post_meta($post_id, '_atracao_regras_selecionadas');
+        }
+        
+        // Salvar posts do blog selecionados (array de checkboxes)
+        if (isset($_POST['atracao_blog_posts']) && is_array($_POST['atracao_blog_posts'])) {
+            $blog_posts = array_map('intval', $_POST['atracao_blog_posts']);
+            update_post_meta($post_id, '_atracao_blog_posts', $blog_posts);
+        } else {
+            delete_post_meta($post_id, '_atracao_blog_posts');
         }
     }
 

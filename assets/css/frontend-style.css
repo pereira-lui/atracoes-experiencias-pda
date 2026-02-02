@@ -331,6 +331,80 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
+   Blog Posts Cards (Cards de Posts do Blog)
+   ========================================================================== */
+
+.aepda-blog-cards {
+    margin-top: 50px;
+    padding: 0 60px;
+}
+
+.aepda-blog-cards__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.aepda-blog-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.aepda-blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.aepda-blog-card__image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.aepda-blog-card__text {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    border-radius: 0 0 15px 15px;
+}
+
+@media (max-width: 991px) {
+    .aepda-blog-cards {
+        padding: 0 30px;
+    }
+    
+    .aepda-blog-cards__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .aepda-blog-cards {
+        padding: 0 20px;
+    }
+    
+    .aepda-blog-cards__grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .aepda-blog-card__image {
+        height: 150px;
+    }
+}
+
+/* ==========================================================================
    Rules Section (Seção de Regras)
    ========================================================================== */
 
