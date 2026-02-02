@@ -19,9 +19,8 @@ while (have_posts()) :
     $galeria = get_post_meta($post_id, '_atracao_galeria', true);
     
     // Blog relacionado
+    $blog_titulo = get_post_meta($post_id, '_atracao_blog_titulo', true);
     $blog_descricao = get_post_meta($post_id, '_atracao_blog_descricao', true);
-    $blog_link_texto = get_post_meta($post_id, '_atracao_blog_link_texto', true);
-    $blog_link_url = get_post_meta($post_id, '_atracao_blog_link_url', true);
     $blog_imagem = get_post_meta($post_id, '_atracao_blog_imagem', true);
     $blog_posts_ids = get_post_meta($post_id, '_atracao_blog_posts', true);
     if (!is_array($blog_posts_ids)) {
@@ -112,23 +111,19 @@ while (have_posts()) :
     <?php endif; ?>
     
     <!-- Seção Matérias do Blog (Fundo Roxo) -->
-    <?php if ($blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : ?>
+    <?php if ($blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : 
+        $blog_section_title = !empty($blog_titulo) ? $blog_titulo : get_the_title();
+    ?>
     <section id="aepda-pda-blog-section" class="aepda-pda-blog-section">
         <div class="aepda-pda-container">
             <div class="aepda-pda-blog-grid">
                 <!-- Conteúdo do Blog -->
                 <div class="aepda-pda-blog-content">
-                    <h2 class="aepda-pda-blog-title"><?php _e('Matérias do Blog', 'atracoes-experiencias-pda'); ?></h2>
+                    <h2 class="aepda-pda-blog-title"><?php echo esc_html($blog_section_title); ?></h2>
                     <div class="aepda-pda-blog-divider"></div>
                     
                     <?php if ($blog_descricao) : ?>
-                        <p class="aepda-pda-blog-description"><?php echo esc_html($blog_descricao); ?></p>
-                    <?php endif; ?>
-                    
-                    <?php if ($blog_link_texto && $blog_link_url) : ?>
-                        <a href="<?php echo esc_url($blog_link_url); ?>" class="aepda-pda-blog-link">
-                            <?php echo esc_html($blog_link_texto); ?>
-                        </a>
+                        <div class="aepda-pda-blog-description"><?php echo wp_kses_post($blog_descricao); ?></div>
                     <?php endif; ?>
                 </div>
                 

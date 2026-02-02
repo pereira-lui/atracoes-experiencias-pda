@@ -320,18 +320,31 @@ a.aepda-card:focus {
     opacity: 0.95;
 }
 
-.aepda-pda-blog-link {
-    color: #FCD34D;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    display: inline-block;
-    transition: color 0.3s ease;
+.aepda-pda-blog-description p {
+    margin-bottom: 1em;
 }
 
-.aepda-pda-blog-link:hover {
-    color: #FDE68A;
+.aepda-pda-blog-description p:last-child {
+    margin-bottom: 0;
+}
+
+.aepda-pda-blog-description a {
+    color: #FCD34D;
     text-decoration: underline;
+}
+
+.aepda-pda-blog-description a:hover {
+    color: #FDE68A;
+}
+
+.aepda-pda-blog-description strong,
+.aepda-pda-blog-description b {
+    font-weight: 600;
+}
+
+.aepda-pda-blog-description em,
+.aepda-pda-blog-description i {
+    font-style: italic;
 }
 
 /* Imagem do Blog */

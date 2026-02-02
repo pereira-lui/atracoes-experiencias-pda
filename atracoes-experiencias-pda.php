@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.4.1');
+define('ATRACOES_EXP_PDA_VERSION', '1.4.2');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -503,9 +503,8 @@ final class Atracoes_Experiencias_PDA {
      * Render Meta Box - Blog Relacionado
      */
     public function render_meta_box_blog_relacionado($post) {
+        $blog_titulo = get_post_meta($post->ID, '_atracao_blog_titulo', true);
         $blog_descricao = get_post_meta($post->ID, '_atracao_blog_descricao', true);
-        $blog_link_texto = get_post_meta($post->ID, '_atracao_blog_link_texto', true);
-        $blog_link_url = get_post_meta($post->ID, '_atracao_blog_link_url', true);
         $blog_imagem = get_post_meta($post->ID, '_atracao_blog_imagem', true);
         $blog_posts_selecionados = get_post_meta($post->ID, '_atracao_blog_posts', true);
         if (!is_array($blog_posts_selecionados)) {
@@ -521,28 +520,30 @@ final class Atracoes_Experiencias_PDA {
             'post_status' => 'publish',
         ]);
         ?>
-        <p class="description" style="margin-bottom: 15px;">
-            <strong><?php _e('Título da Seção:', 'atracoes-experiencias-pda'); ?></strong> 
-            <?php echo esc_html(get_the_title($post->ID)); ?>
-            <em>(<?php _e('usa o título da página automaticamente', 'atracoes-experiencias-pda'); ?>)</em>
-        </p>
         <table class="form-table atracao-meta-table">
+            <tr>
+                <th><label for="atracao_blog_titulo"><?php _e('Título da Seção', 'atracoes-experiencias-pda'); ?></label></th>
+                <td>
+                    <input type="text" id="atracao_blog_titulo" name="atracao_blog_titulo" value="<?php echo esc_attr($blog_titulo); ?>" class="widefat" placeholder="<?php echo esc_attr(get_the_title($post->ID)); ?>">
+                    <p class="description"><?php _e('Deixe vazio para usar o título da página automaticamente.', 'atracoes-experiencias-pda'); ?></p>
+                </td>
+            </tr>
             <tr>
                 <th><label for="atracao_blog_descricao"><?php _e('Descrição', 'atracoes-experiencias-pda'); ?></label></th>
                 <td>
-                    <textarea id="atracao_blog_descricao" name="atracao_blog_descricao" class="widefat" rows="3" placeholder="Ex: O Guan-etê das "jacus-do-mato" dá nome às jacutingas..."><?php echo esc_textarea($blog_descricao); ?></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="atracao_blog_link_texto"><?php _e('Texto do Link', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_blog_link_texto" name="atracao_blog_link_texto" value="<?php echo esc_attr($blog_link_texto); ?>" class="widefat" placeholder="Ex: Confira nossa matéria completa no blog!">
-                </td>
-            </tr>
-            <tr>
-                <th><label for="atracao_blog_link_url"><?php _e('URL do Link', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="url" id="atracao_blog_link_url" name="atracao_blog_link_url" value="<?php echo esc_url($blog_link_url); ?>" class="widefat" placeholder="https://...">
+                    <?php
+                    wp_editor($blog_descricao, 'atracao_blog_descricao', [
+                        'textarea_name' => 'atracao_blog_descricao',
+                        'textarea_rows' => 6,
+                        'media_buttons' => false,
+                        'teeny' => true,
+                        'quicktags' => true,
+                        'tinymce' => [
+                            'toolbar1' => 'bold,italic,underline,link,unlink',
+                            'toolbar2' => '',
+                        ],
+                    ]);
+                    ?>
                 </td>
             </tr>
             <tr>
@@ -723,9 +724,7 @@ final class Atracoes_Experiencias_PDA {
         // Salvar campos de texto simples
         $text_fields = [
             'atracao_card_texto' => '_atracao_card_texto',
-            'atracao_blog_descricao' => '_atracao_blog_descricao',
-            'atracao_blog_link_texto' => '_atracao_blog_link_texto',
-            'atracao_blog_link_url' => '_atracao_blog_link_url',
+            'atracao_blog_titulo' => '_atracao_blog_titulo',
         ];
 
         foreach ($text_fields as $field_name => $meta_key) {
@@ -733,6 +732,12 @@ final class Atracoes_Experiencias_PDA {
                 $value = sanitize_text_field($_POST[$field_name]);
                 update_post_meta($post_id, $meta_key, $value);
             }
+        }
+        
+        // Salvar descrição do blog (permite HTML)
+        if (isset($_POST['atracao_blog_descricao'])) {
+            $blog_descricao = wp_kses_post($_POST['atracao_blog_descricao']);
+            update_post_meta($post_id, '_atracao_blog_descricao', $blog_descricao);
         }
         
         // Salvar galeria separadamente (precisa de lógica especial)
