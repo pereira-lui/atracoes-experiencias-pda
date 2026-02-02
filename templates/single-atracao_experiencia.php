@@ -21,7 +21,6 @@ while (have_posts()) :
     $galeria = get_post_meta($post_id, '_atracao_galeria', true);
     
     // Blog relacionado
-    $blog_titulo = get_post_meta($post_id, '_atracao_blog_titulo', true);
     $blog_descricao = get_post_meta($post_id, '_atracao_blog_descricao', true);
     $blog_link_texto = get_post_meta($post_id, '_atracao_blog_link_texto', true);
     $blog_link_url = get_post_meta($post_id, '_atracao_blog_link_url', true);
@@ -121,14 +120,12 @@ while (have_posts()) :
     </div><!-- .aepda-single-container -->
     
     <!-- Seção Matérias do Blog (Fundo Roxo) -->
-    <?php if ($blog_titulo || $blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : ?>
+    <?php if ($blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : ?>
     <section class="aepda-blog-section">
         <div class="aepda-blog-section__inner">
             <div class="aepda-blog-section__content">
-                <?php if ($blog_titulo) : ?>
-                    <h2 class="aepda-blog-section__title"><?php echo esc_html($blog_titulo); ?></h2>
-                    <div class="aepda-blog-section__divider"></div>
-                <?php endif; ?>
+                <h2 class="aepda-blog-section__title"><?php echo esc_html(get_the_title()); ?></h2>
+                <div class="aepda-blog-section__divider"></div>
                 
                 <?php if ($blog_descricao) : ?>
                     <p class="aepda-blog-section__description"><?php echo esc_html($blog_descricao); ?></p>

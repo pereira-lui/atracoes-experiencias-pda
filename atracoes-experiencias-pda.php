@@ -503,7 +503,6 @@ final class Atracoes_Experiencias_PDA {
      * Render Meta Box - Blog Relacionado
      */
     public function render_meta_box_blog_relacionado($post) {
-        $blog_titulo = get_post_meta($post->ID, '_atracao_blog_titulo', true);
         $blog_descricao = get_post_meta($post->ID, '_atracao_blog_descricao', true);
         $blog_link_texto = get_post_meta($post->ID, '_atracao_blog_link_texto', true);
         $blog_link_url = get_post_meta($post->ID, '_atracao_blog_link_url', true);
@@ -522,13 +521,12 @@ final class Atracoes_Experiencias_PDA {
             'post_status' => 'publish',
         ]);
         ?>
+        <p class="description" style="margin-bottom: 15px;">
+            <strong><?php _e('Título da Seção:', 'atracoes-experiencias-pda'); ?></strong> 
+            <?php echo esc_html(get_the_title($post->ID)); ?>
+            <em>(<?php _e('usa o título da página automaticamente', 'atracoes-experiencias-pda'); ?>)</em>
+        </p>
         <table class="form-table atracao-meta-table">
-            <tr>
-                <th><label for="atracao_blog_titulo"><?php _e('Título da Seção', 'atracoes-experiencias-pda'); ?></label></th>
-                <td>
-                    <input type="text" id="atracao_blog_titulo" name="atracao_blog_titulo" value="<?php echo esc_attr($blog_titulo); ?>" class="widefat" placeholder="Ex: Matérias do Blog">
-                </td>
-            </tr>
             <tr>
                 <th><label for="atracao_blog_descricao"><?php _e('Descrição', 'atracoes-experiencias-pda'); ?></label></th>
                 <td>
@@ -725,7 +723,6 @@ final class Atracoes_Experiencias_PDA {
             'atracao_galeria' => '_atracao_galeria',
             'atracao_card_imagem' => '_atracao_card_imagem',
             'atracao_card_texto' => '_atracao_card_texto',
-            'atracao_blog_titulo' => '_atracao_blog_titulo',
             'atracao_blog_descricao' => '_atracao_blog_descricao',
             'atracao_blog_link_texto' => '_atracao_blog_link_texto',
             'atracao_blog_link_url' => '_atracao_blog_link_url',
