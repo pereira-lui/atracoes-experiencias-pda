@@ -113,12 +113,6 @@
      * Initialize Single Image Uploads
      */
     function initImageUploads() {
-        // Debug: verificar quantos campos existem
-        console.log('AEPDA: Initializing image uploads');
-        console.log('AEPDA: atracao_imagem_topo found:', $('#atracao_imagem_topo').length);
-        console.log('AEPDA: atracao_galeria found:', $('#atracao_galeria').length);
-        console.log('AEPDA: atracao_blog_imagem found:', $('#atracao_blog_imagem').length);
-        
         $(document).on('click', '.atracao-image-upload-btn', function(e) {
             e.preventDefault();
 
@@ -128,10 +122,6 @@
             var $input = $('#' + targetId);
             var $preview = $('#' + previewId);
             var $removeBtn = $button.siblings('.atracao-image-remove-btn');
-            
-            console.log('AEPDA: Click on upload btn, target:', targetId);
-            console.log('AEPDA: Input element found:', $input.length);
-            console.log('AEPDA: Input current value:', $input.val());
 
             var frame = wp.media({
                 title: atracoesExpPda.selectImage,
@@ -147,13 +137,7 @@
                     ? attachment.sizes.medium.url 
                     : attachment.url;
 
-                console.log('AEPDA: Selected attachment ID:', attachment.id);
-                console.log('AEPDA: Setting value to input:', targetId);
-                
                 $input.val(attachment.id);
-                
-                console.log('AEPDA: Input value after set:', $input.val());
-                
                 $preview.html('<img src="' + imageUrl + '" alt="">');
                 $removeBtn.show();
             });
