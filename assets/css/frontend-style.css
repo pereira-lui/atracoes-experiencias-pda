@@ -209,14 +209,15 @@ a.aepda-card:focus {
 .aepda-pda-gallery-swiper {
     width: 100%;
     overflow: visible;
-    margin-left: calc((100vw - 1200px) / 2);
-    padding-right: calc((100vw - 1200px) / 2);
+}
+
+.aepda-pda-gallery-swiper .swiper-wrapper {
+    padding-left: calc((100vw - 1200px) / 2);
 }
 
 @media (max-width: 1240px) {
-    .aepda-pda-gallery-swiper {
-        margin-left: 20px;
-        padding-right: 0;
+    .aepda-pda-gallery-swiper .swiper-wrapper {
+        padding-left: 20px;
     }
 }
 
