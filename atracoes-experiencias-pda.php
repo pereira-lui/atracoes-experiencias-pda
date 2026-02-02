@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.3.4');
+define('ATRACOES_EXP_PDA_VERSION', '1.3.5');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -695,18 +695,29 @@ final class Atracoes_Experiencias_PDA {
      * Save Meta Boxes
      */
     public function save_meta_boxes($post_id) {
+        // DEBUG: Log do POST para verificar o que está sendo enviado
+        error_log('=== ATRACOES SAVE DEBUG ===');
+        error_log('Post ID: ' . $post_id);
+        error_log('atracao_imagem_topo: ' . (isset($_POST['atracao_imagem_topo']) ? $_POST['atracao_imagem_topo'] : 'NOT SET'));
+        error_log('atracao_galeria: ' . (isset($_POST['atracao_galeria']) ? $_POST['atracao_galeria'] : 'NOT SET'));
+        error_log('atracao_blog_imagem: ' . (isset($_POST['atracao_blog_imagem']) ? $_POST['atracao_blog_imagem'] : 'NOT SET'));
+        error_log('nonce: ' . (isset($_POST['atracao_meta_box_nonce']) ? 'SET' : 'NOT SET'));
+        
         // Verificar se é uma revisão
         if (wp_is_post_revision($post_id)) {
+            error_log('ABORT: is revision');
             return;
         }
         
         // Verificar nonce
         if (!isset($_POST['atracao_meta_box_nonce']) || !wp_verify_nonce($_POST['atracao_meta_box_nonce'], 'atracao_meta_box')) {
+            error_log('ABORT: nonce failed');
             return;
         }
 
         // Verificar autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            error_log('ABORT: autosave');
             return;
         }
 
@@ -722,7 +733,6 @@ final class Atracoes_Experiencias_PDA {
 
         // Salvar campos de texto simples
         $text_fields = [
-            'atracao_galeria' => '_atracao_galeria',
             'atracao_card_texto' => '_atracao_card_texto',
             'atracao_blog_descricao' => '_atracao_blog_descricao',
             'atracao_blog_link_texto' => '_atracao_blog_link_texto',
@@ -736,6 +746,12 @@ final class Atracoes_Experiencias_PDA {
             }
         }
         
+        // Salvar galeria separadamente (precisa de lógica especial)
+        if (isset($_POST['atracao_galeria']) && $_POST['atracao_galeria'] !== '') {
+            $galeria_value = sanitize_text_field($_POST['atracao_galeria']);
+            update_post_meta($post_id, '_atracao_galeria', $galeria_value);
+        }
+        
         // Salvar campos de imagem (IDs de attachments)
         $image_fields = [
             'atracao_imagem_topo' => '_atracao_imagem_topo',
@@ -744,13 +760,15 @@ final class Atracoes_Experiencias_PDA {
         ];
 
         foreach ($image_fields as $field_name => $meta_key) {
-            if (isset($_POST[$field_name])) {
+            if (isset($_POST[$field_name]) && $_POST[$field_name] !== '') {
                 $value = absint($_POST[$field_name]);
                 if ($value > 0) {
                     update_post_meta($post_id, $meta_key, $value);
-                } else {
-                    delete_post_meta($post_id, $meta_key);
                 }
+            }
+            // Só deleta se o campo foi explicitamente enviado vazio
+            elseif (isset($_POST[$field_name]) && $_POST[$field_name] === '') {
+                delete_post_meta($post_id, $meta_key);
             }
         }
 
