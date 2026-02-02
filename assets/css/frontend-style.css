@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Styles
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.1.0
+ * @version 1.3.0
  */
 
 /* ==========================================================================
@@ -84,130 +84,143 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
-   Single Atração Page - Nova Estrutura
+   Single Atração Page - Layout Principal
    ========================================================================== */
 
 .aepda-single-page {
     width: 100%;
 }
 
-/* Hero Image (Imagem do Topo) */
-.aepda-hero-image {
+/* Container Geral */
+.aepda-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Hero Section (Imagem do Topo)
+   ========================================================================== */
+
+.aepda-hero {
     width: 100%;
     height: 500px;
     overflow: hidden;
     position: relative;
 }
 
-.aepda-hero-image img {
+.aepda-hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
 }
 
-/* Container */
-.aepda-single-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px;
+/* ==========================================================================
+   Breadcrumb
+   ========================================================================== */
+
+.aepda-breadcrumb-wrapper {
+    padding: 20px 0;
+    background-color: #fff;
 }
 
-/* Breadcrumb */
-.aepda-breadcrumb {
-    margin-bottom: 30px;
+.aepda-breadcrumb-wrapper .rank-math-breadcrumb {
     font-size: 14px;
     color: #666;
 }
 
-.aepda-breadcrumb a {
+.aepda-breadcrumb-wrapper .rank-math-breadcrumb a {
     color: #5B21B6;
     text-decoration: none;
 }
 
-.aepda-breadcrumb a:hover {
+.aepda-breadcrumb-wrapper .rank-math-breadcrumb a:hover {
     text-decoration: underline;
 }
 
-/* Content Section */
-.aepda-content-section {
-    margin-bottom: 40px;
+/* ==========================================================================
+   Main Section - Grid Layout (Texto + Galeria lado a lado)
+   ========================================================================== */
+
+.aepda-main-section {
+    padding: 40px 0 60px;
+    background-color: #fff;
 }
 
-/* Title Block */
-.aepda-title-block {
-    margin-bottom: 30px;
+.aepda-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: start;
 }
 
-.aepda-page-title {
-    font-size: 36px;
+/* Coluna de Conteúdo (Esquerda) */
+.aepda-main-content {
+    padding-right: 20px;
+}
+
+.aepda-main-title {
+    font-size: 42px;
     font-weight: 700;
     color: #1a1a1a;
-    margin: 0 0 15px 0;
+    margin: 0 0 20px 0;
     line-height: 1.2;
 }
 
-.aepda-page-subtitle {
-    font-size: 18px;
-    color: #555;
-    line-height: 1.6;
-    margin: 0;
-    font-style: italic;
+.aepda-main-divider {
+    width: 80px;
+    height: 4px;
+    background-color: #5B21B6;
+    margin-bottom: 25px;
 }
 
-/* Texto Sobre */
-.aepda-texto-sobre {
+.aepda-main-text {
     font-size: 16px;
     line-height: 1.8;
     color: #333;
 }
 
-.aepda-texto-sobre p {
+.aepda-main-text p {
     margin-bottom: 1.5em;
 }
 
-.aepda-texto-sobre h2,
-.aepda-texto-sobre h3,
-.aepda-texto-sobre h4 {
+.aepda-main-text p:last-child {
+    margin-bottom: 0;
+}
+
+.aepda-main-text strong {
+    font-weight: 600;
     color: #1a1a1a;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
 }
 
 /* ==========================================================================
-   Gallery Section
+   Gallery (Coluna Direita)
    ========================================================================== */
 
-.aepda-gallery-section {
-    margin-bottom: 50px;
+.aepda-main-gallery {
+    position: sticky;
+    top: 30px;
 }
 
-.aepda-gallery-wrapper {
-    position: relative;
+.aepda-gallery {
+    width: 100%;
 }
 
-.aepda-gallery-slider {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 10px 0;
-}
-
-.aepda-gallery-slider::-webkit-scrollbar {
-    display: none;
-}
-
-.aepda-gallery-item {
-    flex: 0 0 auto;
-    width: calc(50% - 10px);
+/* Imagem Principal */
+.aepda-gallery__main {
+    width: 100%;
     border-radius: 15px;
     overflow: hidden;
+    margin-bottom: 15px;
+    background-color: #f0f0f0;
 }
 
-.aepda-gallery-item img {
+.aepda-gallery__main-link {
+    display: block;
+}
+
+.aepda-gallery__main img {
     width: 100%;
     height: 350px;
     object-fit: cover;
@@ -215,52 +228,82 @@ a.aepda-card:focus {
     transition: transform 0.3s ease;
 }
 
-.aepda-gallery-item:hover img {
-    transform: scale(1.03);
+.aepda-gallery__main-link:hover img {
+    transform: scale(1.02);
 }
 
-.aepda-gallery-item a {
-    display: block;
-}
-
-/* Gallery Navigation */
-.aepda-gallery-nav {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
+/* Thumbnails Wrapper */
+.aepda-gallery__thumbs-wrapper {
     display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    padding: 0 10px;
+    align-items: center;
+    gap: 10px;
 }
 
-.aepda-gallery-prev,
-.aepda-gallery-next {
-    width: 50px;
-    height: 50px;
+/* Navigation Buttons */
+.aepda-gallery__nav {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: white;
-    border: none;
+    border: 2px solid #E5E7EB;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    pointer-events: auto;
+    color: #666;
     transition: all 0.3s ease;
-    color: #333;
 }
 
-.aepda-gallery-prev:hover,
-.aepda-gallery-next:hover {
+.aepda-gallery__nav:hover {
     background: #5B21B6;
+    border-color: #5B21B6;
     color: white;
 }
 
+.aepda-gallery__nav svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Thumbnails Container */
+.aepda-gallery__thumbs {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.aepda-gallery__thumb {
+    flex: 0 0 auto;
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.aepda-gallery__thumb:hover {
+    opacity: 1;
+}
+
+.aepda-gallery__thumb--active {
+    border-color: #5B21B6;
+    opacity: 1;
+}
+
+.aepda-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 /* ==========================================================================
-   Blog Section (Seção Roxa)
+   Blog Section (Seção Roxa com Matérias)
    ========================================================================== */
 
 .aepda-blog-section {
@@ -269,42 +312,41 @@ a.aepda-card:focus {
     padding: 60px 0;
 }
 
-.aepda-blog-section__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.aepda-blog-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
     align-items: center;
+    margin-bottom: 40px;
 }
 
-.aepda-blog-section__content {
-    padding-right: 30px;
+/* Conteúdo do Blog */
+.aepda-blog-content {
+    padding-right: 20px;
 }
 
-.aepda-blog-section__title {
-    font-size: 32px;
+.aepda-blog-title {
+    font-size: 36px;
     font-weight: 700;
     margin: 0 0 20px 0;
     color: white;
 }
 
-.aepda-blog-section__divider {
+.aepda-blog-divider {
     width: 80px;
     height: 4px;
     background-color: #7C3AED;
     margin-bottom: 25px;
 }
 
-.aepda-blog-section__description {
+.aepda-blog-description {
     font-size: 15px;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
     opacity: 0.95;
 }
 
-.aepda-blog-section__link {
+.aepda-blog-link {
     color: #FCD34D;
     text-decoration: none;
     font-weight: 600;
@@ -313,33 +355,29 @@ a.aepda-card:focus {
     transition: color 0.3s ease;
 }
 
-.aepda-blog-section__link:hover {
+.aepda-blog-link:hover {
     color: #FDE68A;
     text-decoration: underline;
 }
 
-.aepda-blog-section__image {
+/* Imagem do Blog */
+.aepda-blog-image {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.aepda-blog-section__image img {
+.aepda-blog-image img {
     width: 100%;
     height: auto;
     display: block;
 }
 
 /* ==========================================================================
-   Blog Posts Cards (Cards de Posts do Blog)
+   Blog Cards (Posts do Blog)
    ========================================================================== */
 
 .aepda-blog-cards {
-    margin-top: 50px;
-    padding: 0 60px;
-}
-
-.aepda-blog-cards__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
@@ -358,13 +396,20 @@ a.aepda-card:focus {
 
 .aepda-blog-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .aepda-blog-card__image {
     width: 100%;
     height: 180px;
     object-fit: cover;
+    display: block;
+}
+
+.aepda-blog-card__placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: #ddd;
 }
 
 .aepda-blog-card__text {
@@ -375,33 +420,7 @@ a.aepda-card:focus {
     min-height: 60px;
     display: flex;
     align-items: center;
-    border-radius: 0 0 15px 15px;
-}
-
-@media (max-width: 991px) {
-    .aepda-blog-cards {
-        padding: 0 30px;
-    }
-    
-    .aepda-blog-cards__grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-}
-
-@media (max-width: 576px) {
-    .aepda-blog-cards {
-        padding: 0 20px;
-    }
-    
-    .aepda-blog-cards__grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .aepda-blog-card__image {
-        height: 150px;
-    }
+    color: white;
 }
 
 /* ==========================================================================
@@ -413,13 +432,7 @@ a.aepda-card:focus {
     background-color: #FAFAFA;
 }
 
-.aepda-rules-section__inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.aepda-rules-section__title {
+.aepda-rules-title {
     font-size: 28px;
     font-weight: 700;
     color: #1a1a1a;
@@ -428,7 +441,7 @@ a.aepda-card:focus {
     line-height: 1.4;
 }
 
-.aepda-rules-section__divider {
+.aepda-rules-divider {
     width: 80px;
     height: 4px;
     background-color: #5B21B6;
@@ -437,8 +450,8 @@ a.aepda-card:focus {
 
 .aepda-rules-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     padding: 40px;
     border: 2px solid #E5E7EB;
     border-radius: 15px;
@@ -447,24 +460,27 @@ a.aepda-card:focus {
 
 .aepda-rule-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 15px;
-    padding: 15px;
+    padding: 20px;
 }
 
-.aepda-rule-item__icon {
+.aepda-rule-icon {
     flex-shrink: 0;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.aepda-rule-item__text {
+.aepda-rule-text {
     font-size: 14px;
     color: #333;
-    line-height: 1.4;
+    line-height: 1.5;
+    margin: 0;
 }
 
 /* ==========================================================================
@@ -473,34 +489,34 @@ a.aepda-card:focus {
 
 .aepda-icon {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-/* Não alimentar os animais - pássaro com comida e símbolo proibido */
+/* Não alimentar os animais */
 .aepda-icon-nao-alimentar {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Cpath d='M22 38c2-4 6-6 10-6 2 0 4 0 6 2l4-2c-1-3-5-6-10-6-8 0-14 7-14 14 0 2 1 4 2 6l2-8z'/%3E%3Ccircle cx='28' cy='30' r='2' fill='%23333'/%3E%3Cpath d='M40 26l4 1 1-3-5 2z' fill='%23333'/%3E%3C/svg%3E");
 }
 
-/* Não tocar nos animais - mão com símbolo proibido */
+/* Não tocar nos animais */
 .aepda-icon-nao-tocar {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23333'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23333' stroke-width='2'/%3E%3Cpath d='M16 48L48 16' stroke='%23333' stroke-width='3' fill='none'/%3E%3Cpath d='M32 14v6M28 15v5M24 17v4M36 15v5M40 17v4M24 21c0 0-4 8-4 16 0 6 4 10 12 10s12-4 12-10c0-8-4-16-4-16'/%3E%3C/svg%3E");
 }
 
-/* Não sair da trilha - pessoa caminhando com símbolo proibido */
+/* Não sair da trilha */
 .aepda-icon-nao-sair-trilha {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Ccircle cx='32' cy='18' r='4' fill='%23333'/%3E%3Cpath d='M32 22v10M32 32l-6 12M32 32l6 12M26 28l-4 4M38 28l4 4' stroke-width='2.5'/%3E%3Cpath d='M20 44h6M38 44h6' stroke-dasharray='2 2'/%3E%3C/svg%3E");
 }
 
-/* Permitido fotografar sem flash - câmera com flash riscado */
+/* Permitido fotografar sem flash */
 .aepda-icon-sem-flash {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='14' y='24' width='36' height='24' rx='3'/%3E%3Ccircle cx='32' cy='36' r='8'/%3E%3Ccircle cx='32' cy='36' r='4'/%3E%3Crect x='22' y='20' width='8' height='4'/%3E%3Cpath d='M44 16h6l-3 8'/%3E%3Cpath d='M42 12l8 12' stroke-width='2.5'/%3E%3C/svg%3E");
 }
 
-/* Manter silêncio - alto-falante com X */
+/* Manter silêncio */
 .aepda-icon-silencio {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M12 26v12h8l12 10V16L20 26h-8z' fill='%23333'/%3E%3Cpath d='M40 24l12 16M52 24l-12 16' stroke-width='2.5'/%3E%3C/svg%3E");
 }
@@ -514,28 +530,42 @@ a.aepda-card:focus {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .aepda-hero-image {
+    .aepda-hero {
         height: 400px;
     }
     
-    .aepda-blog-section__inner {
+    .aepda-main-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .aepda-main-content {
+        padding-right: 0;
+    }
+    
+    .aepda-main-gallery {
+        position: static;
+    }
+    
+    .aepda-blog-grid {
         grid-template-columns: 1fr;
         gap: 30px;
     }
     
-    .aepda-blog-section__content {
+    .aepda-blog-content {
         padding-right: 0;
-        order: 1;
     }
     
-    .aepda-blog-section__image {
-        order: 2;
+    .aepda-blog-image {
         max-width: 500px;
-        margin: 0 auto;
     }
     
-    .aepda-gallery-item {
-        width: calc(60% - 10px);
+    .aepda-blog-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .aepda-rules-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -554,341 +584,108 @@ a.aepda-card:focus {
         margin: 0 10px 10px 10px;
     }
     
-    .aepda-hero-image {
-        height: 300px;
+    .aepda-hero {
+        height: 280px;
     }
     
-    .aepda-page-title {
-        font-size: 28px;
+    .aepda-main-title {
+        font-size: 32px;
     }
     
-    .aepda-page-subtitle {
-        font-size: 16px;
-    }
-    
-    .aepda-gallery-item {
-        width: calc(85% - 10px);
-    }
-    
-    .aepda-gallery-item img {
+    .aepda-gallery__main img {
         height: 250px;
     }
     
-    .aepda-gallery-prev,
-    .aepda-gallery-next {
-        width: 40px;
-        height: 40px;
+    .aepda-gallery__thumb {
+        width: 60px;
+        height: 45px;
     }
     
     .aepda-blog-section {
         padding: 40px 0;
     }
     
-    .aepda-blog-section__title {
-        font-size: 24px;
+    .aepda-blog-title {
+        font-size: 28px;
     }
     
-    .aepda-rules-section__title {
+    .aepda-blog-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-blog-card__image {
+        height: 150px;
+    }
+    
+    .aepda-rules-section {
+        padding: 50px 0;
+    }
+    
+    .aepda-rules-title {
         font-size: 22px;
     }
     
     .aepda-rules-grid {
         grid-template-columns: 1fr;
         padding: 25px;
+        gap: 20px;
     }
     
     .aepda-rule-item {
-        padding: 10px;
-    }
-}
-
-@media (max-width: 767px) {
-    .aepda-grid {
-        grid-template-columns: 1fr;
+        flex-direction: row;
+        text-align: left;
+        padding: 15px;
     }
     
-    .aepda-card {
-        height: 220px;
+    .aepda-rule-icon {
+        width: 50px;
+        height: 50px;
     }
     
-    .aepda-card__text {
-        font-size: 13px;
-        padding: 10px 15px;
-        margin: 0 10px 10px 10px;
+    .aepda-icon {
+        width: 45px;
+        height: 45px;
     }
 }
 
 /* ==========================================================================
-   Single Atração Page Styles (optional template styles)
+   Lightbox Styles
    ========================================================================== */
 
-.aepda-single-atracao {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-.aepda-single-atracao__header {
-    margin-bottom: 30px;
-}
-
-.aepda-single-atracao__title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0 0 15px 0;
-}
-
-.aepda-single-atracao__subtitle {
-    font-size: 18px;
-    color: #666;
-    line-height: 1.6;
-}
-
-.aepda-single-atracao__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.aepda-single-atracao__description {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #333;
-}
-
-.aepda-single-atracao__image {
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.aepda-single-atracao__image img {
+.aepda-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Blog Section */
-.aepda-blog-section {
-    background-color: #5B21B6;
-    color: white;
-    padding: 40px;
-    border-radius: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.aepda-blog-section__title {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 15px 0;
-}
-
-.aepda-blog-section__description {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.aepda-blog-section__link {
-    color: #FCD34D;
-    text-decoration: underline;
-}
-
-.aepda-blog-section__link:hover {
-    color: #FDE68A;
-}
-
-.aepda-blog-section__image {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.aepda-blog-section__image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Rules Section */
-.aepda-rules-section {
-    padding: 40px 0;
-}
-
-.aepda-rules-section__title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
-    text-align: center;
-    margin: 0 0 30px 0;
-}
-
-.aepda-rules-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 30px;
-    border: 2px solid #E5E7EB;
-    border-radius: 15px;
-}
-
-.aepda-rule-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-}
-
-.aepda-rule-item__icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    display: flex;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 99999;
     align-items: center;
     justify-content: center;
-    background-color: #F3F4F6;
+}
+
+.aepda-lightbox.active {
+    display: flex;
+}
+
+.aepda-lightbox__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: none;
     border-radius: 50%;
-}
-
-.aepda-rule-item__icon .dashicons {
+    cursor: pointer;
     font-size: 24px;
-    width: 24px;
-    height: 24px;
-    color: #5B21B6;
+    line-height: 40px;
+    text-align: center;
 }
 
-.aepda-rule-item__text {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.4;
-}
-
-/* Links Section (Saiba mais) */
-.aepda-links-section {
-    padding: 30px 0;
-    border-top: 1px solid #E5E7EB;
-    margin-top: 30px;
-}
-
-.aepda-links-section__title {
-    font-size: 16px;
-    color: #666;
-    margin: 0 0 15px 0;
-}
-
-.aepda-links-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 30px;
-}
-
-.aepda-links-list a {
-    color: #5B21B6;
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.3s ease;
-}
-
-.aepda-links-list a:hover {
-    color: #7C3AED;
-    text-decoration: underline;
-}
-
-/* Info Meta */
-.aepda-info-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: #F9FAFB;
-    border-radius: 10px;
-}
-
-.aepda-info-meta__item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.aepda-info-meta__label {
-    font-weight: 600;
-    color: #666;
-    font-size: 13px;
-}
-
-.aepda-info-meta__value {
-    color: #333;
-    font-size: 14px;
-}
-
-/* Gallery */
-.aepda-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.aepda-gallery__item {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.aepda-gallery__item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.aepda-gallery__item:hover img {
-    transform: scale(1.05);
-}
-
-/* ==========================================================================
-   Responsive - Single Page
-   ========================================================================== */
-
-@media (max-width: 1024px) {
-    .aepda-single-atracao__content {
-        grid-template-columns: 1fr;
-    }
-    
-    .aepda-blog-section {
-        grid-template-columns: 1fr;
-    }
-    
-    .aepda-gallery {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 767px) {
-    .aepda-single-atracao__title {
-        font-size: 28px;
-    }
-    
-    .aepda-single-atracao__subtitle {
-        font-size: 16px;
-    }
-    
-    .aepda-rules-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .aepda-gallery {
-        grid-template-columns: 1fr;
-    }
-    
-    .aepda-gallery__item img {
-        height: 250px;
-    }
+.aepda-lightbox__image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
 }

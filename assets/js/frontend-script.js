@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Scripts
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.1.0
+ * @version 1.3.0
  */
 
 (function($) {
@@ -10,63 +10,98 @@
 
     $(document).ready(function() {
         // Initialize frontend functionality
+        initGalleryThumbnails();
         initGalleryLightbox();
-        initGallerySlider();
     });
 
     /**
-     * Initialize Gallery Slider Navigation
+     * Initialize Gallery Thumbnails Navigation
      */
-    function initGallerySlider() {
-        var $slider = $('#aepda-gallery-slider');
-        var $prevBtn = $('.aepda-gallery-prev');
-        var $nextBtn = $('.aepda-gallery-next');
+    function initGalleryThumbnails() {
+        var $thumbs = $('.aepda-gallery__thumb');
+        var $mainImg = $('#aepda-gallery-main-img');
+        var $mainLink = $('#aepda-gallery-main-link');
+        var $thumbsContainer = $('#aepda-gallery-thumbs');
+        var $prevBtn = $('.aepda-gallery__nav--prev');
+        var $nextBtn = $('.aepda-gallery__nav--next');
         
-        if (!$slider.length) return;
+        if (!$thumbs.length) return;
         
-        var scrollAmount = 400; // pixels to scroll
+        var currentIndex = 0;
+        var totalThumbs = $thumbs.length;
         
+        // Click on thumbnail to change main image
+        $thumbs.on('click', function() {
+            var $thumb = $(this);
+            var largeUrl = $thumb.data('large');
+            var fullUrl = $thumb.data('full');
+            
+            // Update main image
+            $mainImg.attr('src', largeUrl);
+            $mainLink.attr('href', fullUrl);
+            
+            // Update active state
+            $thumbs.removeClass('aepda-gallery__thumb--active');
+            $thumb.addClass('aepda-gallery__thumb--active');
+            
+            // Update current index
+            currentIndex = $thumbs.index($thumb);
+        });
+        
+        // Navigation buttons
         $prevBtn.on('click', function() {
-            $slider.animate({
-                scrollLeft: $slider.scrollLeft() - scrollAmount
-            }, 300);
+            if (currentIndex > 0) {
+                currentIndex--;
+                $thumbs.eq(currentIndex).trigger('click');
+                scrollToThumb(currentIndex);
+            }
         });
         
         $nextBtn.on('click', function() {
-            $slider.animate({
-                scrollLeft: $slider.scrollLeft() + scrollAmount
-            }, 300);
+            if (currentIndex < totalThumbs - 1) {
+                currentIndex++;
+                $thumbs.eq(currentIndex).trigger('click');
+                scrollToThumb(currentIndex);
+            }
         });
         
-        // Hide/show buttons based on scroll position
-        function updateNavButtons() {
-            var scrollLeft = $slider.scrollLeft();
-            var maxScroll = $slider[0].scrollWidth - $slider[0].clientWidth;
-            
-            $prevBtn.css('opacity', scrollLeft <= 0 ? 0.3 : 1);
-            $nextBtn.css('opacity', scrollLeft >= maxScroll - 5 ? 0.3 : 1);
+        // Scroll thumbnail into view
+        function scrollToThumb(index) {
+            var $thumb = $thumbs.eq(index);
+            if ($thumb.length && $thumbsContainer.length) {
+                var thumbLeft = $thumb.position().left;
+                var containerWidth = $thumbsContainer.width();
+                var thumbWidth = $thumb.outerWidth(true);
+                
+                if (thumbLeft < 0 || thumbLeft + thumbWidth > containerWidth) {
+                    $thumbsContainer.animate({
+                        scrollLeft: $thumbsContainer.scrollLeft() + thumbLeft - (containerWidth / 2) + (thumbWidth / 2)
+                    }, 200);
+                }
+            }
         }
-        
-        $slider.on('scroll', updateNavButtons);
-        updateNavButtons();
     }
 
     /**
      * Initialize Gallery Lightbox
      */
     function initGalleryLightbox() {
-        // Handle both old and new gallery selectors
-        $('.aepda-gallery__item, .aepda-gallery-item a').on('click', function(e) {
+        // Handle click on main gallery image
+        $('.aepda-gallery__main-link').on('click', function(e) {
             e.preventDefault();
             
+            var fullSrc = $(this).attr('href');
             var $img = $(this).find('img');
-            var fullSrc = $(this).attr('href') || $img.attr('src').replace(/-\d+x\d+\./, '.');
             
+            openLightbox(fullSrc, $img.attr('alt') || '');
+        });
+        
+        function openLightbox(src, alt) {
             // Create overlay
             var $overlay = $('<div class="aepda-lightbox-overlay">' +
                 '<div class="aepda-lightbox-content">' +
                     '<button class="aepda-lightbox-close">&times;</button>' +
-                    '<img src="' + fullSrc + '" alt="' + $img.attr('alt') + '">' +
+                    '<img src="' + src + '" alt="' + alt + '">' +
                 '</div>' +
             '</div>');
             
@@ -91,7 +126,7 @@
                     closeLightbox($overlay);
                 }
             });
-        });
+        }
         
         function closeLightbox($overlay) {
             $overlay.removeClass('aepda-lightbox--active');

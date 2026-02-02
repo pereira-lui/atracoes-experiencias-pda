@@ -3,7 +3,7 @@
  * Template para exibir uma única Atração/Experiência
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.0.0
+ * @version 1.3.0
  */
 
 get_header();
@@ -43,129 +43,144 @@ while (have_posts()) :
 
 <div class="aepda-single-page">
     
-    <!-- Imagem do Topo -->
+    <!-- Imagem do Topo (Hero) -->
     <?php if ($imagem_topo) : 
         $imagem_topo_url = wp_get_attachment_image_url($imagem_topo, 'full');
     ?>
-    <div class="aepda-hero-image">
-        <img src="<?php echo esc_url($imagem_topo_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+    <div class="aepda-hero">
+        <img src="<?php echo esc_url($imagem_topo_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="aepda-hero__image">
     </div>
     <?php endif; ?>
     
-    <div class="aepda-single-container">
-        
-        <!-- Breadcrumb usando Rank Math -->
-        <div class="aepda-breadcrumb">
+    <!-- Breadcrumb -->
+    <div class="aepda-breadcrumb-wrapper">
+        <div class="aepda-container">
             <?php echo do_shortcode('[rank_math_breadcrumb]'); ?>
         </div>
-        
-        <!-- Seção de Conteúdo Principal -->
-        <section class="aepda-content-section">
-            
-            <!-- Título -->
-            <div class="aepda-title-block">
-                <h1 class="aepda-page-title"><?php echo esc_html(get_the_title()); ?></h1>
-            </div>
-            
-            <!-- Textos Sobre -->
-            <?php if ($texto_sobre) : ?>
-            <div class="aepda-texto-sobre">
-                <?php echo wp_kses_post($texto_sobre); ?>
-            </div>
-            <?php endif; ?>
-            
-        </section>
-        
-        <!-- Galeria de Imagens -->
-        <?php if (!empty($galeria_ids)) : ?>
-        <section class="aepda-gallery-section">
-            <div class="aepda-gallery-wrapper">
-                <div class="aepda-gallery-slider" id="aepda-gallery-slider">
-                    <?php foreach ($galeria_ids as $image_id) : 
-                        $image_url = wp_get_attachment_image_url($image_id, 'large');
-                        $image_full = wp_get_attachment_image_url($image_id, 'full');
-                        $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-                        if ($image_url) :
-                    ?>
-                    <div class="aepda-gallery-item">
-                        <a href="<?php echo esc_url($image_full); ?>" data-lightbox="gallery">
-                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>">
-                        </a>
+    </div>
+    
+    <!-- Seção Principal: Título/Texto + Galeria lado a lado -->
+    <section class="aepda-main-section">
+        <div class="aepda-container">
+            <div class="aepda-main-grid">
+                
+                <!-- Coluna Esquerda: Título e Texto -->
+                <div class="aepda-main-content">
+                    <h1 class="aepda-main-title"><?php echo esc_html(get_the_title()); ?></h1>
+                    <div class="aepda-main-divider"></div>
+                    
+                    <?php if ($texto_sobre) : ?>
+                    <div class="aepda-main-text">
+                        <?php echo wp_kses_post($texto_sobre); ?>
                     </div>
-                    <?php endif; endforeach; ?>
+                    <?php endif; ?>
                 </div>
                 
-                <!-- Navegação da Galeria -->
-                <div class="aepda-gallery-nav">
-                    <button class="aepda-gallery-prev" aria-label="<?php esc_attr_e('Anterior', 'atracoes-experiencias-pda'); ?>">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <button class="aepda-gallery-next" aria-label="<?php esc_attr_e('Próximo', 'atracoes-experiencias-pda'); ?>">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
+                <!-- Coluna Direita: Galeria -->
+                <?php if (!empty($galeria_ids)) : ?>
+                <div class="aepda-main-gallery">
+                    <div class="aepda-gallery">
+                        <!-- Imagem Principal -->
+                        <div class="aepda-gallery__main">
+                            <?php 
+                            $first_image_url = wp_get_attachment_image_url($galeria_ids[0], 'large');
+                            $first_image_full = wp_get_attachment_image_url($galeria_ids[0], 'full');
+                            ?>
+                            <a href="<?php echo esc_url($first_image_full); ?>" data-lightbox="gallery" class="aepda-gallery__main-link" id="aepda-gallery-main-link">
+                                <img src="<?php echo esc_url($first_image_url); ?>" alt="" id="aepda-gallery-main-img">
+                            </a>
+                        </div>
+                        
+                        <!-- Thumbnails -->
+                        <div class="aepda-gallery__thumbs-wrapper">
+                            <button class="aepda-gallery__nav aepda-gallery__nav--prev" aria-label="Anterior">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            
+                            <div class="aepda-gallery__thumbs" id="aepda-gallery-thumbs">
+                                <?php foreach ($galeria_ids as $index => $image_id) : 
+                                    $thumb_url = wp_get_attachment_image_url($image_id, 'medium');
+                                    $large_url = wp_get_attachment_image_url($image_id, 'large');
+                                    $full_url = wp_get_attachment_image_url($image_id, 'full');
+                                    if ($thumb_url) :
+                                ?>
+                                <div class="aepda-gallery__thumb <?php echo $index === 0 ? 'aepda-gallery__thumb--active' : ''; ?>" 
+                                     data-large="<?php echo esc_url($large_url); ?>"
+                                     data-full="<?php echo esc_url($full_url); ?>">
+                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="">
+                                </div>
+                                <?php endif; endforeach; ?>
+                            </div>
+                            
+                            <button class="aepda-gallery__nav aepda-gallery__nav--next" aria-label="Próximo">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                <?php endif; ?>
+                
             </div>
-        </section>
-        <?php endif; ?>
-        
-    </div><!-- .aepda-single-container -->
+        </div>
+    </section>
     
     <!-- Seção Matérias do Blog (Fundo Roxo) -->
     <?php if ($blog_descricao || $blog_imagem || !empty($blog_posts_ids)) : ?>
     <section class="aepda-blog-section">
-        <div class="aepda-blog-section__inner">
-            <div class="aepda-blog-section__content">
-                <h2 class="aepda-blog-section__title"><?php echo esc_html(get_the_title()); ?></h2>
-                <div class="aepda-blog-section__divider"></div>
+        <div class="aepda-container">
+            <div class="aepda-blog-grid">
+                <!-- Conteúdo do Blog -->
+                <div class="aepda-blog-content">
+                    <h2 class="aepda-blog-title"><?php _e('Matérias do Blog', 'atracoes-experiencias-pda'); ?></h2>
+                    <div class="aepda-blog-divider"></div>
+                    
+                    <?php if ($blog_descricao) : ?>
+                        <p class="aepda-blog-description"><?php echo esc_html($blog_descricao); ?></p>
+                    <?php endif; ?>
+                    
+                    <?php if ($blog_link_texto && $blog_link_url) : ?>
+                        <a href="<?php echo esc_url($blog_link_url); ?>" class="aepda-blog-link">
+                            <?php echo esc_html($blog_link_texto); ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
                 
-                <?php if ($blog_descricao) : ?>
-                    <p class="aepda-blog-section__description"><?php echo esc_html($blog_descricao); ?></p>
-                <?php endif; ?>
-                
-                <?php if ($blog_link_texto && $blog_link_url) : ?>
-                    <a href="<?php echo esc_url($blog_link_url); ?>" class="aepda-blog-section__link">
-                        <?php echo esc_html($blog_link_texto); ?>
-                    </a>
+                <!-- Imagem do Blog -->
+                <?php if ($blog_imagem) : 
+                    $blog_imagem_url = wp_get_attachment_image_url($blog_imagem, 'medium_large');
+                ?>
+                <div class="aepda-blog-image">
+                    <img src="<?php echo esc_url($blog_imagem_url); ?>" alt="">
+                </div>
                 <?php endif; ?>
             </div>
             
-            <?php if ($blog_imagem) : 
-                $blog_imagem_url = wp_get_attachment_image_url($blog_imagem, 'medium_large');
+            <!-- Cards de Posts do Blog -->
+            <?php if (!empty($blog_posts_ids)) : 
+                $card_colors = [
+                    '#0891B2', // Azul/Ciano
+                    '#7C3AED', // Roxo
+                    '#DB2777', // Rosa
+                    '#EA580C', // Laranja
+                    '#16A34A', // Verde
+                    '#CA8A04', // Amarelo
+                ];
+                $color_index = 0;
+                $total_colors = count($card_colors);
+                
+                $blog_posts_query = get_posts([
+                    'post_type' => 'blog_post',
+                    'post__in' => $blog_posts_ids,
+                    'orderby' => 'post__in',
+                    'posts_per_page' => -1,
+                    'post_status' => 'publish',
+                ]);
             ?>
-            <div class="aepda-blog-section__image">
-                <img src="<?php echo esc_url($blog_imagem_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
-            </div>
-            <?php endif; ?>
-        </div>
-        
-        <?php if (!empty($blog_posts_ids)) : 
-            // Cores intercaladas para os cards
-            $card_colors = [
-                ['bg' => '#0891B2', 'text' => '#FFFFFF'], // Azul petróleo/ciano
-                ['bg' => '#7C3AED', 'text' => '#FFFFFF'], // Roxo
-                ['bg' => '#DB2777', 'text' => '#FFFFFF'], // Rosa/Magenta
-                ['bg' => '#EA580C', 'text' => '#FFFFFF'], // Laranja
-                ['bg' => '#16A34A', 'text' => '#FFFFFF'], // Verde
-                ['bg' => '#CA8A04', 'text' => '#FFFFFF'], // Amarelo/Dourado
-            ];
-            $color_index = 0;
-            $total_colors = count($card_colors);
-            
-            // Buscar os posts selecionados
-            $blog_posts_query = get_posts([
-                'post_type' => 'blog_post',
-                'post__in' => $blog_posts_ids,
-                'orderby' => 'post__in',
-                'posts_per_page' => -1,
-                'post_status' => 'publish',
-            ]);
-        ?>
-        <div class="aepda-blog-cards">
-            <div class="aepda-blog-cards__grid">
+            <div class="aepda-blog-cards">
                 <?php foreach ($blog_posts_query as $blog_post) : 
                     $current_color = $card_colors[$color_index % $total_colors];
                     $color_index++;
@@ -173,27 +188,30 @@ while (have_posts()) :
                 ?>
                 <a href="<?php echo esc_url(get_permalink($blog_post->ID)); ?>" class="aepda-blog-card">
                     <?php if ($thumbnail_url) : ?>
-                        <img class="aepda-blog-card__image" src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr($blog_post->post_title); ?>">
+                        <img class="aepda-blog-card__image" src="<?php echo esc_url($thumbnail_url); ?>" alt="">
+                    <?php else : ?>
+                        <div class="aepda-blog-card__placeholder"></div>
                     <?php endif; ?>
-                    <span class="aepda-blog-card__text" style="background-color: <?php echo esc_attr($current_color['bg']); ?>; color: <?php echo esc_attr($current_color['text']); ?>;">
+                    <span class="aepda-blog-card__text" style="background-color: <?php echo esc_attr($current_color); ?>;">
                         <?php echo esc_html($blog_post->post_title); ?>
                     </span>
                 </a>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
     </section>
     <?php endif; ?>
     
     <!-- Seção de Regras -->
     <?php if (!empty($regras_selecionadas)) : ?>
     <section class="aepda-rules-section">
-        <div class="aepda-rules-section__inner">
-            <h2 class="aepda-rules-section__title">
-                <?php _e('Lembre-se de algumas regras para melhor<br>experiência do seu passeio e para os animais:', 'atracoes-experiencias-pda'); ?>
+        <div class="aepda-container">
+            <h2 class="aepda-rules-title">
+                <?php _e('Lembre-se de algumas regras para melhor', 'atracoes-experiencias-pda'); ?><br>
+                <?php _e('experiência do seu passeio e para os animais:', 'atracoes-experiencias-pda'); ?>
             </h2>
-            <div class="aepda-rules-section__divider"></div>
+            <div class="aepda-rules-divider"></div>
             
             <div class="aepda-rules-grid">
                 <?php foreach ($regras_selecionadas as $regra_key) : 
@@ -201,10 +219,10 @@ while (have_posts()) :
                         $regra = $regras_disponiveis[$regra_key];
                 ?>
                 <div class="aepda-rule-item">
-                    <div class="aepda-rule-item__icon">
+                    <div class="aepda-rule-icon">
                         <span class="aepda-icon aepda-icon-<?php echo esc_attr($regra['icone']); ?>"></span>
                     </div>
-                    <span class="aepda-rule-item__text"><?php echo esc_html($regra['texto']); ?></span>
+                    <p class="aepda-rule-text"><?php echo esc_html($regra['texto']); ?></p>
                 </div>
                 <?php endif; endforeach; ?>
             </div>
