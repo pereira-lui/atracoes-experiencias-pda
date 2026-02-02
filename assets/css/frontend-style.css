@@ -205,16 +205,18 @@ a.aepda-card:focus {
     overflow: hidden;
 }
 
-/* Swiper Galeria - alinhado com container inicialmente */
+/* Swiper Galeria - alinhado com container na esquerda, estende até borda direita */
 .aepda-pda-gallery-swiper {
     width: 100%;
     overflow: visible;
-    padding-left: calc((100vw - 1200px) / 2);
+    margin-left: calc((100vw - 1200px) / 2);
+    padding-right: calc((100vw - 1200px) / 2);
 }
 
 @media (max-width: 1240px) {
     .aepda-pda-gallery-swiper {
-        padding-left: 20px;
+        margin-left: 20px;
+        padding-right: 0;
     }
 }
 
