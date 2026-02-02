@@ -150,37 +150,13 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
-   Main Section - Layout (Texto container + Galeria full-width direita)
+   Main Section - Título e Texto
    ========================================================================== */
 
 #aepda-pda-main-section,
 .aepda-pda-main-section {
-    padding: 40px 0 60px;
+    padding: 40px 0 50px;
     background-color: #fff;
-    overflow: hidden;
-}
-
-/* Layout principal - texto à esquerda, galeria grudada na direita */
-.aepda-pda-main-layout {
-    display: grid;
-    grid-template-columns: 1fr 55%;
-    gap: 0;
-    align-items: start;
-    max-width: none;
-    margin: 0;
-}
-
-/* Coluna de Conteúdo (Esquerda) - dentro do container */
-.aepda-pda-main-content {
-    max-width: 600px;
-    padding-left: calc((100vw - 1200px) / 2 + 20px);
-    padding-right: 50px;
-}
-
-@media (max-width: 1240px) {
-    .aepda-pda-main-content {
-        padding-left: 20px;
-    }
 }
 
 .aepda-pda-main-title {
@@ -202,6 +178,7 @@ a.aepda-card:focus {
     font-size: 16px;
     line-height: 1.8;
     color: #333;
+    max-width: 900px;
 }
 
 .aepda-pda-main-text p {
@@ -218,27 +195,27 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
-   Gallery Swiper (Coluna Direita - grudada na direita)
+   Gallery Section - Carrossel 100% largura
    ========================================================================== */
 
-.aepda-pda-main-gallery {
-    position: relative;
-    width: 100%;
-    padding-right: 0;
+#aepda-pda-gallery-section,
+.aepda-pda-gallery-section {
+    background-color: #fff;
+    padding-bottom: 40px;
 }
 
-/* Swiper Principal */
-.aepda-pda-gallery-main {
+/* Swiper Galeria */
+.aepda-pda-gallery-swiper {
     width: 100%;
-    overflow: hidden;
-    border-radius: 15px 0 0 15px;
-}
-
-.aepda-pda-gallery-main .swiper-slide {
     overflow: hidden;
 }
 
-.aepda-pda-gallery-main .swiper-slide img {
+.aepda-pda-gallery-swiper .swiper-slide {
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.aepda-pda-gallery-swiper .swiper-slide img {
     width: 100%;
     height: 450px;
     object-fit: cover;
@@ -259,7 +236,7 @@ a.aepda-card:focus {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    padding: 20px 30px 0 0;
+    padding-top: 20px;
 }
 
 /* Navigation Buttons */
@@ -529,27 +506,12 @@ a.aepda-card:focus {
         height: 400px;
     }
     
-    .aepda-pda-main-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
+    .aepda-pda-main-title {
+        font-size: 36px;
     }
     
-    .aepda-pda-main-content {
-        padding-left: 20px;
-        padding-right: 20px;
-        max-width: none;
-    }
-    
-    .aepda-pda-main-gallery {
-        width: 100%;
-    }
-    
-    .aepda-pda-gallery-main {
-        border-radius: 0;
-    }
-    
-    .aepda-pda-gallery-nav-wrapper {
-        padding: 20px 20px 0;
+    .aepda-pda-gallery-swiper .swiper-slide img {
+        height: 380px;
     }
     
     .aepda-pda-blog-grid {
@@ -595,15 +557,15 @@ a.aepda-card:focus {
     }
     
     .aepda-pda-main-title {
-        font-size: 32px;
+        font-size: 28px;
     }
     
-    .aepda-pda-gallery-main .swiper-slide img {
+    .aepda-pda-gallery-swiper .swiper-slide img {
         height: 280px;
     }
     
     .aepda-pda-gallery-nav-wrapper {
-        padding: 15px 15px 0;
+        padding-top: 15px;
     }
     
     .aepda-pda-gallery-nav {

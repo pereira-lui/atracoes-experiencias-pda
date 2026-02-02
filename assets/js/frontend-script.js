@@ -18,14 +18,14 @@
      * Initialize Gallery Swiper
      */
     function initAepdaPdaGallerySwiper() {
-        var $mainGallery = $('.aepda-pda-gallery-main');
+        var $gallery = $('.aepda-pda-gallery-swiper');
         
-        if (!$mainGallery.length) return;
+        if (!$gallery.length) return;
         
         // Initialize Main Swiper with navigation
-        var aepdaPdaMainSwiper = new Swiper('.aepda-pda-gallery-main', {
+        var aepdaPdaGallerySwiper = new Swiper('.aepda-pda-gallery-swiper', {
             slidesPerView: 1.2,
-            spaceBetween: 15,
+            spaceBetween: 20,
             loop: true,
             centeredSlides: false,
             navigation: {
@@ -33,6 +33,10 @@
                 prevEl: '.aepda-pda-gallery-nav--prev',
             },
             breakpoints: {
+                320: {
+                    slidesPerView: 1.1,
+                    spaceBetween: 10,
+                },
                 768: {
                     slidesPerView: 1.2,
                     spaceBetween: 15,
