@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Scripts
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.3.1
+ * @version 1.3.2
  */
 
 (function($) {
@@ -10,40 +10,40 @@
 
     $(document).ready(function() {
         // Initialize frontend functionality
-        initGallerySwiper();
-        initGalleryLightbox();
+        initAepdaPdaGallerySwiper();
+        initAepdaPdaGalleryLightbox();
     });
 
     /**
      * Initialize Gallery Swiper
      */
-    function initGallerySwiper() {
-        var $mainGallery = $('.aepda-gallery-main');
-        var $thumbsGallery = $('.aepda-gallery-thumbs');
+    function initAepdaPdaGallerySwiper() {
+        var $mainGallery = $('.aepda-pda-gallery-main');
+        var $thumbsGallery = $('.aepda-pda-gallery-thumbs');
         
         if (!$mainGallery.length || !$thumbsGallery.length) return;
         
         // Initialize Thumbs Swiper first
-        var thumbsSwiper = new Swiper('.aepda-gallery-thumbs', {
+        var aepdaPdaThumbsSwiper = new Swiper('.aepda-pda-gallery-thumbs', {
             spaceBetween: 10,
             slidesPerView: 'auto',
             freeMode: true,
             watchSlidesProgress: true,
             navigation: {
-                nextEl: '.aepda-gallery-nav--next',
-                prevEl: '.aepda-gallery-nav--prev',
+                nextEl: '.aepda-pda-gallery-nav--next',
+                prevEl: '.aepda-pda-gallery-nav--prev',
             },
         });
         
         // Initialize Main Swiper
-        var mainSwiper = new Swiper('.aepda-gallery-main', {
+        var aepdaPdaMainSwiper = new Swiper('.aepda-pda-gallery-main', {
             spaceBetween: 10,
             effect: 'fade',
             fadeEffect: {
                 crossFade: true
             },
             thumbs: {
-                swiper: thumbsSwiper,
+                swiper: aepdaPdaThumbsSwiper,
             },
         });
     }
@@ -51,77 +51,77 @@
     /**
      * Initialize Gallery Lightbox
      */
-    function initGalleryLightbox() {
+    function initAepdaPdaGalleryLightbox() {
         // Handle click on gallery images
-        $(document).on('click', '.aepda-gallery__link', function(e) {
+        $(document).on('click', '.aepda-pda-gallery-link', function(e) {
             e.preventDefault();
             
             var fullSrc = $(this).attr('href');
             var $img = $(this).find('img');
             
-            openLightbox(fullSrc, $img.attr('alt') || '');
+            aepdaPdaOpenLightbox(fullSrc, $img.attr('alt') || '');
         });
         
-        function openLightbox(src, alt) {
-            // Create overlay
-            var $overlay = $('<div class="aepda-lightbox-overlay">' +
-                '<div class="aepda-lightbox-content">' +
-                    '<button class="aepda-lightbox-close">&times;</button>' +
+        function aepdaPdaOpenLightbox(src, alt) {
+            // Create overlay with unique classes
+            var $overlay = $('<div class="aepda-pda-lightbox-overlay">' +
+                '<div class="aepda-pda-lightbox-content">' +
+                    '<button class="aepda-pda-lightbox-close">&times;</button>' +
                     '<img src="' + src + '" alt="' + alt + '">' +
                 '</div>' +
             '</div>');
             
             $('body').append($overlay);
-            $('body').addClass('aepda-no-scroll');
+            $('body').addClass('aepda-pda-no-scroll');
             
             // Fade in
             setTimeout(function() {
-                $overlay.addClass('aepda-lightbox--active');
+                $overlay.addClass('aepda-pda-lightbox--active');
             }, 10);
             
             // Close handlers
             $overlay.on('click', function(e) {
-                if ($(e.target).hasClass('aepda-lightbox-overlay') || $(e.target).hasClass('aepda-lightbox-close')) {
-                    closeLightbox($overlay);
+                if ($(e.target).hasClass('aepda-pda-lightbox-overlay') || $(e.target).hasClass('aepda-pda-lightbox-close')) {
+                    aepdaPdaCloseLightbox($overlay);
                 }
             });
             
             // ESC key
-            $(document).on('keyup.lightbox', function(e) {
+            $(document).on('keyup.aepdaPdaLightbox', function(e) {
                 if (e.key === 'Escape') {
-                    closeLightbox($overlay);
+                    aepdaPdaCloseLightbox($overlay);
                 }
             });
         }
         
-        function closeLightbox($overlay) {
-            $overlay.removeClass('aepda-lightbox--active');
-            $('body').removeClass('aepda-no-scroll');
+        function aepdaPdaCloseLightbox($overlay) {
+            $overlay.removeClass('aepda-pda-lightbox--active');
+            $('body').removeClass('aepda-pda-no-scroll');
             
             setTimeout(function() {
                 $overlay.remove();
-                $(document).off('keyup.lightbox');
+                $(document).off('keyup.aepdaPdaLightbox');
             }, 300);
         }
     }
 
 })(jQuery);
 
-// Add lightbox styles dynamically
+// Add lightbox styles dynamically with unique class names
 (function() {
-    var styles = `
-        .aepda-no-scroll {
-            overflow: hidden;
+    var aepdaPdaStyles = `
+        .aepda-pda-no-scroll {
+            overflow: hidden !important;
         }
         
-        .aepda-lightbox-overlay {
+        .aepda-pda-lightbox-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.9);
-            z-index: 99999;
+            z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -129,24 +129,24 @@
             transition: opacity 0.3s ease;
         }
         
-        .aepda-lightbox--active {
+        .aepda-pda-lightbox--active {
             opacity: 1;
         }
         
-        .aepda-lightbox-content {
+        .aepda-pda-lightbox-content {
             position: relative;
             max-width: 90%;
             max-height: 90%;
         }
         
-        .aepda-lightbox-content img {
+        .aepda-pda-lightbox-content img {
             max-width: 100%;
             max-height: 90vh;
             display: block;
             border-radius: 5px;
         }
         
-        .aepda-lightbox-close {
+        .aepda-pda-lightbox-close {
             position: absolute;
             top: -40px;
             right: 0;
@@ -159,13 +159,14 @@
             transition: opacity 0.3s ease;
         }
         
-        .aepda-lightbox-close:hover {
+        .aepda-pda-lightbox-close:hover {
             opacity: 0.7;
         }
     `;
     
-    var styleSheet = document.createElement('style');
-    styleSheet.type = 'text/css';
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
+    var aepdaPdaStyleSheet = document.createElement('style');
+    aepdaPdaStyleSheet.id = 'aepda-pda-lightbox-styles';
+    aepdaPdaStyleSheet.type = 'text/css';
+    aepdaPdaStyleSheet.textContent = aepdaPdaStyles;
+    document.head.appendChild(aepdaPdaStyleSheet);
 })();

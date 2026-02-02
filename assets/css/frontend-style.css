@@ -87,55 +87,65 @@ a.aepda-card:focus {
    Single Atração Page - Layout Principal
    ========================================================================== */
 
-.aepda-single-page {
+#aepda-pda-single-wrapper,
+.aepda-pda-single-page {
     width: 100%;
+    display: block;
 }
 
 /* Container Geral */
-.aepda-container {
+.aepda-pda-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 /* ==========================================================================
    Hero Section (Imagem do Topo)
    ========================================================================== */
 
-.aepda-hero {
+#aepda-pda-hero-section,
+.aepda-pda-hero {
     width: 100%;
     height: 500px;
     overflow: hidden;
     position: relative;
+    display: block;
+    background-color: #f0f0f0;
 }
 
-.aepda-hero__image {
-    width: 100%;
-    height: 100%;
+.aepda-pda-hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
     object-fit: cover;
     object-position: center;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* ==========================================================================
    Breadcrumb
    ========================================================================== */
 
-.aepda-breadcrumb-wrapper {
+.aepda-pda-breadcrumb {
     padding: 20px 0;
     background-color: #fff;
 }
 
-.aepda-breadcrumb-wrapper .rank-math-breadcrumb {
+.aepda-pda-breadcrumb .rank-math-breadcrumb {
     font-size: 14px;
     color: #666;
 }
 
-.aepda-breadcrumb-wrapper .rank-math-breadcrumb a {
+.aepda-pda-breadcrumb .rank-math-breadcrumb a {
     color: #5B21B6;
     text-decoration: none;
 }
 
-.aepda-breadcrumb-wrapper .rank-math-breadcrumb a:hover {
+.aepda-pda-breadcrumb .rank-math-breadcrumb a:hover {
     text-decoration: underline;
 }
 
@@ -143,12 +153,13 @@ a.aepda-card:focus {
    Main Section - Grid Layout (Texto + Galeria lado a lado)
    ========================================================================== */
 
-.aepda-main-section {
+#aepda-pda-main-section,
+.aepda-pda-main-section {
     padding: 40px 0 60px;
     background-color: #fff;
 }
 
-.aepda-main-grid {
+.aepda-pda-main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
@@ -156,11 +167,11 @@ a.aepda-card:focus {
 }
 
 /* Coluna de Conteúdo (Esquerda) */
-.aepda-main-content {
+.aepda-pda-main-content {
     padding-right: 20px;
 }
 
-.aepda-main-title {
+.aepda-pda-main-title {
     font-size: 42px;
     font-weight: 700;
     color: #1a1a1a;
@@ -168,28 +179,28 @@ a.aepda-card:focus {
     line-height: 1.2;
 }
 
-.aepda-main-divider {
+.aepda-pda-main-divider {
     width: 80px;
     height: 4px;
     background-color: #5B21B6;
     margin-bottom: 25px;
 }
 
-.aepda-main-text {
+.aepda-pda-main-text {
     font-size: 16px;
     line-height: 1.8;
     color: #333;
 }
 
-.aepda-main-text p {
+.aepda-pda-main-text p {
     margin-bottom: 1.5em;
 }
 
-.aepda-main-text p:last-child {
+.aepda-pda-main-text p:last-child {
     margin-bottom: 0;
 }
 
-.aepda-main-text strong {
+.aepda-pda-main-text strong {
     font-weight: 600;
     color: #1a1a1a;
 }
@@ -198,49 +209,49 @@ a.aepda-card:focus {
    Gallery Swiper (Coluna Direita)
    ========================================================================== */
 
-.aepda-main-gallery {
+.aepda-pda-main-gallery {
     position: sticky;
     top: 30px;
 }
 
 /* Swiper Principal */
-.aepda-gallery-main {
+.aepda-pda-gallery-main {
     width: 100%;
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 15px;
 }
 
-.aepda-gallery-main .swiper-slide {
+.aepda-pda-gallery-main .swiper-slide {
     border-radius: 15px;
     overflow: hidden;
 }
 
-.aepda-gallery-main .swiper-slide img {
+.aepda-pda-gallery-main .swiper-slide img {
     width: 100%;
     height: 350px;
     object-fit: cover;
     display: block;
 }
 
-.aepda-gallery__link {
+.aepda-pda-gallery-link {
     display: block;
     cursor: zoom-in;
 }
 
-.aepda-gallery__link:hover img {
+.aepda-pda-gallery-link:hover img {
     opacity: 0.95;
 }
 
 /* Wrapper dos Thumbs */
-.aepda-gallery-thumbs-wrapper {
+.aepda-pda-gallery-thumbs-wrapper {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 /* Navigation Buttons */
-.aepda-gallery-nav {
+.aepda-pda-gallery-nav {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
@@ -256,29 +267,29 @@ a.aepda-card:focus {
     z-index: 10;
 }
 
-.aepda-gallery-nav:hover {
+.aepda-pda-gallery-nav:hover {
     background: #5B21B6;
     border-color: #5B21B6;
     color: white;
 }
 
-.aepda-gallery-nav svg {
+.aepda-pda-gallery-nav svg {
     width: 20px;
     height: 20px;
 }
 
-.aepda-gallery-nav:disabled {
+.aepda-pda-gallery-nav:disabled {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
 /* Swiper Thumbs */
-.aepda-gallery-thumbs {
+.aepda-pda-gallery-thumbs {
     flex: 1;
     overflow: hidden;
 }
 
-.aepda-gallery-thumbs .swiper-slide {
+.aepda-pda-gallery-thumbs .swiper-slide {
     width: 80px !important;
     height: 60px;
     border-radius: 8px;
@@ -289,16 +300,16 @@ a.aepda-card:focus {
     opacity: 0.6;
 }
 
-.aepda-gallery-thumbs .swiper-slide:hover {
+.aepda-pda-gallery-thumbs .swiper-slide:hover {
     opacity: 1;
 }
 
-.aepda-gallery-thumbs .swiper-slide-thumb-active {
+.aepda-pda-gallery-thumbs .swiper-slide-thumb-active {
     border-color: #5B21B6;
     opacity: 1;
 }
 
-.aepda-gallery-thumbs .swiper-slide img {
+.aepda-pda-gallery-thumbs .swiper-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -309,13 +320,14 @@ a.aepda-card:focus {
    Blog Section (Seção Roxa com Matérias)
    ========================================================================== */
 
-.aepda-blog-section {
+#aepda-pda-blog-section,
+.aepda-pda-blog-section {
     background-color: #5B21B6;
     color: white;
     padding: 60px 0;
 }
 
-.aepda-blog-grid {
+.aepda-pda-blog-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
@@ -324,32 +336,32 @@ a.aepda-card:focus {
 }
 
 /* Conteúdo do Blog */
-.aepda-blog-content {
+.aepda-pda-blog-content {
     padding-right: 20px;
 }
 
-.aepda-blog-title {
+.aepda-pda-blog-title {
     font-size: 36px;
     font-weight: 700;
     margin: 0 0 20px 0;
     color: white;
 }
 
-.aepda-blog-divider {
+.aepda-pda-blog-divider {
     width: 80px;
     height: 4px;
     background-color: #7C3AED;
     margin-bottom: 25px;
 }
 
-.aepda-blog-description {
+.aepda-pda-blog-description {
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 20px 0;
     opacity: 0.95;
 }
 
-.aepda-blog-link {
+.aepda-pda-blog-link {
     color: #FCD34D;
     text-decoration: none;
     font-weight: 600;
@@ -358,19 +370,19 @@ a.aepda-card:focus {
     transition: color 0.3s ease;
 }
 
-.aepda-blog-link:hover {
+.aepda-pda-blog-link:hover {
     color: #FDE68A;
     text-decoration: underline;
 }
 
 /* Imagem do Blog */
-.aepda-blog-image {
+.aepda-pda-blog-image {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.aepda-blog-image img {
+.aepda-pda-blog-image img {
     width: 100%;
     height: auto;
     display: block;
@@ -380,13 +392,13 @@ a.aepda-card:focus {
    Blog Cards (Posts do Blog)
    ========================================================================== */
 
-.aepda-blog-cards {
+.aepda-pda-blog-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
-.aepda-blog-card {
+.aepda-pda-blog-card {
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -397,25 +409,25 @@ a.aepda-card:focus {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.aepda-blog-card:hover {
+.aepda-pda-blog-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.aepda-blog-card__image {
+.aepda-pda-blog-card-image {
     width: 100%;
     height: 180px;
     object-fit: cover;
     display: block;
 }
 
-.aepda-blog-card__placeholder {
+.aepda-pda-blog-card-placeholder {
     width: 100%;
     height: 180px;
     background-color: #ddd;
 }
 
-.aepda-blog-card__text {
+.aepda-pda-blog-card-text {
     padding: 15px 20px;
     font-size: 14px;
     font-weight: 600;
@@ -430,12 +442,13 @@ a.aepda-card:focus {
    Rules Section (Seção de Regras)
    ========================================================================== */
 
-.aepda-rules-section {
+#aepda-pda-rules-section,
+.aepda-pda-rules-section {
     padding: 70px 0;
     background-color: #FAFAFA;
 }
 
-.aepda-rules-title {
+.aepda-pda-rules-title {
     font-size: 28px;
     font-weight: 700;
     color: #1a1a1a;
@@ -444,14 +457,14 @@ a.aepda-card:focus {
     line-height: 1.4;
 }
 
-.aepda-rules-divider {
+.aepda-pda-rules-divider {
     width: 80px;
     height: 4px;
     background-color: #5B21B6;
     margin-bottom: 40px;
 }
 
-.aepda-rules-grid {
+.aepda-pda-rules-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
@@ -461,7 +474,7 @@ a.aepda-card:focus {
     background: white;
 }
 
-.aepda-rule-item {
+.aepda-pda-rule-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -470,7 +483,7 @@ a.aepda-card:focus {
     padding: 20px;
 }
 
-.aepda-rule-icon {
+.aepda-pda-rule-icon {
     flex-shrink: 0;
     width: 70px;
     height: 70px;
@@ -479,7 +492,7 @@ a.aepda-card:focus {
     justify-content: center;
 }
 
-.aepda-rule-text {
+.aepda-pda-rule-text {
     font-size: 14px;
     color: #333;
     line-height: 1.5;
@@ -490,7 +503,7 @@ a.aepda-card:focus {
    Icons for Rules (SVG icons)
    ========================================================================== */
 
-.aepda-icon {
+.aepda-pda-icon {
     display: inline-block;
     width: 60px;
     height: 60px;
@@ -500,27 +513,27 @@ a.aepda-card:focus {
 }
 
 /* Não alimentar os animais */
-.aepda-icon-nao-alimentar {
+.aepda-pda-icon-nao-alimentar {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Cpath d='M22 38c2-4 6-6 10-6 2 0 4 0 6 2l4-2c-1-3-5-6-10-6-8 0-14 7-14 14 0 2 1 4 2 6l2-8z'/%3E%3Ccircle cx='28' cy='30' r='2' fill='%23333'/%3E%3Cpath d='M40 26l4 1 1-3-5 2z' fill='%23333'/%3E%3C/svg%3E");
 }
 
 /* Não tocar nos animais */
-.aepda-icon-nao-tocar {
+.aepda-pda-icon-nao-tocar {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23333'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23333' stroke-width='2'/%3E%3Cpath d='M16 48L48 16' stroke='%23333' stroke-width='3' fill='none'/%3E%3Cpath d='M32 14v6M28 15v5M24 17v4M36 15v5M40 17v4M24 21c0 0-4 8-4 16 0 6 4 10 12 10s12-4 12-10c0-8-4-16-4-16'/%3E%3C/svg%3E");
 }
 
 /* Não sair da trilha */
-.aepda-icon-nao-sair-trilha {
+.aepda-pda-icon-nao-sair-trilha {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Ccircle cx='32' cy='18' r='4' fill='%23333'/%3E%3Cpath d='M32 22v10M32 32l-6 12M32 32l6 12M26 28l-4 4M38 28l4 4' stroke-width='2.5'/%3E%3Cpath d='M20 44h6M38 44h6' stroke-dasharray='2 2'/%3E%3C/svg%3E");
 }
 
 /* Permitido fotografar sem flash */
-.aepda-icon-sem-flash {
+.aepda-pda-icon-sem-flash {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='14' y='24' width='36' height='24' rx='3'/%3E%3Ccircle cx='32' cy='36' r='8'/%3E%3Ccircle cx='32' cy='36' r='4'/%3E%3Crect x='22' y='20' width='8' height='4'/%3E%3Cpath d='M44 16h6l-3 8'/%3E%3Cpath d='M42 12l8 12' stroke-width='2.5'/%3E%3C/svg%3E");
 }
 
 /* Manter silêncio */
-.aepda-icon-silencio {
+.aepda-pda-icon-silencio {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M12 26v12h8l12 10V16L20 26h-8z' fill='%23333'/%3E%3Cpath d='M40 24l12 16M52 24l-12 16' stroke-width='2.5'/%3E%3C/svg%3E");
 }
 
@@ -533,41 +546,42 @@ a.aepda-card:focus {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .aepda-hero {
+    #aepda-pda-hero-section,
+    .aepda-pda-hero {
         height: 400px;
     }
     
-    .aepda-main-grid {
+    .aepda-pda-main-grid {
         grid-template-columns: 1fr;
         gap: 40px;
     }
     
-    .aepda-main-content {
+    .aepda-pda-main-content {
         padding-right: 0;
     }
     
-    .aepda-main-gallery {
+    .aepda-pda-main-gallery {
         position: static;
     }
     
-    .aepda-blog-grid {
+    .aepda-pda-blog-grid {
         grid-template-columns: 1fr;
         gap: 30px;
     }
     
-    .aepda-blog-content {
+    .aepda-pda-blog-content {
         padding-right: 0;
     }
     
-    .aepda-blog-image {
+    .aepda-pda-blog-image {
         max-width: 500px;
     }
     
-    .aepda-blog-cards {
+    .aepda-pda-blog-cards {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .aepda-rules-grid {
+    .aepda-pda-rules-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -587,65 +601,68 @@ a.aepda-card:focus {
         margin: 0 10px 10px 10px;
     }
     
-    .aepda-hero {
+    #aepda-pda-hero-section,
+    .aepda-pda-hero {
         height: 280px;
     }
     
-    .aepda-main-title {
+    .aepda-pda-main-title {
         font-size: 32px;
     }
     
-    .aepda-gallery-main .swiper-slide img {
+    .aepda-pda-gallery-main .swiper-slide img {
         height: 250px;
     }
     
-    .aepda-gallery-thumbs .swiper-slide {
+    .aepda-pda-gallery-thumbs .swiper-slide {
         width: 60px !important;
         height: 45px;
     }
     
-    .aepda-blog-section {
+    #aepda-pda-blog-section,
+    .aepda-pda-blog-section {
         padding: 40px 0;
     }
     
-    .aepda-blog-title {
+    .aepda-pda-blog-title {
         font-size: 28px;
     }
     
-    .aepda-blog-cards {
+    .aepda-pda-blog-cards {
         grid-template-columns: 1fr;
     }
     
-    .aepda-blog-card__image {
+    .aepda-pda-blog-card-image {
         height: 150px;
     }
     
-    .aepda-rules-section {
+    #aepda-pda-rules-section,
+    .aepda-pda-rules-section {
         padding: 50px 0;
     }
     
-    .aepda-rules-title {
+    .aepda-pda-rules-title {
         font-size: 22px;
     }
     
-    .aepda-rules-grid {
+    .aepda-pda-rules-grid {
         grid-template-columns: 1fr;
         padding: 25px;
         gap: 20px;
     }
     
-    .aepda-rule-item {
+    .aepda-pda-rule-item {
         flex-direction: row;
         text-align: left;
         padding: 15px;
     }
     
-    .aepda-rule-icon {
+    .aepda-pda-rule-icon {
         width: 50px;
         height: 50px;
     }
     
-    .aepda-icon {
+    .aepda-pda-icon {
         width: 45px;
         height: 45px;
     }
@@ -655,7 +672,7 @@ a.aepda-card:focus {
    Lightbox Styles
    ========================================================================== */
 
-.aepda-lightbox {
+.aepda-pda-lightbox {
     display: none;
     position: fixed;
     top: 0;
@@ -668,11 +685,11 @@ a.aepda-card:focus {
     justify-content: center;
 }
 
-.aepda-lightbox.active {
+.aepda-pda-lightbox.active {
     display: flex;
 }
 
-.aepda-lightbox__close {
+.aepda-pda-lightbox-close {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -687,7 +704,7 @@ a.aepda-card:focus {
     text-align: center;
 }
 
-.aepda-lightbox__image {
+.aepda-pda-lightbox-image {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain;
