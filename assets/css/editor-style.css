@@ -1,0 +1,44 @@
+/**
+ * Atrações e Experiências PDA - Editor Styles
+ *
+ * @package Atracoes_Experiencias_PDA
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+   Elementor Editor Preview
+   ========================================================================== */
+
+.elementor-editor-active .aepda-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.elementor-editor-active .aepda-card--preview {
+    height: 200px;
+    border-radius: 15px;
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+}
+
+.elementor-editor-active .aepda-card--preview .aepda-card__text {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    background-color: #8B5CF6;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Panel alert style */
+.elementor-panel-alert-info {
+    margin-top: 15px;
+}

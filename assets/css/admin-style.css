@@ -1,0 +1,274 @@
+/**
+ * Atrações e Experiências PDA - Admin Styles
+ *
+ * @package Atracoes_Experiencias_PDA
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+   Meta Box Tables
+   ========================================================================== */
+
+.atracao-meta-table {
+    width: 100%;
+}
+
+.atracao-meta-table th {
+    width: 200px;
+    text-align: left;
+    padding: 15px 10px 15px 0;
+    vertical-align: top;
+}
+
+.atracao-meta-table td {
+    padding: 10px 0;
+}
+
+.atracao-meta-table input[type="text"],
+.atracao-meta-table input[type="url"],
+.atracao-meta-table textarea,
+.atracao-meta-table select {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* ==========================================================================
+   Gallery Meta Box
+   ========================================================================== */
+
+.atracao-galeria-wrapper {
+    padding: 10px 0;
+}
+
+.atracao-galeria-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    min-height: 100px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+}
+
+.atracao-galeria-preview:empty::after {
+    content: 'Nenhuma imagem adicionada ainda. Clique no botão abaixo para adicionar.';
+    color: #999;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.atracao-galeria-item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+}
+
+.atracao-galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.atracao-galeria-item .atracao-galeria-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    background-color: #dc3232;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.atracao-galeria-item .atracao-galeria-remove:hover {
+    background-color: #a00;
+}
+
+/* ==========================================================================
+   Image Upload
+   ========================================================================== */
+
+.atracao-image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.atracao-image-preview {
+    min-height: 150px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atracao-image-preview:empty::after {
+    content: 'Nenhuma imagem selecionada';
+    color: #999;
+    font-style: italic;
+}
+
+.atracao-image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+}
+
+.atracao-image-upload .button {
+    width: fit-content;
+}
+
+/* ==========================================================================
+   Rules/Dicas Meta Box
+   ========================================================================== */
+
+.atracao-regras-wrapper {
+    padding: 10px 0;
+}
+
+#atracao-regras-list {
+    margin-bottom: 15px;
+}
+
+.atracao-regra-item {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    align-items: end;
+}
+
+.atracao-regra-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #666;
+}
+
+.atracao-regra-item input {
+    width: 100%;
+}
+
+.atracao-regra-remove {
+    color: #dc3232 !important;
+    border-color: #dc3232 !important;
+}
+
+.atracao-regra-remove:hover {
+    background-color: #dc3232 !important;
+    color: white !important;
+}
+
+/* ==========================================================================
+   Links Meta Box
+   ========================================================================== */
+
+.atracao-links-wrapper {
+    padding: 10px 0;
+}
+
+.atracao-links-wrapper > p {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+#atracao-links-list {
+    margin-bottom: 15px;
+}
+
+.atracao-link-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    align-items: end;
+}
+
+.atracao-link-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #666;
+}
+
+.atracao-link-item input {
+    width: 100%;
+}
+
+.atracao-link-remove {
+    color: #dc3232 !important;
+    border-color: #dc3232 !important;
+}
+
+.atracao-link-remove:hover {
+    background-color: #dc3232 !important;
+    color: white !important;
+}
+
+/* ==========================================================================
+   Color Picker
+   ========================================================================== */
+
+.wp-picker-container {
+    display: block;
+}
+
+.wp-picker-container .wp-color-result {
+    margin: 0 0 6px 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 782px) {
+    .atracao-meta-table th {
+        display: block;
+        width: 100%;
+        padding-bottom: 5px;
+    }
+    
+    .atracao-meta-table td {
+        display: block;
+        padding-top: 0;
+    }
+    
+    .atracao-regra-item,
+    .atracao-link-item {
+        grid-template-columns: 1fr;
+    }
+    
+    .atracao-regra-item .button,
+    .atracao-link-item .button {
+        justify-self: start;
+    }
+}

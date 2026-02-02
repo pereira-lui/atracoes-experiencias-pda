@@ -1,0 +1,391 @@
+/**
+ * Atrações e Experiências PDA - Frontend Styles
+ *
+ * @package Atracoes_Experiencias_PDA
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+   Atrações Grid Widget
+   ========================================================================== */
+
+.aepda-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.aepda-card {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    height: 280px;
+    border-radius: 15px;
+}
+
+.aepda-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: center center;
+    transition: transform 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.aepda-card__text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    transition: background-color 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+    padding: 12px 20px;
+    margin: 0 15px 15px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.3;
+    /* Cores padrão - podem ser sobrescritas por CSS Variables */
+    background-color: var(--aepda-card-bg, #8B5CF6);
+    color: var(--aepda-card-color, #FFFFFF);
+}
+
+/* Link styles */
+a.aepda-card {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+a.aepda-card:hover {
+    text-decoration: none;
+}
+
+a.aepda-card:focus {
+    outline: none;
+}
+
+/* Preview styles for editor */
+.aepda-card--preview {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* No results message */
+.aepda-no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+/* ==========================================================================
+   Responsive Styles
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .aepda-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .aepda-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-card {
+        height: 220px;
+    }
+    
+    .aepda-card__text {
+        font-size: 13px;
+        padding: 10px 15px;
+        margin: 0 10px 10px 10px;
+    }
+}
+
+/* ==========================================================================
+   Single Atração Page Styles (optional template styles)
+   ========================================================================== */
+
+.aepda-single-atracao {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.aepda-single-atracao__header {
+    margin-bottom: 30px;
+}
+
+.aepda-single-atracao__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 15px 0;
+}
+
+.aepda-single-atracao__subtitle {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.aepda-single-atracao__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.aepda-single-atracao__description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+}
+
+.aepda-single-atracao__image {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.aepda-single-atracao__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Blog Section */
+.aepda-blog-section {
+    background-color: #5B21B6;
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.aepda-blog-section__title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+}
+
+.aepda-blog-section__description {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.aepda-blog-section__link {
+    color: #FCD34D;
+    text-decoration: underline;
+}
+
+.aepda-blog-section__link:hover {
+    color: #FDE68A;
+}
+
+.aepda-blog-section__image {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.aepda-blog-section__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Rules Section */
+.aepda-rules-section {
+    padding: 40px 0;
+}
+
+.aepda-rules-section__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 30px 0;
+}
+
+.aepda-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 2px solid #E5E7EB;
+    border-radius: 15px;
+}
+
+.aepda-rule-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+}
+
+.aepda-rule-item__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F3F4F6;
+    border-radius: 50%;
+}
+
+.aepda-rule-item__icon .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #5B21B6;
+}
+
+.aepda-rule-item__text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Links Section (Saiba mais) */
+.aepda-links-section {
+    padding: 30px 0;
+    border-top: 1px solid #E5E7EB;
+    margin-top: 30px;
+}
+
+.aepda-links-section__title {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 15px 0;
+}
+
+.aepda-links-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+}
+
+.aepda-links-list a {
+    color: #5B21B6;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.aepda-links-list a:hover {
+    color: #7C3AED;
+    text-decoration: underline;
+}
+
+/* Info Meta */
+.aepda-info-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #F9FAFB;
+    border-radius: 10px;
+}
+
+.aepda-info-meta__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.aepda-info-meta__label {
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
+}
+
+.aepda-info-meta__value {
+    color: #333;
+    font-size: 14px;
+}
+
+/* Gallery */
+.aepda-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.aepda-gallery__item {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.aepda-gallery__item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.aepda-gallery__item:hover img {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Responsive - Single Page
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .aepda-single-atracao__content {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-blog-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .aepda-single-atracao__title {
+        font-size: 28px;
+    }
+    
+    .aepda-single-atracao__subtitle {
+        font-size: 16px;
+    }
+    
+    .aepda-rules-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .aepda-gallery__item img {
+        height: 250px;
+    }
+}
