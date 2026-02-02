@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -573,29 +573,82 @@ final class Atracoes_Experiencias_PDA {
             </tr>
         </table>
         
-        <h4 style="margin-top: 25px; margin-bottom: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
-            <?php _e('Posts do Blog para Exibir como Cards', 'atracoes-experiencias-pda'); ?>
-        </h4>
-        <p class="description" style="margin-bottom: 15px;">
-            <?php _e('Selecione os posts do blog que aparecerão como cards abaixo desta seção. As cores dos cards são intercaladas automaticamente.', 'atracoes-experiencias-pda'); ?>
-        </p>
-        
-        <div class="atracao-blog-posts-selector">
+        <div class="atracao-blog-posts-section">
+            <h4 class="atracao-blog-posts-title">
+                <?php _e('Posts do Blog para Exibir como Cards', 'atracoes-experiencias-pda'); ?>
+            </h4>
+            <p class="description">
+                <?php _e('Selecione os posts do blog que aparecerão como cards abaixo desta seção.', 'atracoes-experiencias-pda'); ?>
+            </p>
+            
             <?php if (!empty($blog_posts)) : ?>
-                <div class="atracao-blog-posts-checkboxes" style="max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
-                    <?php foreach ($blog_posts as $blog_post) : ?>
-                        <label style="display: block; padding: 8px 10px; margin-bottom: 5px; background: #f9f9f9; border-radius: 4px; cursor: pointer;">
-                            <input type="checkbox" 
-                                   name="atracao_blog_posts[]" 
-                                   value="<?php echo esc_attr($blog_post->ID); ?>"
-                                   <?php checked(in_array($blog_post->ID, $blog_posts_selecionados)); ?>
-                                   style="margin-right: 10px;">
-                            <?php echo esc_html($blog_post->post_title); ?>
-                        </label>
+            
+            <!-- Posts Selecionados -->
+            <div class="atracao-blog-posts-selected">
+                <label class="atracao-blog-posts-label">
+                    <span class="dashicons dashicons-yes-alt"></span>
+                    <?php _e('Selecionados', 'atracoes-experiencias-pda'); ?>
+                    <span class="atracao-blog-posts-count" id="selected-count">(<?php echo count($blog_posts_selecionados); ?>)</span>
+                </label>
+                <div class="atracao-blog-posts-selected-list" id="blog-posts-selected-list">
+                    <?php 
+                    if (!empty($blog_posts_selecionados)) :
+                        foreach ($blog_posts as $blog_post) :
+                            if (in_array($blog_post->ID, $blog_posts_selecionados)) :
+                    ?>
+                    <div class="atracao-blog-post-item atracao-blog-post-item--selected" data-id="<?php echo esc_attr($blog_post->ID); ?>">
+                        <input type="checkbox" 
+                               name="atracao_blog_posts[]" 
+                               value="<?php echo esc_attr($blog_post->ID); ?>"
+                               checked
+                               class="atracao-blog-post-checkbox">
+                        <span class="atracao-blog-post-title"><?php echo esc_html($blog_post->post_title); ?></span>
+                        <button type="button" class="atracao-blog-post-remove" title="<?php _e('Remover', 'atracoes-experiencias-pda'); ?>">
+                            <span class="dashicons dashicons-no-alt"></span>
+                        </button>
+                    </div>
+                    <?php 
+                            endif;
+                        endforeach;
+                    else :
+                    ?>
+                    <p class="atracao-blog-posts-empty" id="selected-empty"><?php _e('Nenhum post selecionado', 'atracoes-experiencias-pda'); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            
+            <!-- Campo de Pesquisa -->
+            <div class="atracao-blog-posts-search">
+                <label class="atracao-blog-posts-label">
+                    <span class="dashicons dashicons-search"></span>
+                    <?php _e('Adicionar Posts', 'atracoes-experiencias-pda'); ?>
+                </label>
+                <input type="text" 
+                       id="blog-posts-search" 
+                       class="atracao-blog-posts-search-input" 
+                       placeholder="<?php _e('Pesquisar posts do blog...', 'atracoes-experiencias-pda'); ?>">
+            </div>
+            
+            <!-- Lista de Posts Disponíveis -->
+            <div class="atracao-blog-posts-available">
+                <div class="atracao-blog-posts-list" id="blog-posts-list">
+                    <?php foreach ($blog_posts as $blog_post) : 
+                        $is_selected = in_array($blog_post->ID, $blog_posts_selecionados);
+                    ?>
+                    <div class="atracao-blog-post-item <?php echo $is_selected ? 'atracao-blog-post-item--hidden' : ''; ?>" 
+                         data-id="<?php echo esc_attr($blog_post->ID); ?>"
+                         data-title="<?php echo esc_attr(strtolower($blog_post->post_title)); ?>">
+                        <span class="atracao-blog-post-title"><?php echo esc_html($blog_post->post_title); ?></span>
+                        <button type="button" class="atracao-blog-post-add" title="<?php _e('Adicionar', 'atracoes-experiencias-pda'); ?>">
+                            <span class="dashicons dashicons-plus-alt2"></span>
+                        </button>
+                    </div>
                     <?php endforeach; ?>
                 </div>
+            </div>
+            
             <?php else : ?>
-                <p class="description"><?php _e('Nenhum post do blog encontrado. Crie posts do tipo "blog_post" para selecioná-los aqui.', 'atracoes-experiencias-pda'); ?></p>
+                <p class="description" style="margin-top: 15px;"><?php _e('Nenhum post do blog encontrado. Crie posts do tipo "blog_post" para selecioná-los aqui.', 'atracoes-experiencias-pda'); ?></p>
             <?php endif; ?>
         </div>
         <?php
