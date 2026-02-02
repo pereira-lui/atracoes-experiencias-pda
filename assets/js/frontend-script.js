@@ -22,11 +22,11 @@
         
         if (!$gallery.length) return;
         
-        // Initialize Main Swiper with navigation
+        // Initialize Swiper - starts aligned with container, then slides to edge
         var aepdaPdaGallerySwiper = new Swiper('.aepda-pda-gallery-swiper', {
-            slidesPerView: 1.2,
+            slidesPerView: 1.15,
             spaceBetween: 20,
-            loop: true,
+            loop: false,
             centeredSlides: false,
             navigation: {
                 nextEl: '.aepda-pda-gallery-nav--next',
@@ -34,15 +34,15 @@
             },
             breakpoints: {
                 320: {
-                    slidesPerView: 1.1,
+                    slidesPerView: 1.08,
                     spaceBetween: 10,
                 },
                 768: {
-                    slidesPerView: 1.2,
+                    slidesPerView: 1.1,
                     spaceBetween: 15,
                 },
                 1024: {
-                    slidesPerView: 1.2,
+                    slidesPerView: 1.15,
                     spaceBetween: 20,
                 }
             }
