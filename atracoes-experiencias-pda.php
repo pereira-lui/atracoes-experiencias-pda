@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.3.0
+ * Version: 1.3.3
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.3.0');
+define('ATRACOES_EXP_PDA_VERSION', '1.3.3');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -69,7 +69,10 @@ final class Atracoes_Experiencias_PDA {
 
         // Add Meta Boxes
         add_action('add_meta_boxes', [$this, 'add_meta_boxes']);
-        add_action('save_post', [$this, 'save_meta_boxes']);
+        add_action('save_post', [$this, 'save_meta_boxes'], 10, 1);
+        
+        // Add nonce field via edit_form_after_title to ensure it's always present
+        add_action('edit_form_after_title', [$this, 'add_nonce_field']);
 
         // Reordenar meta boxes - Rank Math por último
         add_action('add_meta_boxes', [$this, 'reorder_meta_boxes'], 99);
@@ -277,11 +280,19 @@ final class Atracoes_Experiencias_PDA {
     }
 
     /**
+     * Add nonce field to edit form
+     */
+    public function add_nonce_field($post) {
+        if ($post->post_type !== 'atracao_experiencia') {
+            return;
+        }
+        wp_nonce_field('atracao_meta_box', 'atracao_meta_box_nonce');
+    }
+
+    /**
      * Render Meta Box - Imagem do Topo
      */
     public function render_meta_box_imagem_topo($post) {
-        wp_nonce_field('atracao_meta_box', 'atracao_meta_box_nonce');
-
         $imagem_topo = get_post_meta($post->ID, '_atracao_imagem_topo', true);
         ?>
         <div class="atracao-imagem-topo-wrapper">
@@ -684,6 +695,11 @@ final class Atracoes_Experiencias_PDA {
      * Save Meta Boxes
      */
     public function save_meta_boxes($post_id) {
+        // Verificar se é uma revisão
+        if (wp_is_post_revision($post_id)) {
+            return;
+        }
+        
         // Verificar nonce
         if (!isset($_POST['atracao_meta_box_nonce']) || !wp_verify_nonce($_POST['atracao_meta_box_nonce'], 'atracao_meta_box')) {
             return;
