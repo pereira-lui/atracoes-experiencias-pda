@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Scripts
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.3.2
+ * @version 1.3.8
  */
 
 (function($) {
@@ -19,32 +19,29 @@
      */
     function initAepdaPdaGallerySwiper() {
         var $mainGallery = $('.aepda-pda-gallery-main');
-        var $thumbsGallery = $('.aepda-pda-gallery-thumbs');
         
-        if (!$mainGallery.length || !$thumbsGallery.length) return;
+        if (!$mainGallery.length) return;
         
-        // Initialize Thumbs Swiper first
-        var aepdaPdaThumbsSwiper = new Swiper('.aepda-pda-gallery-thumbs', {
-            spaceBetween: 10,
-            slidesPerView: 'auto',
-            freeMode: true,
-            watchSlidesProgress: true,
+        // Initialize Main Swiper with navigation
+        var aepdaPdaMainSwiper = new Swiper('.aepda-pda-gallery-main', {
+            slidesPerView: 1.2,
+            spaceBetween: 15,
+            loop: true,
+            centeredSlides: false,
             navigation: {
                 nextEl: '.aepda-pda-gallery-nav--next',
                 prevEl: '.aepda-pda-gallery-nav--prev',
             },
-        });
-        
-        // Initialize Main Swiper
-        var aepdaPdaMainSwiper = new Swiper('.aepda-pda-gallery-main', {
-            spaceBetween: 10,
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
-            thumbs: {
-                swiper: aepdaPdaThumbsSwiper,
-            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 1.2,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 1.2,
+                    spaceBetween: 20,
+                }
+            }
         });
     }
 

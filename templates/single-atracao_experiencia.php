@@ -62,72 +62,56 @@ while (have_posts()) :
     
     <!-- Seção Principal: Título/Texto + Galeria lado a lado -->
     <section id="aepda-pda-main-section" class="aepda-pda-main-section">
-        <div class="aepda-pda-container">
-            <div class="aepda-pda-main-grid">
+        <div class="aepda-pda-main-layout">
+            
+            <!-- Coluna Esquerda: Título e Texto (dentro do container) -->
+            <div class="aepda-pda-main-content">
+                <h1 class="aepda-pda-main-title"><?php echo esc_html(get_the_title()); ?></h1>
+                <div class="aepda-pda-main-divider"></div>
                 
-                <!-- Coluna Esquerda: Título e Texto -->
-                <div class="aepda-pda-main-content">
-                    <h1 class="aepda-pda-main-title"><?php echo esc_html(get_the_title()); ?></h1>
-                    <div class="aepda-pda-main-divider"></div>
-                    
-                    <?php if ($texto_sobre) : ?>
-                    <div class="aepda-pda-main-text">
-                        <?php echo wp_kses_post($texto_sobre); ?>
-                    </div>
-                    <?php endif; ?>
-                </div>
-                
-                <!-- Coluna Direita: Galeria com Swiper -->
-                <?php if (!empty($galeria_ids)) : ?>
-                <div class="aepda-pda-main-gallery">
-                    <!-- Swiper Principal -->
-                    <div class="swiper aepda-pda-gallery-main">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($galeria_ids as $image_id) : 
-                                $large_url = wp_get_attachment_image_url($image_id, 'large');
-                                $full_url = wp_get_attachment_image_url($image_id, 'full');
-                                if ($large_url) :
-                            ?>
-                            <div class="swiper-slide">
-                                <a href="<?php echo esc_url($full_url); ?>" class="aepda-pda-gallery-link" data-lightbox="gallery">
-                                    <img src="<?php echo esc_url($large_url); ?>" alt="">
-                                </a>
-                            </div>
-                            <?php endif; endforeach; ?>
-                        </div>
-                    </div>
-                    
-                    <!-- Swiper Thumbs -->
-                    <div class="aepda-pda-gallery-thumbs-wrapper">
-                        <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--prev" aria-label="Anterior">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                        
-                        <div class="swiper aepda-pda-gallery-thumbs">
-                            <div class="swiper-wrapper">
-                                <?php foreach ($galeria_ids as $image_id) : 
-                                    $thumb_url = wp_get_attachment_image_url($image_id, 'medium');
-                                    if ($thumb_url) :
-                                ?>
-                                <div class="swiper-slide">
-                                    <img src="<?php echo esc_url($thumb_url); ?>" alt="">
-                                </div>
-                                <?php endif; endforeach; ?>
-                            </div>
-                        </div>
-                        
-                        <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--next" aria-label="Próximo">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    </div>
+                <?php if ($texto_sobre) : ?>
+                <div class="aepda-pda-main-text">
+                    <?php echo wp_kses_post($texto_sobre); ?>
                 </div>
                 <?php endif; ?>
-                
             </div>
+            
+            <!-- Coluna Direita: Galeria grudada na direita -->
+            <?php if (!empty($galeria_ids)) : ?>
+            <div class="aepda-pda-main-gallery">
+                <!-- Swiper Principal -->
+                <div class="swiper aepda-pda-gallery-main">
+                    <div class="swiper-wrapper">
+                        <?php foreach ($galeria_ids as $image_id) : 
+                            $large_url = wp_get_attachment_image_url($image_id, 'large');
+                            $full_url = wp_get_attachment_image_url($image_id, 'full');
+                            if ($large_url) :
+                        ?>
+                        <div class="swiper-slide">
+                            <a href="<?php echo esc_url($full_url); ?>" class="aepda-pda-gallery-link" data-lightbox="gallery">
+                                <img src="<?php echo esc_url($large_url); ?>" alt="">
+                            </a>
+                        </div>
+                        <?php endif; endforeach; ?>
+                    </div>
+                </div>
+                
+                <!-- Navegação do Swiper -->
+                <div class="aepda-pda-gallery-nav-wrapper">
+                    <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--prev" aria-label="Anterior">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--next" aria-label="Próximo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <?php endif; ?>
+            
         </div>
     </section>
     
