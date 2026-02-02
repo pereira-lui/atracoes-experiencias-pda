@@ -235,10 +235,6 @@ a.aepda-card:focus {
     cursor: zoom-in;
 }
 
-.aepda-pda-gallery-link:hover img {
-    opacity: 0.95;
-}
-
 /* Wrapper da Navegação */
 .aepda-pda-gallery-nav-wrapper {
     display: flex;
