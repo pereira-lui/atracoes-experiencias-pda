@@ -579,8 +579,21 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
                 $post_id = get_the_ID();
                 $title = get_the_title();
                 $permalink = get_permalink();
-                $thumbnail_id = get_post_thumbnail_id();
-                $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'large') : '';
+                
+                // Imagem do card: primeiro verifica se tem imagem específica do card, senão usa a thumbnail
+                $card_image_id = get_post_meta($post_id, '_atracao_card_imagem', true);
+                if ($card_image_id) {
+                    $image_url = wp_get_attachment_image_url($card_image_id, 'large');
+                } else {
+                    $thumbnail_id = get_post_thumbnail_id();
+                    $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'large') : '';
+                }
+                
+                // Texto do card: usa o texto personalizado ou o título
+                $card_text = get_post_meta($post_id, '_atracao_card_texto', true);
+                if (empty($card_text)) {
+                    $card_text = $title;
+                }
 
                 // Cores do card (do meta ou default)
                 $card_bg_color = get_post_meta($post_id, '_atracao_card_cor_fundo', true);
@@ -603,9 +616,9 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             ?>
                 <a href="<?php echo esc_url($permalink); ?>" class="<?php echo esc_attr(implode(' ', $card_classes)); ?>" style="<?php echo esc_attr($inline_style); ?>">
                     <?php if ($image_url) : ?>
-                        <img class="aepda-card__image" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>">
+                        <img class="aepda-card__image" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($card_text); ?>">
                     <?php endif; ?>
-                    <span class="aepda-card__text"><?php echo esc_html($title); ?></span>
+                    <span class="aepda-card__text"><?php echo esc_html($card_text); ?></span>
                 </a>
             <?php endwhile; ?>
         </div>

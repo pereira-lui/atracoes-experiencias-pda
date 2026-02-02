@@ -395,13 +395,58 @@ final class Atracoes_Experiencias_PDA {
      * Render Meta Box - Configurações do Card
      */
     public function render_meta_box_card_config($post) {
+        $card_imagem = get_post_meta($post->ID, '_atracao_card_imagem', true);
+        $card_texto = get_post_meta($post->ID, '_atracao_card_texto', true);
         $card_cor_fundo = get_post_meta($post->ID, '_atracao_card_cor_fundo', true);
         $card_cor_texto = get_post_meta($post->ID, '_atracao_card_cor_texto', true);
         
-        // Valores padrão
+        // Texto padrão: título da página
+        if (empty($card_texto)) {
+            $card_texto = get_the_title($post->ID);
+        }
+        
+        // Valores padrão cores
         if (empty($card_cor_fundo)) $card_cor_fundo = '#8B5CF6';
         if (empty($card_cor_texto)) $card_cor_texto = '#FFFFFF';
         ?>
+        
+        <!-- Imagem do Card -->
+        <div class="atracao-card-image-wrapper" style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 8px;">
+                <?php _e('Imagem do Card (Widget)', 'atracoes-experiencias-pda'); ?>
+            </label>
+            <div class="atracao-image-upload">
+                <input type="hidden" id="atracao_card_imagem" name="atracao_card_imagem" value="<?php echo esc_attr($card_imagem); ?>">
+                <div id="atracao-card-imagem-preview" class="atracao-image-preview atracao-image-preview--card">
+                    <?php
+                    if ($card_imagem) {
+                        $image_url = wp_get_attachment_image_url($card_imagem, 'medium');
+                        if ($image_url) {
+                            echo '<img src="' . esc_url($image_url) . '" alt="">';
+                        }
+                    }
+                    ?>
+                </div>
+                <button type="button" class="button atracao-image-upload-btn" data-target="atracao_card_imagem" data-preview="atracao-card-imagem-preview">
+                    <?php _e('Selecionar Imagem', 'atracoes-experiencias-pda'); ?>
+                </button>
+                <button type="button" class="button atracao-image-remove-btn" data-target="atracao_card_imagem" data-preview="atracao-card-imagem-preview" <?php echo empty($card_imagem) ? 'style="display:none;"' : ''; ?>>
+                    <?php _e('Remover', 'atracoes-experiencias-pda'); ?>
+                </button>
+            </div>
+            <p class="description"><?php _e('Imagem que aparece na listagem de cards do widget.', 'atracoes-experiencias-pda'); ?></p>
+        </div>
+        
+        <!-- Texto do Card -->
+        <p style="margin-bottom: 15px;">
+            <label for="atracao_card_texto" style="display: block; font-weight: 600; margin-bottom: 5px;">
+                <?php _e('Texto do Card', 'atracoes-experiencias-pda'); ?>
+            </label>
+            <input type="text" id="atracao_card_texto" name="atracao_card_texto" value="<?php echo esc_attr($card_texto); ?>" class="widefat" placeholder="<?php echo esc_attr(get_the_title($post->ID)); ?>">
+            <span class="description"><?php _e('Texto exibido no card. Por padrão usa o título da página.', 'atracoes-experiencias-pda'); ?></span>
+        </p>
+        
+        <!-- Cores -->
         <p>
             <label for="atracao_card_cor_fundo"><?php _e('Cor de Fundo do Card', 'atracoes-experiencias-pda'); ?></label><br>
             <input type="text" id="atracao_card_cor_fundo" name="atracao_card_cor_fundo" value="<?php echo esc_attr($card_cor_fundo); ?>" class="atracao-color-picker" data-default-color="#8B5CF6">
@@ -625,6 +670,8 @@ final class Atracoes_Experiencias_PDA {
             'atracao_titulo_sobre' => '_atracao_titulo_sobre',
             'atracao_subtitulo' => '_atracao_subtitulo',
             'atracao_galeria' => '_atracao_galeria',
+            'atracao_card_imagem' => '_atracao_card_imagem',
+            'atracao_card_texto' => '_atracao_card_texto',
             'atracao_card_cor_fundo' => '_atracao_card_cor_fundo',
             'atracao_card_cor_texto' => '_atracao_card_cor_texto',
             'atracao_blog_titulo' => '_atracao_blog_titulo',
