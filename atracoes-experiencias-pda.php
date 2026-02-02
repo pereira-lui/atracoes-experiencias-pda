@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -390,17 +390,11 @@ final class Atracoes_Experiencias_PDA {
     public function render_meta_box_card_config($post) {
         $card_imagem = get_post_meta($post->ID, '_atracao_card_imagem', true);
         $card_texto = get_post_meta($post->ID, '_atracao_card_texto', true);
-        $card_cor_fundo = get_post_meta($post->ID, '_atracao_card_cor_fundo', true);
-        $card_cor_texto = get_post_meta($post->ID, '_atracao_card_cor_texto', true);
         
         // Texto padrão: título da página
         if (empty($card_texto)) {
             $card_texto = get_the_title($post->ID);
         }
-        
-        // Valores padrão cores
-        if (empty($card_cor_fundo)) $card_cor_fundo = '#8B5CF6';
-        if (empty($card_cor_texto)) $card_cor_texto = '#FFFFFF';
         ?>
         
         <!-- Imagem do Card -->
@@ -439,16 +433,10 @@ final class Atracoes_Experiencias_PDA {
             <span class="description"><?php _e('Texto exibido no card. Por padrão usa o título da página.', 'atracoes-experiencias-pda'); ?></span>
         </p>
         
-        <!-- Cores -->
-        <p>
-            <label for="atracao_card_cor_fundo"><?php _e('Cor de Fundo do Card', 'atracoes-experiencias-pda'); ?></label><br>
-            <input type="text" id="atracao_card_cor_fundo" name="atracao_card_cor_fundo" value="<?php echo esc_attr($card_cor_fundo); ?>" class="atracao-color-picker" data-default-color="#8B5CF6">
+        <p class="description" style="margin-top: 15px; padding: 10px; background: #f0f0f1; border-radius: 4px;">
+            <strong><?php _e('Nota:', 'atracoes-experiencias-pda'); ?></strong>
+            <?php _e('As cores dos cards são aplicadas automaticamente de forma intercalada (azul, roxo, verde, amarelo, rosa).', 'atracoes-experiencias-pda'); ?>
         </p>
-        <p>
-            <label for="atracao_card_cor_texto"><?php _e('Cor do Texto do Card', 'atracoes-experiencias-pda'); ?></label><br>
-            <input type="text" id="atracao_card_cor_texto" name="atracao_card_cor_texto" value="<?php echo esc_attr($card_cor_texto); ?>" class="atracao-color-picker" data-default-color="#FFFFFF">
-        </p>
-        <p class="description"><?php _e('Cores usadas na listagem de cards.', 'atracoes-experiencias-pda'); ?></p>
         <?php
     }
 
@@ -645,8 +633,6 @@ final class Atracoes_Experiencias_PDA {
             'atracao_galeria' => '_atracao_galeria',
             'atracao_card_imagem' => '_atracao_card_imagem',
             'atracao_card_texto' => '_atracao_card_texto',
-            'atracao_card_cor_fundo' => '_atracao_card_cor_fundo',
-            'atracao_card_cor_texto' => '_atracao_card_cor_texto',
             'atracao_blog_titulo' => '_atracao_blog_titulo',
             'atracao_blog_descricao' => '_atracao_blog_descricao',
             'atracao_blog_link_texto' => '_atracao_blog_link_texto',

@@ -538,6 +538,17 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
         }
 
         $use_custom_colors = $settings['use_custom_colors'] === 'yes';
+        
+        // Cores intercaladas para os cards (azul escuro, roxo, verde, amarelo, rosa)
+        $card_colors = [
+            ['bg' => '#1E3A5F', 'text' => '#FFFFFF'], // Azul escuro
+            ['bg' => '#8B5CF6', 'text' => '#FFFFFF'], // Roxo
+            ['bg' => '#22C55E', 'text' => '#FFFFFF'], // Verde
+            ['bg' => '#EAB308', 'text' => '#FFFFFF'], // Amarelo
+            ['bg' => '#EC4899', 'text' => '#FFFFFF'], // Rosa/Magenta
+        ];
+        $color_index = 0;
+        $total_colors = count($card_colors);
         ?>
 
         <div class="aepda-grid">
@@ -561,12 +572,11 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
                     $card_text = $title;
                 }
 
-                // Cores do card (do meta ou default)
-                $card_bg_color = get_post_meta($post_id, '_atracao_card_cor_fundo', true);
-                $card_text_color = get_post_meta($post_id, '_atracao_card_cor_texto', true);
-
-                if (empty($card_bg_color)) $card_bg_color = '#8B5CF6';
-                if (empty($card_text_color)) $card_text_color = '#FFFFFF';
+                // Cores intercaladas automaticamente
+                $current_color = $card_colors[$color_index % $total_colors];
+                $card_bg_color = $current_color['bg'];
+                $card_text_color = $current_color['text'];
+                $color_index++;
 
                 // Classes do card
                 $card_classes = ['aepda-card'];
