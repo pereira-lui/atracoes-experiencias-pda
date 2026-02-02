@@ -76,50 +76,52 @@ while (have_posts()) :
                     <?php endif; ?>
                 </div>
                 
-                <!-- Coluna Direita: Galeria -->
+                <!-- Coluna Direita: Galeria com Swiper -->
                 <?php if (!empty($galeria_ids)) : ?>
                 <div class="aepda-main-gallery">
-                    <div class="aepda-gallery">
-                        <!-- Imagem Principal -->
-                        <div class="aepda-gallery__main">
-                            <?php 
-                            $first_image_url = wp_get_attachment_image_url($galeria_ids[0], 'large');
-                            $first_image_full = wp_get_attachment_image_url($galeria_ids[0], 'full');
+                    <!-- Swiper Principal -->
+                    <div class="swiper aepda-gallery-main">
+                        <div class="swiper-wrapper">
+                            <?php foreach ($galeria_ids as $image_id) : 
+                                $large_url = wp_get_attachment_image_url($image_id, 'large');
+                                $full_url = wp_get_attachment_image_url($image_id, 'full');
+                                if ($large_url) :
                             ?>
-                            <a href="<?php echo esc_url($first_image_full); ?>" data-lightbox="gallery" class="aepda-gallery__main-link" id="aepda-gallery-main-link">
-                                <img src="<?php echo esc_url($first_image_url); ?>" alt="" id="aepda-gallery-main-img">
-                            </a>
+                            <div class="swiper-slide">
+                                <a href="<?php echo esc_url($full_url); ?>" class="aepda-gallery__link" data-lightbox="gallery">
+                                    <img src="<?php echo esc_url($large_url); ?>" alt="">
+                                </a>
+                            </div>
+                            <?php endif; endforeach; ?>
                         </div>
+                    </div>
+                    
+                    <!-- Swiper Thumbs -->
+                    <div class="aepda-gallery-thumbs-wrapper">
+                        <button class="aepda-gallery-nav aepda-gallery-nav--prev" aria-label="Anterior">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
                         
-                        <!-- Thumbnails -->
-                        <div class="aepda-gallery__thumbs-wrapper">
-                            <button class="aepda-gallery__nav aepda-gallery__nav--prev" aria-label="Anterior">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                            </button>
-                            
-                            <div class="aepda-gallery__thumbs" id="aepda-gallery-thumbs">
-                                <?php foreach ($galeria_ids as $index => $image_id) : 
+                        <div class="swiper aepda-gallery-thumbs">
+                            <div class="swiper-wrapper">
+                                <?php foreach ($galeria_ids as $image_id) : 
                                     $thumb_url = wp_get_attachment_image_url($image_id, 'medium');
-                                    $large_url = wp_get_attachment_image_url($image_id, 'large');
-                                    $full_url = wp_get_attachment_image_url($image_id, 'full');
                                     if ($thumb_url) :
                                 ?>
-                                <div class="aepda-gallery__thumb <?php echo $index === 0 ? 'aepda-gallery__thumb--active' : ''; ?>" 
-                                     data-large="<?php echo esc_url($large_url); ?>"
-                                     data-full="<?php echo esc_url($full_url); ?>">
+                                <div class="swiper-slide">
                                     <img src="<?php echo esc_url($thumb_url); ?>" alt="">
                                 </div>
                                 <?php endif; endforeach; ?>
                             </div>
-                            
-                            <button class="aepda-gallery__nav aepda-gallery__nav--next" aria-label="Próximo">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </button>
                         </div>
+                        
+                        <button class="aepda-gallery-nav aepda-gallery-nav--next" aria-label="Próximo">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <?php endif; ?>

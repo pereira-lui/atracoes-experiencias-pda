@@ -195,7 +195,7 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
-   Gallery (Coluna Direita)
+   Gallery Swiper (Coluna Direita)
    ========================================================================== */
 
 .aepda-main-gallery {
@@ -203,44 +203,44 @@ a.aepda-card:focus {
     top: 30px;
 }
 
-.aepda-gallery {
-    width: 100%;
-}
-
-/* Imagem Principal */
-.aepda-gallery__main {
+/* Swiper Principal */
+.aepda-gallery-main {
     width: 100%;
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 15px;
-    background-color: #f0f0f0;
 }
 
-.aepda-gallery__main-link {
-    display: block;
+.aepda-gallery-main .swiper-slide {
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.aepda-gallery__main img {
+.aepda-gallery-main .swiper-slide img {
     width: 100%;
     height: 350px;
     object-fit: cover;
     display: block;
-    transition: transform 0.3s ease;
 }
 
-.aepda-gallery__main-link:hover img {
-    transform: scale(1.02);
+.aepda-gallery__link {
+    display: block;
+    cursor: zoom-in;
 }
 
-/* Thumbnails Wrapper */
-.aepda-gallery__thumbs-wrapper {
+.aepda-gallery__link:hover img {
+    opacity: 0.95;
+}
+
+/* Wrapper dos Thumbs */
+.aepda-gallery-thumbs-wrapper {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 /* Navigation Buttons */
-.aepda-gallery__nav {
+.aepda-gallery-nav {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
@@ -253,30 +253,33 @@ a.aepda-card:focus {
     justify-content: center;
     color: #666;
     transition: all 0.3s ease;
+    z-index: 10;
 }
 
-.aepda-gallery__nav:hover {
+.aepda-gallery-nav:hover {
     background: #5B21B6;
     border-color: #5B21B6;
     color: white;
 }
 
-.aepda-gallery__nav svg {
+.aepda-gallery-nav svg {
     width: 20px;
     height: 20px;
 }
 
-/* Thumbnails Container */
-.aepda-gallery__thumbs {
-    display: flex;
-    gap: 10px;
-    overflow: hidden;
-    flex: 1;
+.aepda-gallery-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
-.aepda-gallery__thumb {
-    flex: 0 0 auto;
-    width: 80px;
+/* Swiper Thumbs */
+.aepda-gallery-thumbs {
+    flex: 1;
+    overflow: hidden;
+}
+
+.aepda-gallery-thumbs .swiper-slide {
+    width: 80px !important;
     height: 60px;
     border-radius: 8px;
     overflow: hidden;
@@ -286,16 +289,16 @@ a.aepda-card:focus {
     opacity: 0.6;
 }
 
-.aepda-gallery__thumb:hover {
+.aepda-gallery-thumbs .swiper-slide:hover {
     opacity: 1;
 }
 
-.aepda-gallery__thumb--active {
+.aepda-gallery-thumbs .swiper-slide-thumb-active {
     border-color: #5B21B6;
     opacity: 1;
 }
 
-.aepda-gallery__thumb img {
+.aepda-gallery-thumbs .swiper-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -592,12 +595,12 @@ a.aepda-card:focus {
         font-size: 32px;
     }
     
-    .aepda-gallery__main img {
+    .aepda-gallery-main .swiper-slide img {
         height: 250px;
     }
     
-    .aepda-gallery__thumb {
-        width: 60px;
+    .aepda-gallery-thumbs .swiper-slide {
+        width: 60px !important;
         height: 45px;
     }
     

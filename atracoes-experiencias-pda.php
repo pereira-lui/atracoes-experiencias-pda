@@ -834,19 +834,36 @@ final class Atracoes_Experiencias_PDA {
      * Enqueue frontend styles and scripts
      */
     public function enqueue_frontend_assets() {
+        // Swiper CSS (CDN)
+        wp_enqueue_style(
+            'swiper-css',
+            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+            [],
+            '11.0.0'
+        );
+        
         // Main CSS
         wp_enqueue_style(
             'atracoes-exp-pda-style',
             ATRACOES_EXP_PDA_PLUGIN_URL . 'assets/css/frontend-style.css',
-            [],
+            ['swiper-css'],
             ATRACOES_EXP_PDA_VERSION
+        );
+
+        // Swiper JS (CDN)
+        wp_enqueue_script(
+            'swiper-js',
+            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+            [],
+            '11.0.0',
+            true
         );
 
         // Main JS
         wp_enqueue_script(
             'atracoes-exp-pda-script',
             ATRACOES_EXP_PDA_PLUGIN_URL . 'assets/js/frontend-script.js',
-            ['jquery'],
+            ['jquery', 'swiper-js'],
             ATRACOES_EXP_PDA_VERSION,
             true
         );

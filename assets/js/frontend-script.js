@@ -2,7 +2,7 @@
  * Atrações e Experiências PDA - Frontend Scripts
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.3.0
+ * @version 1.3.1
  */
 
 (function($) {
@@ -10,84 +10,50 @@
 
     $(document).ready(function() {
         // Initialize frontend functionality
-        initGalleryThumbnails();
+        initGallerySwiper();
         initGalleryLightbox();
     });
 
     /**
-     * Initialize Gallery Thumbnails Navigation
+     * Initialize Gallery Swiper
      */
-    function initGalleryThumbnails() {
-        var $thumbs = $('.aepda-gallery__thumb');
-        var $mainImg = $('#aepda-gallery-main-img');
-        var $mainLink = $('#aepda-gallery-main-link');
-        var $thumbsContainer = $('#aepda-gallery-thumbs');
-        var $prevBtn = $('.aepda-gallery__nav--prev');
-        var $nextBtn = $('.aepda-gallery__nav--next');
+    function initGallerySwiper() {
+        var $mainGallery = $('.aepda-gallery-main');
+        var $thumbsGallery = $('.aepda-gallery-thumbs');
         
-        if (!$thumbs.length) return;
+        if (!$mainGallery.length || !$thumbsGallery.length) return;
         
-        var currentIndex = 0;
-        var totalThumbs = $thumbs.length;
-        
-        // Click on thumbnail to change main image
-        $thumbs.on('click', function() {
-            var $thumb = $(this);
-            var largeUrl = $thumb.data('large');
-            var fullUrl = $thumb.data('full');
-            
-            // Update main image
-            $mainImg.attr('src', largeUrl);
-            $mainLink.attr('href', fullUrl);
-            
-            // Update active state
-            $thumbs.removeClass('aepda-gallery__thumb--active');
-            $thumb.addClass('aepda-gallery__thumb--active');
-            
-            // Update current index
-            currentIndex = $thumbs.index($thumb);
+        // Initialize Thumbs Swiper first
+        var thumbsSwiper = new Swiper('.aepda-gallery-thumbs', {
+            spaceBetween: 10,
+            slidesPerView: 'auto',
+            freeMode: true,
+            watchSlidesProgress: true,
+            navigation: {
+                nextEl: '.aepda-gallery-nav--next',
+                prevEl: '.aepda-gallery-nav--prev',
+            },
         });
         
-        // Navigation buttons
-        $prevBtn.on('click', function() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                $thumbs.eq(currentIndex).trigger('click');
-                scrollToThumb(currentIndex);
-            }
+        // Initialize Main Swiper
+        var mainSwiper = new Swiper('.aepda-gallery-main', {
+            spaceBetween: 10,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            thumbs: {
+                swiper: thumbsSwiper,
+            },
         });
-        
-        $nextBtn.on('click', function() {
-            if (currentIndex < totalThumbs - 1) {
-                currentIndex++;
-                $thumbs.eq(currentIndex).trigger('click');
-                scrollToThumb(currentIndex);
-            }
-        });
-        
-        // Scroll thumbnail into view
-        function scrollToThumb(index) {
-            var $thumb = $thumbs.eq(index);
-            if ($thumb.length && $thumbsContainer.length) {
-                var thumbLeft = $thumb.position().left;
-                var containerWidth = $thumbsContainer.width();
-                var thumbWidth = $thumb.outerWidth(true);
-                
-                if (thumbLeft < 0 || thumbLeft + thumbWidth > containerWidth) {
-                    $thumbsContainer.animate({
-                        scrollLeft: $thumbsContainer.scrollLeft() + thumbLeft - (containerWidth / 2) + (thumbWidth / 2)
-                    }, 200);
-                }
-            }
-        }
     }
 
     /**
      * Initialize Gallery Lightbox
      */
     function initGalleryLightbox() {
-        // Handle click on main gallery image
-        $('.aepda-gallery__main-link').on('click', function(e) {
+        // Handle click on gallery images
+        $(document).on('click', '.aepda-gallery__link', function(e) {
             e.preventDefault();
             
             var fullSrc = $(this).attr('href');
