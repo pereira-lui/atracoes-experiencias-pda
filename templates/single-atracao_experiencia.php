@@ -73,22 +73,24 @@ while (have_posts()) :
         </div>
     </section>
     
-    <!-- Galeria Carrossel (100% largura) -->
+    <!-- Galeria Carrossel (alinhado à esquerda com container, estende à direita) -->
     <?php if (!empty($galeria_ids)) : ?>
     <section id="aepda-pda-gallery-section" class="aepda-pda-gallery-section">
-        <div class="swiper aepda-pda-gallery-swiper">
-            <div class="swiper-wrapper">
-                <?php foreach ($galeria_ids as $image_id) : 
-                    $large_url = wp_get_attachment_image_url($image_id, 'large');
-                    $full_url = wp_get_attachment_image_url($image_id, 'full');
-                    if ($large_url) :
-                ?>
-                <div class="swiper-slide">
-                    <a href="<?php echo esc_url($full_url); ?>" class="aepda-pda-gallery-link" data-lightbox="gallery">
-                        <img src="<?php echo esc_url($large_url); ?>" alt="">
-                    </a>
+        <div class="aepda-pda-gallery-container">
+            <div class="swiper aepda-pda-gallery-swiper">
+                <div class="swiper-wrapper">
+                    <?php foreach ($galeria_ids as $image_id) : 
+                        $large_url = wp_get_attachment_image_url($image_id, 'large');
+                        $full_url = wp_get_attachment_image_url($image_id, 'full');
+                        if ($large_url) :
+                    ?>
+                    <div class="swiper-slide">
+                        <a href="<?php echo esc_url($full_url); ?>" class="aepda-pda-gallery-link" data-lightbox="gallery">
+                            <img src="<?php echo esc_url($large_url); ?>" alt="">
+                        </a>
+                    </div>
+                    <?php endif; endforeach; ?>
                 </div>
-                <?php endif; endforeach; ?>
             </div>
         </div>
         

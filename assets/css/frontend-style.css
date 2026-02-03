@@ -195,29 +195,38 @@ a.aepda-card:focus {
 }
 
 /* ==========================================================================
-   Gallery Section - Carrossel 100% largura
+   Gallery Section - Carrossel (alinhado à esquerda com container, estende à direita)
    ========================================================================== */
 
 #aepda-pda-gallery-section,
 .aepda-pda-gallery-section {
     background-color: #fff;
     padding-bottom: 40px;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
-/* Swiper Galeria - alinhado com container na esquerda, estende até borda direita */
+/* Container da Galeria - alinhado com container 1200px na esquerda */
+.aepda-pda-gallery-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    position: relative !important;
+    padding-left: calc((100% - 1200px) / 2 + 20px) !important;
+    padding-right: 0 !important;
+}
+
+/* Swiper Galeria */
 .aepda-pda-gallery-swiper {
-    width: 100%;
-    overflow: visible;
+    overflow: visible !important;
+    padding: 10px 0 !important;
 }
 
 .aepda-pda-gallery-swiper .swiper-wrapper {
-    padding-left: calc((100vw - 1200px) / 2);
+    align-items: stretch !important;
 }
 
 @media (max-width: 1240px) {
-    .aepda-pda-gallery-swiper .swiper-wrapper {
-        padding-left: 20px;
+    .aepda-pda-gallery-container {
+        padding-left: 20px !important;
     }
 }
 
