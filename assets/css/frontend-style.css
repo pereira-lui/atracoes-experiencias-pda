@@ -257,29 +257,28 @@ a.aepda-card:focus {
 
 /* Navigation Buttons */
 .aepda-pda-gallery-nav {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid #E5E7EB;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #333;
+    padding: 0;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .aepda-pda-gallery-nav:hover {
-    background: #5B21B6;
-    border-color: #5B21B6;
-    color: white;
+    opacity: 0.8;
+    transform: scale(1.05);
 }
 
-.aepda-pda-gallery-nav svg {
-    width: 24px;
-    height: 24px;
+.aepda-pda-gallery-nav img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .aepda-pda-gallery-nav:disabled {

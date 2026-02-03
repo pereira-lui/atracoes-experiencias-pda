@@ -98,14 +98,10 @@ while (have_posts()) :
         <div class="aepda-pda-container">
             <div class="aepda-pda-gallery-nav-wrapper">
                 <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--prev" aria-label="Anterior">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
+                    <img src="https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/prev.png" alt="Anterior">
                 </button>
                 <button class="aepda-pda-gallery-nav aepda-pda-gallery-nav--next" aria-label="Próximo">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                    <img src="https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/next.png" alt="Próximo">
                 </button>
             </div>
         </div>
