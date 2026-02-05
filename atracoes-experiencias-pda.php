@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.4.8
+ * Version: 1.4.9
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.4.8');
+define('ATRACOES_EXP_PDA_VERSION', '1.4.9');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -74,8 +74,14 @@ final class Atracoes_Experiencias_PDA {
         // Add nonce field via edit_form_after_title to ensure it's always present
         add_action('edit_form_after_title', [$this, 'add_nonce_field']);
 
-        // Reordenar meta boxes - Rank Math por último
-        add_action('add_meta_boxes', [$this, 'reorder_meta_boxes'], 99);
+        // Reordenar meta boxes - Rank Math por último (prioridade muito alta)
+        add_action('add_meta_boxes', [$this, 'reorder_meta_boxes'], 9999);
+        add_action('do_meta_boxes', [$this, 'reorder_meta_boxes'], 9999);
+        
+        // Filtro específico para prioridade do Rank Math
+        add_filter('rank_math/metabox/priority', function() {
+            return 'low';
+        });
 
         // Check for Elementor
         if ($this->is_compatible()) {
@@ -108,22 +114,34 @@ final class Atracoes_Experiencias_PDA {
     public function reorder_meta_boxes() {
         global $wp_meta_boxes;
         
-        if (!isset($wp_meta_boxes['atracao_experiencia'])) {
+        $screen = 'atracao_experiencia';
+        
+        if (!isset($wp_meta_boxes[$screen])) {
             return;
         }
         
-        // Procurar o metabox do Rank Math e movê-lo para baixo
+        // Procurar o metabox do Rank Math em todos os contextos e prioridades
         foreach (['normal', 'side', 'advanced'] as $context) {
             foreach (['high', 'core', 'default', 'low'] as $priority) {
-                if (isset($wp_meta_boxes['atracao_experiencia'][$context][$priority])) {
-                    foreach ($wp_meta_boxes['atracao_experiencia'][$context][$priority] as $id => $metabox) {
-                        // Rank Math meta box
-                        if (strpos($id, 'rank_math') !== false || $id === 'rank_math_metabox') {
-                            // Remove e adiciona novamente com prioridade baixa
-                            $saved_metabox = $wp_meta_boxes['atracao_experiencia'][$context][$priority][$id];
-                            unset($wp_meta_boxes['atracao_experiencia'][$context][$priority][$id]);
-                            $wp_meta_boxes['atracao_experiencia'][$context]['low'][$id] = $saved_metabox;
+                if (!isset($wp_meta_boxes[$screen][$context][$priority])) {
+                    continue;
+                }
+                
+                foreach ($wp_meta_boxes[$screen][$context][$priority] as $id => $metabox) {
+                    // Detectar Rank Math meta box
+                    if (strpos($id, 'rank_math') !== false || 
+                        strpos($id, 'rank-math') !== false || 
+                        $id === 'rank_math_metabox') {
+                        
+                        // Guardar e remover
+                        $saved_metabox = $wp_meta_boxes[$screen][$context][$priority][$id];
+                        unset($wp_meta_boxes[$screen][$context][$priority][$id]);
+                        
+                        // Mover para 'advanced' context com prioridade 'low' (aparece por último)
+                        if (!isset($wp_meta_boxes[$screen]['advanced']['low'])) {
+                            $wp_meta_boxes[$screen]['advanced']['low'] = [];
                         }
+                        $wp_meta_boxes[$screen]['advanced']['low'][$id] = $saved_metabox;
                     }
                 }
             }
