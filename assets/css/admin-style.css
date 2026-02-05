@@ -133,22 +133,6 @@
     border-radius: 5px;
 }
 
-/* Preview específico para Card (sidebar) */
-.atracao-image-preview--card {
-    min-height: 100px;
-    max-width: 100%;
-}
-
-.atracao-image-preview--card img {
-    max-height: 150px;
-}
-
-.atracao-image-upload .button {
-    max-width: 100%;
-    max-height: 200px;
-    border-radius: 5px;
-}
-
 .atracao-image-upload .button {
     width: fit-content;
 }
@@ -165,82 +149,39 @@
     margin-bottom: 15px;
 }
 
-/* ==========================================================================
-   Imagem do Topo (Large Preview)
-   ========================================================================== */
-
-.atracao-image-preview--large {
-    min-height: 200px;
-    max-width: 100%;
-}
-
-.atracao-image-preview--large img {
-    max-height: 300px;
-    max-width: 100%;
-}
-
-/* ==========================================================================
-   Rules Checkboxes (Nova versão)
-   ========================================================================== */
-
-.atracao-regras-checkboxes {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.atracao-regra-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 15px 20px;
+.atracao-regra-item {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    border-radius: 5px;
+    align-items: end;
 }
 
-.atracao-regra-checkbox:hover {
-    background-color: #f0f0f0;
-    border-color: #5B21B6;
-}
-
-.atracao-regra-checkbox input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    cursor: pointer;
-    accent-color: #5B21B6;
-}
-
-.atracao-regra-checkbox input[type="checkbox"]:checked + .atracao-regra-checkbox-icon + .atracao-regra-checkbox-text {
-    color: #5B21B6;
+.atracao-regra-item label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: 600;
+    font-size: 12px;
+    color: #666;
 }
 
-.atracao-regra-checkbox-icon {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.7;
+.atracao-regra-item input {
+    width: 100%;
 }
 
-.atracao-regra-checkbox-text {
-    flex: 1;
-    font-size: 14px;
-    color: #333;
+.atracao-regra-remove {
+    color: #dc3232 !important;
+    border-color: #dc3232 !important;
 }
 
-/* Icons for admin checkboxes (5 opções) */
-.atracao-icon-nao-alimentar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Cpath d='M22 38c2-4 6-6 10-6 2 0 4 0 6 2l4-2c-1-3-5-6-10-6-8 0-14 7-14 14 0 2 1 4 2 6l2-8z'/%3E%3Ccircle cx='28' cy='30' r='2' fill='%23333'/%3E%3Cpath d='M40 26l4 1 1-3-5 2z' fill='%23333'/%3E%3C/svg%3E"); }
-.atracao-icon-nao-tocar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%23333'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23333' stroke-width='2'/%3E%3Cpath d='M16 48L48 16' stroke='%23333' stroke-width='3' fill='none'/%3E%3Cpath d='M32 14v6M28 15v5M24 17v4M36 15v5M40 17v4M24 21c0 0-4 8-4 16 0 6 4 10 12 10s12-4 12-10c0-8-4-16-4-16'/%3E%3C/svg%3E"); }
-.atracao-icon-nao-sair-trilha { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpath d='M16 48L48 16' stroke-width='3'/%3E%3Ccircle cx='32' cy='18' r='4' fill='%23333'/%3E%3Cpath d='M32 22v10M32 32l-6 12M32 32l6 12M26 28l-4 4M38 28l4 4' stroke-width='2.5'/%3E%3Cpath d='M20 44h6M38 44h6' stroke-dasharray='2 2'/%3E%3C/svg%3E"); }
-.atracao-icon-sem-flash { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Crect x='14' y='24' width='36' height='24' rx='3'/%3E%3Ccircle cx='32' cy='36' r='8'/%3E%3Ccircle cx='32' cy='36' r='4'/%3E%3Crect x='22' y='20' width='8' height='4'/%3E%3Cpath d='M44 16h6l-3 8'/%3E%3Cpath d='M42 12l8 12' stroke-width='2.5'/%3E%3C/svg%3E"); }
-.atracao-icon-silencio { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23333' stroke-width='2'%3E%3Cpath d='M12 26v12h8l12 10V16L20 26h-8z' fill='%23333'/%3E%3Cpath d='M40 24l12 16M52 24l-12 16' stroke-width='2.5'/%3E%3C/svg%3E"); }
+.atracao-regra-remove:hover {
+    background-color: #dc3232 !important;
+    color: white !important;
+}
 
 /* ==========================================================================
    Links Meta Box
@@ -306,186 +247,6 @@
 }
 
 /* ==========================================================================
-   Blog Posts Selector
-   ========================================================================== */
-
-.atracao-blog-posts-section {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #ddd;
-}
-
-.atracao-blog-posts-title {
-    margin: 0 0 8px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1d2327;
-}
-
-.atracao-blog-posts-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #1d2327;
-    margin-bottom: 10px;
-}
-
-.atracao-blog-posts-label .dashicons {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-}
-
-.atracao-blog-posts-count {
-    font-weight: 400;
-    color: #666;
-}
-
-/* Posts Selecionados */
-.atracao-blog-posts-selected {
-    margin-bottom: 20px;
-}
-
-.atracao-blog-posts-selected .atracao-blog-posts-label .dashicons {
-    color: #00a32a;
-}
-
-.atracao-blog-posts-selected-list {
-    border: 1px solid #c3c4c7;
-    border-radius: 4px;
-    background: #f6f7f7;
-    min-height: 50px;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.atracao-blog-posts-empty {
-    padding: 15px;
-    margin: 0;
-    color: #666;
-    font-style: italic;
-    text-align: center;
-}
-
-/* Campo de Pesquisa */
-.atracao-blog-posts-search {
-    margin-bottom: 10px;
-}
-
-.atracao-blog-posts-search .atracao-blog-posts-label .dashicons {
-    color: #2271b1;
-}
-
-.atracao-blog-posts-search-input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #c3c4c7;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.atracao-blog-posts-search-input:focus {
-    border-color: #2271b1;
-    box-shadow: 0 0 0 1px #2271b1;
-    outline: none;
-}
-
-/* Lista de Posts Disponíveis */
-.atracao-blog-posts-available {
-    margin-top: 10px;
-}
-
-.atracao-blog-posts-list {
-    border: 1px solid #c3c4c7;
-    border-radius: 4px;
-    background: #fff;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-/* Item de Post */
-.atracao-blog-post-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 12px;
-    border-bottom: 1px solid #f0f0f1;
-    gap: 10px;
-    transition: background-color 0.15s ease;
-}
-
-.atracao-blog-post-item:last-child {
-    border-bottom: none;
-}
-
-.atracao-blog-post-item:hover {
-    background-color: #f0f6fc;
-}
-
-.atracao-blog-post-item--selected {
-    background-color: #fff;
-}
-
-.atracao-blog-post-item--selected:hover {
-    background-color: #fcf0f1;
-}
-
-.atracao-blog-post-item--hidden {
-    display: none !important;
-}
-
-.atracao-blog-post-checkbox {
-    margin: 0;
-    display: none;
-}
-
-.atracao-blog-post-title {
-    flex: 1;
-    font-size: 13px;
-    color: #1d2327;
-    line-height: 1.4;
-}
-
-.atracao-blog-post-add,
-.atracao-blog-post-remove {
-    background: none;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.atracao-blog-post-add {
-    color: #00a32a;
-}
-
-.atracao-blog-post-add:hover {
-    background-color: #00a32a;
-    color: #fff;
-}
-
-.atracao-blog-post-remove {
-    color: #d63638;
-}
-
-.atracao-blog-post-remove:hover {
-    background-color: #d63638;
-    color: #fff;
-}
-
-.atracao-blog-post-add .dashicons,
-.atracao-blog-post-remove .dashicons {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-}
-
-/* ==========================================================================
    Responsive
    ========================================================================== */
 
@@ -509,9 +270,5 @@
     .atracao-regra-item .button,
     .atracao-link-item .button {
         justify-self: start;
-    }
-    
-    .atracao-regra-checkbox {
-        flex-wrap: wrap;
     }
 }

@@ -87,10 +87,32 @@ a.aepda-card:focus {
    Single Atração Page - Layout Principal
    ========================================================================== */
 
+/* Esconder elementos do Elementor que não devem aparecer */
+.aepda-pda-single-page .elementor-location-single,
+.aepda-pda-single-page .elementor-template-canvas {
+    display: none !important;
+}
+
 #aepda-pda-single-wrapper,
 .aepda-pda-single-page {
     width: 100%;
     display: block;
+    position: relative;
+    z-index: 10;
+    background: #fff;
+    clear: both;
+    overflow: hidden;
+}
+
+/* Resetar conflitos do tema */
+.aepda-pda-single-page * {
+    box-sizing: border-box;
+}
+
+/* Esconder conteúdo do tema/Elementor dentro do wrapper */
+.aepda-pda-single-page > .elementor,
+.aepda-pda-single-page > article > .elementor {
+    display: none !important;
 }
 
 /* Container Geral */
@@ -113,6 +135,7 @@ a.aepda-card:focus {
     position: relative;
     display: block;
     background-color: #f0f0f0;
+    z-index: 1;
 }
 
 .aepda-pda-hero-img {
@@ -124,6 +147,8 @@ a.aepda-card:focus {
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
+    position: relative;
+    z-index: 1;
 }
 
 /* ==========================================================================
