@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.5.0
+ * Version: 1.5.1
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.5.0');
+define('ATRACOES_EXP_PDA_VERSION', '1.5.1');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -880,36 +880,19 @@ final class Atracoes_Experiencias_PDA {
      * Enqueue frontend styles and scripts
      */
     public function enqueue_frontend_assets() {
-        // Swiper CSS (CDN)
-        wp_enqueue_style(
-            'swiper-css',
-            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
-            [],
-            '11.0.0'
-        );
-        
         // Main CSS
         wp_enqueue_style(
             'atracoes-exp-pda-style',
             ATRACOES_EXP_PDA_PLUGIN_URL . 'assets/css/frontend-style.css',
-            ['swiper-css'],
+            [],
             ATRACOES_EXP_PDA_VERSION
         );
 
-        // Swiper JS (CDN)
-        wp_enqueue_script(
-            'swiper-js',
-            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-            [],
-            '11.0.0',
-            true
-        );
-
-        // Main JS
+        // Main JS (Swiper já carregado pelo tema/Elementor)
         wp_enqueue_script(
             'atracoes-exp-pda-script',
             ATRACOES_EXP_PDA_PLUGIN_URL . 'assets/js/frontend-script.js',
-            ['jquery', 'swiper-js'],
+            ['jquery'],
             ATRACOES_EXP_PDA_VERSION,
             true
         );
