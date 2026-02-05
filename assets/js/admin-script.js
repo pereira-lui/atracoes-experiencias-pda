@@ -21,6 +21,9 @@
         
         // Initialize repeater fields (rules and links)
         initRepeaterFields();
+        
+        // Initialize blog posts selector
+        initBlogPostsSelector();
     });
 
     /**
@@ -218,6 +221,98 @@
         $linksList.on('click', '.atracao-link-remove', function(e) {
             e.preventDefault();
             $(this).closest('.atracao-link-item').remove();
+        });
+    }
+    
+    /**
+     * Initialize Blog Posts Selector
+     */
+    function initBlogPostsSelector() {
+        var $searchInput = $('#blog-posts-search');
+        var $availableList = $('#blog-posts-list');
+        var $selectedList = $('#blog-posts-selected-list');
+        var $selectedCount = $('#selected-count');
+        var $selectedEmpty = $('#selected-empty');
+        
+        if (!$searchInput.length) return;
+        
+        // Função para atualizar contagem
+        function updateCount() {
+            var count = $selectedList.find('.atracao-blog-post-item').length;
+            $selectedCount.text('(' + count + ')');
+            
+            if (count === 0) {
+                if (!$selectedEmpty.length) {
+                    $selectedList.html('<p class="atracao-blog-posts-empty" id="selected-empty">Nenhum post selecionado</p>');
+                }
+            } else {
+                $selectedEmpty.remove();
+            }
+        }
+        
+        // Pesquisa
+        $searchInput.on('input', function() {
+            var searchTerm = $(this).val().toLowerCase().trim();
+            
+            $availableList.find('.atracao-blog-post-item').each(function() {
+                var $item = $(this);
+                var title = $item.data('title');
+                
+                if ($item.hasClass('atracao-blog-post-item--hidden')) {
+                    return; // Já está selecionado, manter escondido
+                }
+                
+                if (searchTerm === '' || title.indexOf(searchTerm) !== -1) {
+                    $item.show();
+                } else {
+                    $item.hide();
+                }
+            });
+        });
+        
+        // Adicionar post
+        $availableList.on('click', '.atracao-blog-post-add', function(e) {
+            e.preventDefault();
+            
+            var $item = $(this).closest('.atracao-blog-post-item');
+            var postId = $item.data('id');
+            var postTitle = $item.find('.atracao-blog-post-title').text();
+            
+            // Criar item selecionado
+            var $selectedItem = $('<div class="atracao-blog-post-item atracao-blog-post-item--selected" data-id="' + postId + '">' +
+                '<input type="checkbox" name="atracao_blog_posts[]" value="' + postId + '" checked class="atracao-blog-post-checkbox">' +
+                '<span class="atracao-blog-post-title">' + postTitle + '</span>' +
+                '<button type="button" class="atracao-blog-post-remove" title="Remover">' +
+                    '<span class="dashicons dashicons-no-alt"></span>' +
+                '</button>' +
+            '</div>');
+            
+            // Remover mensagem de vazio
+            $selectedEmpty.remove();
+            
+            // Adicionar à lista de selecionados
+            $selectedList.append($selectedItem);
+            
+            // Esconder da lista de disponíveis
+            $item.addClass('atracao-blog-post-item--hidden');
+            
+            updateCount();
+        });
+        
+        // Remover post
+        $selectedList.on('click', '.atracao-blog-post-remove', function(e) {
+            e.preventDefault();
+            
+            var $item = $(this).closest('.atracao-blog-post-item');
+            var postId = $item.data('id');
+            
+            // Mostrar na lista de disponíveis
+            $availableList.find('.atracao-blog-post-item[data-id="' + postId + '"]').removeClass('atracao-blog-post-item--hidden');
+            
+            // Remover da lista de selecionados
+            $item.remove();
+            
+            updateCount();
         });
     }
 
