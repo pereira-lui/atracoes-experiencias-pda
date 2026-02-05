@@ -460,8 +460,9 @@ a.aepda-card:focus {
 }
 
 .aepda-pda-rules-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 30px;
     padding: 40px;
     border: 2px solid #E5E7EB;
@@ -476,6 +477,8 @@ a.aepda-card:focus {
     text-align: center;
     gap: 15px;
     padding: 20px;
+    width: calc(33.333% - 20px);
+    min-width: 180px;
 }
 
 .aepda-pda-rule-icon {
