@@ -3,7 +3,7 @@
  * Plugin Name: Atrações e Experiências PDA
  * Plugin URI: https://github.com/pereira-lui/atracoes-experiencias-pda
  * Description: Plugin para gerenciar Custom Post Type "Atrações e Experiências" com campos personalizados e widget para Elementor.
- * Version: 1.5.1
+ * Version: 1.5.2
  * Author: Lui
  * Author URI: https://github.com/pereira-lui
  * Text Domain: atracoes-experiencias-pda
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('ATRACOES_EXP_PDA_VERSION', '1.5.1');
+define('ATRACOES_EXP_PDA_VERSION', '1.5.2');
 define('ATRACOES_EXP_PDA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('ATRACOES_EXP_PDA_PLUGIN_FILE', __FILE__);
@@ -465,23 +465,23 @@ final class Atracoes_Experiencias_PDA {
         return [
             'nao_alimentar' => [
                 'texto' => __('Não alimentar os animais', 'atracoes-experiencias-pda'),
-                'icone' => 'nao-alimentar'
+                'icone' => 'https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/Nao-Alimente-os-Animais-1.png'
             ],
             'nao_tocar' => [
                 'texto' => __('Não tocar nos animais', 'atracoes-experiencias-pda'),
-                'icone' => 'nao-tocar'
+                'icone' => 'https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/Nao-Toque-os-Animais-1.png'
             ],
             'nao_sair_trilha' => [
                 'texto' => __('Não sair da trilha', 'atracoes-experiencias-pda'),
-                'icone' => 'nao-sair-trilha'
+                'icone' => 'https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/Proibido-sair-da-trilha-1.png'
             ],
             'fotografar_sem_flash' => [
                 'texto' => __('É permitido fotografar e fazer vídeos, mas não usar flash', 'atracoes-experiencias-pda'),
-                'icone' => 'sem-flash'
+                'icone' => 'https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/Nao-Use-Flash-1.png'
             ],
             'manter_silencio' => [
                 'texto' => __('Manter silêncio em alguns pontos para ouvir o barulho da floresta e dos animais', 'atracoes-experiencias-pda'),
-                'icone' => 'silencio'
+                'icone' => 'https://www2.parquedasaves.com.br/wp-content/uploads/2026/02/manter-silencio.png'
             ],
         ];
     }
@@ -508,7 +508,7 @@ final class Atracoes_Experiencias_PDA {
                                name="atracao_regras_selecionadas[]" 
                                value="<?php echo esc_attr($key); ?>"
                                <?php checked(in_array($key, $regras_selecionadas)); ?>>
-                        <span class="atracao-regra-checkbox-icon atracao-icon-<?php echo esc_attr($regra['icone']); ?>"></span>
+                        <img src="<?php echo esc_url($regra['icone']); ?>" alt="" class="atracao-regra-checkbox-icon">
                         <span class="atracao-regra-checkbox-text"><?php echo esc_html($regra['texto']); ?></span>
                     </label>
                 <?php endforeach; ?>

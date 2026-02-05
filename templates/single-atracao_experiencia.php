@@ -196,7 +196,7 @@ while (have_posts()) :
                 ?>
                 <div class="aepda-pda-rule-item">
                     <div class="aepda-pda-rule-icon">
-                        <span class="aepda-pda-icon aepda-pda-icon-<?php echo esc_attr($regra['icone']); ?>"></span>
+                        <img src="<?php echo esc_url($regra['icone']); ?>" alt="">
                     </div>
                     <p class="aepda-pda-rule-text"><?php echo esc_html($regra['texto']); ?></p>
                 </div>
