@@ -86,29 +86,6 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             ]
         );
 
-        // Obter categorias
-        $categories = get_terms([
-            'taxonomy' => 'atracao_categoria',
-            'hide_empty' => false,
-        ]);
-
-        $category_options = ['' => __('Todas as Categorias', 'atracoes-experiencias-pda')];
-        if (!is_wp_error($categories) && !empty($categories)) {
-            foreach ($categories as $category) {
-                $category_options[$category->term_id] = $category->name;
-            }
-        }
-
-        $this->add_control(
-            'category',
-            [
-                'label' => __('Categoria', 'atracoes-experiencias-pda'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => '',
-                'options' => $category_options,
-            ]
-        );
-
         $this->add_control(
             'orderby',
             [
@@ -553,17 +530,6 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             'post_status' => 'publish',
         ];
 
-        // Filter by category
-        if (!empty($settings['category'])) {
-            $args['tax_query'] = [
-                [
-                    'taxonomy' => 'atracao_categoria',
-                    'field' => 'term_id',
-                    'terms' => $settings['category'],
-                ],
-            ];
-        }
-
         $query = new \WP_Query($args);
 
         if (!$query->have_posts()) {
@@ -572,6 +538,18 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
         }
 
         $use_custom_colors = $settings['use_custom_colors'] === 'yes';
+        
+        // Cores intercaladas para os cards (conforme design)
+        $card_colors = [
+            ['bg' => '#0891B2', 'text' => '#FFFFFF'], // Azul petróleo/ciano
+            ['bg' => '#7C3AED', 'text' => '#FFFFFF'], // Roxo
+            ['bg' => '#DB2777', 'text' => '#FFFFFF'], // Rosa/Magenta
+            ['bg' => '#EA580C', 'text' => '#FFFFFF'], // Laranja
+            ['bg' => '#16A34A', 'text' => '#FFFFFF'], // Verde
+            ['bg' => '#CA8A04', 'text' => '#FFFFFF'], // Amarelo/Dourado
+        ];
+        $color_index = 0;
+        $total_colors = count($card_colors);
         ?>
 
         <div class="aepda-grid">
@@ -579,15 +557,27 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
                 $post_id = get_the_ID();
                 $title = get_the_title();
                 $permalink = get_permalink();
-                $thumbnail_id = get_post_thumbnail_id();
-                $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'large') : '';
+                
+                // Imagem do card: primeiro verifica se tem imagem específica do card, senão usa a thumbnail
+                $card_image_id = get_post_meta($post_id, '_atracao_card_imagem', true);
+                if ($card_image_id) {
+                    $image_url = wp_get_attachment_image_url($card_image_id, 'large');
+                } else {
+                    $thumbnail_id = get_post_thumbnail_id();
+                    $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'large') : '';
+                }
+                
+                // Texto do card: usa o texto personalizado ou o título
+                $card_text = get_post_meta($post_id, '_atracao_card_texto', true);
+                if (empty($card_text)) {
+                    $card_text = $title;
+                }
 
-                // Cores do card (do meta ou default)
-                $card_bg_color = get_post_meta($post_id, '_atracao_card_cor_fundo', true);
-                $card_text_color = get_post_meta($post_id, '_atracao_card_cor_texto', true);
-
-                if (empty($card_bg_color)) $card_bg_color = '#8B5CF6';
-                if (empty($card_text_color)) $card_text_color = '#FFFFFF';
+                // Cores intercaladas automaticamente
+                $current_color = $card_colors[$color_index % $total_colors];
+                $card_bg_color = $current_color['bg'];
+                $card_text_color = $current_color['text'];
+                $color_index++;
 
                 // Classes do card
                 $card_classes = ['aepda-card'];
@@ -603,9 +593,9 @@ class Atracoes_Exp_PDA_Widget_Grid extends \Elementor\Widget_Base {
             ?>
                 <a href="<?php echo esc_url($permalink); ?>" class="<?php echo esc_attr(implode(' ', $card_classes)); ?>" style="<?php echo esc_attr($inline_style); ?>">
                     <?php if ($image_url) : ?>
-                        <img class="aepda-card__image" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>">
+                        <img class="aepda-card__image" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($card_text); ?>">
                     <?php endif; ?>
-                    <span class="aepda-card__text"><?php echo esc_html($title); ?></span>
+                    <span class="aepda-card__text"><?php echo esc_html($card_text); ?></span>
                 </a>
             <?php endwhile; ?>
         </div>

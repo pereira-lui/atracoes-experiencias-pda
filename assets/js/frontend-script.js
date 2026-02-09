@@ -1,18 +1,63 @@
 /**
  * Atrações e Experiências PDA - Frontend Scripts
- * Integração com Elementor - Swiper gerenciado globalmente
+ * Integração com Elementor - Swiper carregado globalmente
  *
  * @package Atracoes_Experiencias_PDA
- * @version 1.5.5
+ * @version 1.5.6
  */
 
 (function($) {
     'use strict';
 
     $(document).ready(function() {
-        // Initialize lightbox only - Swiper is managed by Elementor
         initAepdaPdaGalleryLightbox();
     });
+    
+    // Initialize Swiper after page load (Swiper loaded by Elementor)
+    $(window).on('load', function() {
+        initAepdaPdaGallerySwiper();
+    });
+
+    /**
+     * Initialize Gallery Swiper
+     */
+    function initAepdaPdaGallerySwiper() {
+        var $gallery = $('.aepda-pda-gallery-swiper');
+        
+        if (!$gallery.length) return;
+        
+        // Check if Swiper is available (loaded by Elementor)
+        if (typeof Swiper === 'undefined') {
+            console.warn('AEPDA: Swiper not loaded');
+            return;
+        }
+        
+        // Initialize Swiper
+        new Swiper('.aepda-pda-gallery-swiper', {
+            slidesPerView: 1.2,
+            spaceBetween: 20,
+            loop: false,
+            grabCursor: true,
+            navigation: {
+                nextEl: '.aepda-pda-gallery-nav--next',
+                prevEl: '.aepda-pda-gallery-nav--prev',
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1.05,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 1.1,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 1.2,
+                    spaceBetween: 20,
+                }
+            }
+        });
+    }
 
     /**
      * Initialize Gallery Lightbox
